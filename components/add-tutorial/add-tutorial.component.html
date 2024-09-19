@@ -1,0 +1,45 @@
+<div>
+  <div class="submit-form">
+    @if (!submitted) {
+    <div class="form-group">
+      <label for="title">Descrição do equipamento</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        required
+        [(ngModel)]="tutorial.title"
+        name="title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="title">Categoria do equipamento</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        required
+        [(ngModel)]="tutorial.title"
+        name="title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Descrição do defeito</label>
+      <input
+        class="form-control"
+        id="description"
+        required
+        [(ngModel)]="tutorial.description"
+        name="description"
+      />
+    </div>
+
+    <button (click)="saveTutorial()" class="btn btn-success">Enviar</button>
+    } @else {
+    <h4>Solicitação registrada com sucesso!</h4>
+    <button class="btn btn-success" (click)="newTutorial()">Adicionar</button>
+    }
+  </div>
+</div>
