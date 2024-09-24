@@ -27,14 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const actionCell = document.createElement('td');
         if (request.status === 'ORÇADA') {
             const approveButton = document.createElement('button');
-            approveButton.textContent = 'Aprovar';
+            approveButton.textContent = 'Aprovar/Rejeitar Serviço';
             approveButton.classList.add('aprovar');
+            approveButton.addEventListener('click', function() {
+                // Redireciona para a página de pagamento
+                window.location.href = '../RF005/rf005.html'; // Ajuste o caminho conforme necessário
+            });
             actionCell.appendChild(approveButton);
 
-            const rejectButton = document.createElement('button');
+            /*const rejectButton = document.createElement('button');
             rejectButton.textContent = 'Rejeitar';
             rejectButton.classList.add('rejeitar');
-            actionCell.appendChild(rejectButton);
+            actionCell.appendChild(rejectButton);*/
         } else if (request.status === 'REJEITADA') {
             const resgatarButton = document.createElement('button');
             resgatarButton.textContent = 'Resgatar Serviço';
