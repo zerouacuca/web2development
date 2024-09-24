@@ -44,6 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const pagarButton = document.createElement('button');
             pagarButton.textContent = 'Pagar Serviço';
             pagarButton.classList.add('pagar');
+            pagarButton.addEventListener('click', function() {
+                // Redireciona para a página de pagamento
+                window.location.href = '../Pagamento/pagamento.html'; // Ajuste o caminho conforme necessário
+            });
             actionCell.appendChild(pagarButton);
         } else {
             const visualizarButton = document.createElement('button');
