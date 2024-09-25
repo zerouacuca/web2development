@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
         { date: '2024-09-11 14:00', description: 'Mouse Microsoft', status: 'OUTRO' }
     ];
 
+
+    const statusAtualizado = localStorage.getItem('statusSolicitacao');
+    if (statusAtualizado) {
+        requests[0].status = statusAtualizado; 
+    }
+
     const tableBody = document.querySelector('#requestsTable tbody');
 
     requests.forEach(request => {
