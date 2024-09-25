@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             approveButton.classList.add('aprovar');
             approveButton.addEventListener('click', function() {
                 // Redireciona para a página de pagamento
-                window.location.href = '../RF005/rf005.html'; // Ajuste o caminho conforme necessário
+                window.location.href = '../Budget/budget.html'; // Ajuste o caminho conforme necessário
             });
             actionCell.appendChild(approveButton);
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orçamento de Serviço</title>
-    <link rel="stylesheet" href="./rf005.css">
+    <link rel="stylesheet" href="./budget.css">
 </head>
 <body>
     <header>
@@ -22,13 +22,16 @@
             <p><strong>Descrição do Defeito:</strong> Tela azul ao inicializar</p>
             <p><strong>Data da Solicitação:</strong> 20/09/2024</p>
             <p><strong>Estado:</strong> ORÇADA</p>
-            <p><strong>Valor orçado:</strong> <strong class="valor-orcado">R$ 450,00</strong></p>
+            <p><strong>Valor orçado:</strong> <strong id="valor-orcado">R$ 450,00</strong></p>
         </div>
-        <div class="button-container">
-            <button id="aprovar" class="btn btn-success">Aprovar orçamento</button>
-            <button id="rejeitar" class="btn btn-danger">Rejeitar orçamento</button>
-        </div>
+        <div class="popup">
+            <div class="button-container">
+                <button id="aprovar" class="btn btn-success">Aprovar orçamento</button>
+                <span class="popuptext" id="myPopup">Serviço Aprovado no Valor R$ <br> <button id="popupOkBtn" onclick="window.location.href ='../Client/paginaCliente.html'">OK</button></span>
+                <button id="rejeitar" class="btn btn-danger">Rejeitar orçamento</button>
+            </div>
     </div>
-    <script src="./rf005.js"></script>
+    </div>
+    <script src="./budget.js"></script>
 </body>
 </html>
