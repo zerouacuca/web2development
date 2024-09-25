@@ -21,6 +21,8 @@ document.getElementById('aprovar').addEventListener('click', function() {
         const valorOrcado = document.getElementById('valor-orcado').textContent.trim();
         console.log("Valor orçado capturado:", valorOrcado); 
 
+        localStorage.setItem('statusSolicitacao', 'APROVADA');
+
         const popupText = document.getElementById('myPopup');
         popupText.innerHTML = `Serviço Aprovado no Valor ${valorOrcado} <br> <button id="popupOkBtn" onclick="window.location.href ='../Client/paginaCliente.html'">OK</button>`;
         
