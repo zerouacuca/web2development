@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
         { date: '2024-09-11 14:00', description: 'Mouse Microsoft', status: 'OUTRO' }
     ];
 
+
+    const statusAtualizado = localStorage.getItem('statusSolicitacao');
+    if (statusAtualizado) {
+        requests[0].status = statusAtualizado; 
+    }
+
     const tableBody = document.querySelector('#requestsTable tbody');
 
     requests.forEach(request => {
@@ -31,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
             approveButton.classList.add('aprovar');
             approveButton.addEventListener('click', function() {
                 // Redireciona para a página de pagamento
-                window.location.href = '../RF005/rf005.html'; // Ajuste o caminho conforme necessário
+                window.location.href = '../Budget/budget.html'; // Ajuste o caminho conforme necessário
             });
             actionCell.appendChild(approveButton);
 
