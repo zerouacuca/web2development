@@ -6,6 +6,7 @@ const btnConfirmar = document.getElementById("confirmarModal")
 const textJustificatica = document.getElementById("textArea").value
     // console.log("tem btn modal")
     btnModal.addEventListener('click', () => { 
+        console.log("btn clicado")
         modal.style.display = 'flex'
         
     })
