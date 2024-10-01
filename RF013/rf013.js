@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
             actionCell.appendChild(resgatarButton);
             resgatarButton.addEventListener("click", function () {
               // redirecionada para essa pagina (nao criada ainda?!)
-                window.location.href = "../RF0012/rf0012.html"; // Ajuste o caminho conforme necessário
+                window.location.href = "../RF012/rf012.html"; // Ajuste o caminho conforme necessário
             });
       }
     // ==========FIM ABERTA  
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pagarButton.classList.add("arrumada");
         pagarButton.addEventListener("click", function () {
           // Redireciona para a efetuar manuntencao
-          window.location.href = "../RF0014/rf014.html"; // Ajuste o caminho conforme necessário
+          window.location.href = "../RF014/rf014.html"; // Ajuste o caminho conforme necessário
         });
         actionCell.appendChild(pagarButton);
       }
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
         Button.classList.add("aprovada");
         Button.addEventListener("click", function () {
           // Redireciona para a página efetuar manuntencao
-          window.location.href = "../RF0014/rf014.html"; // Ajuste o caminho conforme necessário
+          window.location.href = "../RF014/rf014.html"; // Ajuste o caminho conforme necessário
         });
         actionCell.appendChild(Button);
       }
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
       Button.classList.add("paga");
       Button.addEventListener("click", function () {
         // Redireciona para a página  finalizar manuntencao
-        window.location.href = "../RF0016/rf016.html"; // Ajuste o caminho conforme necessário
+        window.location.href = "../RF016/rf016.html"; // Ajuste o caminho conforme necessário
       });
       actionCell.appendChild(Button);
     }
