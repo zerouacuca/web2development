@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const statusAtualizado = localStorage.getItem("statusSolicitacao");
   if (statusAtualizado) {
     requests[0].status = statusAtualizado;
+    localStorage.clear();//Sem isso fica salvo no browser e não da pra testar.
   }
 
   const tableBody = document.querySelector("#requestsTable tbody");
@@ -49,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     statusCell.textContent = request.status;
     row.appendChild(statusCell);
 
+
     const actionCell = document.createElement("td");
     if (request.status === "ORÇADA") {
       const approveButton = document.createElement("button");
@@ -56,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
       approveButton.classList.add("aprovar");
       approveButton.addEventListener("click", function () {
         // Redireciona para a página de pagamento
-        window.location.href = "../Budget/budget.html"; // Ajuste o caminho conforme necessário
+        window.location.href = "../Budget/budget.html";
       });
       actionCell.appendChild(approveButton);
 
@@ -93,4 +95,5 @@ document.addEventListener("DOMContentLoaded", function () {
     row.appendChild(actionCell);
     tableBody.appendChild(row);
   });
+
 });
