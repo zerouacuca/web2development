@@ -75,6 +75,33 @@ button.aprovar {
     color: white;
 }
 
+button.orcada {
+      /* Marrom */
+    background-color: #633a3a;
+    color: white;
+}
+button.aprovada {
+  background-color:  #bebe06; /* Amarelo */
+  color: white;
+}
+
+
+button.aberta{
+    background-color: #797676;
+    color: white;
+}
+
+button.paga{
+    background-color:  #ff7f00;;
+    color: white;
+}
+
+
+button.arrumada{
+    background-color: #800080;
+    color: white;
+}
+
 button.rejeitar {
     background-color: #f44336;
     color: white;
@@ -96,7 +123,7 @@ button.resgatar, button.pagar, button.visualizar {
   }
   
   .orcada {
-    color: #a52a2a; /* Marrom */
+    color: #633a3a; /* Marrom */
    
   }
   
