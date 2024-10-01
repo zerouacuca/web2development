@@ -20,7 +20,7 @@ const textJustificatica = document.getElementById("textArea").value
         try {
             console.log("botao confirmar clicado "); 
     
-            localStorage.setItem('statusSolicitacao', 'REJEITADAAAA');
+            localStorage.setItem('statusSolicitacao', 'REJEITADA');
     
             const popupText = document.getElementById('myPopup');
             popupText.innerHTML = `Servico Rejeitado <br><button id="popupConfirmarBtn" onclick="window.location.href ='../Client/paginaCliente.html'">OK</button>`;

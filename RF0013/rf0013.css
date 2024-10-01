@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+header {
+    background-color: #6200ea;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+header nav {
+    margin-top: 10px;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+th {
+    background-color: #6200ea;
+    color: white;
+}
+
+button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.aprovar {
+    background-color: #119754;
+    color: white;
+}
+
+button.rejeitar {
+    background-color: #f44336;
+    color: white;
+}
+
+button.resgatar, button.pagar, button.visualizar {
+    background-color: #6200ea;
+    color: white;
+}
+
+/* Estilos para cada estado das solicitações */
+
+.font-bold{
+    font-weight: bolder;
+
+}
+.aberta {
+    color: #797676; /* Cinza */
+  }
+  
+  .orcada {
+    color: #a52a2a; /* Marrom */
+   
+  }
+  
+  .rejeitada {
+    color: #ff0000; /* Vermelho */
+  }
+  
+  .aprovada {
+    color: #bebe06; /* Amarelo */
+  }
+  /* seria a redirecionada ?! */
+  .arrumada {
+    color: #800080; /* Roxo */
+  }
+  
+  .aguardandoPagamento {
+    color: #007bff; /* Azul */
+  }
+  
+  .paga {
+    color: #ff7f00; /* Alaranjado */
+  }
+  
+  .finalizada {
+    color: #28a745; /* Verde */
+  }
