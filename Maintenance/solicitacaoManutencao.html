@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação de Manutenção</title>
+    <link rel="stylesheet" href="./solicitacaoManutencao.css">
+</head>
+<body>
+    <header>
+        <h1>Razer Manutenções</h1>
+        <nav>
+            <a href="../Client/paginaCliente.html">Minhas Solicitações</a>
+            <a href="../Manutention/solicitacaoManutencao.html">Nova Solicitação</a>
+            <a href="../Login/login.html">Sair</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Nova Solicitação de Manutenção</h2>
+        <form id="solicitacaoForm">
+            <label for="descricaoEquipamento">Descrição do Equipamento</label>
+            <input type="text" id="descricaoEquipamento" name="descricaoEquipamento" required>
+
+            <label for="categoriaEquipamento">Categoria do Equipamento</label>
+            <input type="text" id="categoriaEquipamento" name="categoriaEquipamento" required>
+
+            <label for="descricaoDefeito">Descrição do Defeito</label>
+            <textarea id="descricaoDefeito" name="descricaoDefeito" required></textarea>
+
+            <button type="submit">Enviar Solicitação</button>
+        </form>
+    </div>
+    <script src="./solicitacaoManutencao.js"></script>
+</body>
+</html>

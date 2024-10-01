@@ -1,12 +1,9 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
 }
+
 header {
     background-color: #6200ea;
     color: white;
@@ -32,13 +29,21 @@ header nav a:hover {
     text-decoration: underline;
 }
 
+.valor-orcado {
+    color: red;
+    font-weight: bold;
+  }
+
 .container {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 800px;
+    margin: 150px auto 20px; 
 }
 
 h2 {
@@ -46,41 +51,47 @@ h2 {
     color: #333;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.solicitacao-detalhes p {
+    color: #555;
+    margin: 10px 0;
 }
 
-th, td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8mm;
 }
 
-th {
-    background-color: #6200ea;
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;   
+
+}
+
+.btn-success {
+    background-color: green;
     color: white;
 }
 
+.btn-danger {
+    background-color: red;
+    color: white;   
+
+}
 button {
-    padding: 5px 10px;
+    margin-top: 20px;
+    padding: 10px;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-}
-
-button.aprovar {
-    background-color: #4CAF50;
-    color: white;
-}
-
-button.rejeitar {
-    background-color: #f44336;
-    color: white;
-}
-
-button.resgatar, button.pagar, button.visualizar {
     background-color: #6200ea;
     color: white;
+    cursor: pointer;
+    text-align: center;
+}
+
+button:hover {
+    background-color: lightblue;
 }

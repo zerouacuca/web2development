@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial do Cliente</title>
+    <link rel="stylesheet" href="paginaCliente.css">
+</head>
+<body>
+    <header>
+        <h1>Razer Manutenções</h1>
+        <nav>
+            <a href="../Client/paginaCliente.html">Minhas Solicitações</a>
+            <a href="../Manutention/solicitacaoManutencao.html">Nova Solicitação</a>
+            <a href="../Login/login.html">Sair</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Solicitações do Cliente</h2>
+        <table id="requestsTable">
+            <thead>
+                <tr>
+                    <th>Data/Hora</th>
+                    <th>Descrição do Equipamento</th>
+                    <th>Estado da Solicitação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- As linhas serão adicionadas dinamicamente pelo JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <script src="./paginaCliente.js"></script>
+</body>
+</html>
