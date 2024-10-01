@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
     statusCell.textContent = request.status;
     row.appendChild(statusCell);
 
+
     const actionCell = document.createElement("td");
     if (request.status === "ORÇADA") {
       const approveButton = document.createElement("button");
@@ -93,4 +94,5 @@ document.addEventListener("DOMContentLoaded", function () {
     row.appendChild(actionCell);
     tableBody.appendChild(row);
   });
+
 });
