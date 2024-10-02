@@ -107,6 +107,11 @@ button.rejeitar {
     color: white;
 }
 
+button.aguardandoPagamento{
+    background-color: #007bff;
+    color: white;
+}
+
 button.resgatar, button.pagar, button.visualizar {
     background-color: #6200ea;
     color: white;

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Efetuar Manutenção</title>
+  <link rel="stylesheet" href="./applyMaintenance.css">
+</head>
+<body>
+  <header>
+    <h1>Razer Manutenções</h1>
+    <nav>
+      <a href="../Client/paginaCliente.html">Minhas Solicitações</a>
+      <a href="../Login/login.html">Sair</a>
+    </nav>
+  </header>
+  <div class="container">
+    <h2>Dados da Solicitação de Manutenção</h2>
+    <div class="solicitacao-detalhes">
+      <p><strong>Nome do Cliente:</strong> João Silva</p>
+      <p><strong>Descrição do Equipamento:</strong> Computador Gamer</p>
+      <p><strong>Categoria:</strong> Computadores</p>
+      <p><strong>Descrição do Defeito:</strong> Tela azul ao inicializar</p>
+      <p><strong>Data da Solicitação:</strong> 20/09/2024</p>
+      <p><strong>Estado:</strong> <span>EM MANUTENÇÃO</span></p>
+    </div>
+
+    <div class="maintenance-actions">
+      <h3>Efetuar Manutenção</h3>
+      <label for="descricaoManutencao">Descrição da Manutenção:</label>
+      <textarea id="descricaoManutencao" class="form-control" rows="4"></textarea>
+
+      <label for="orientacoesCliente">Orientações para o Cliente:</label>
+      <textarea id="orientacoesCliente" class="form-control" rows="4"></textarea>
+
+      <button id="efetuarManutencao" class="btn btn-success">Efetuar Manutenção</button>
+      <button id="redirecionarManutencao" class="btn btn-danger">Redirecionar Manutenção</button>
+    </div>
+  </div>
+
+  <script src="./applyMaintenance.js"></script>
+</body>
+</html>
