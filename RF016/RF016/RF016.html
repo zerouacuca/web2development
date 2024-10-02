@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Solicitação</title>
+    <link rel="stylesheet" href="RF016.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Controle de Manutenção</h1>
+        <nav>
+            <a href="../Login/login.html">Início</a>
+            <a href="../Client/paginaCliente.html">Solicitações</a>
+            <a href="../RF011/rf011.html">Funcionários</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Finalizar Solicitação</h2>
+        <div class="solicitacao-detalhes">
+            <p><strong>Número da Solicitação:</strong> 12345</p>
+            <p><strong>Descrição da Solicitação:</strong> Manutenção de impressora</p>
+            <p><strong>Status Atual:</strong> PAGA</p>
+        </div>
+
+        <div class="form-group">
+            <label for="dataHora">Data e Hora da Finalização</label>
+            <input type="datetime-local" id="dataHora" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="funcionario">Funcionário Responsável</label>
+            <input type="text" id="funcionario" value="Maria" disabled>
+        </div>
+
+        <button id="finalizar-btn">Finalizar Solicitação</button>
+    </div>
+
+    <script src="RF016.js"></script>
+</body>
+</html>

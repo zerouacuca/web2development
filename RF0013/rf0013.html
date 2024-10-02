@@ -3,22 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial do Cliente</title>
-    <link rel="stylesheet" href="paginaCliente.css">
+    <title>Lista Solicitações</title>
+    <link rel="stylesheet" href="rf0013.css">
+    
 </head>
 <body>
     <header>
         <h1>Razer Manutenções</h1>
         <nav>
-            <a href="../Client/paginaCliente.html">Minhas Solicitações</a>
-
-            <a href="../Maintenance/solicitacaoManutencao.html">Nova Solicitação</a>
-
+            <a href="">Solicitações Abertas</a>
+            <a href="#">Todas Solicitações</a>
             <a href="../Login/login.html">Sair</a>
         </nav>
     </header>
     <div class="container">
-        <h2>Solicitações do Cliente</h2>
+        <h2>Lista das Solicitações</h2>
+        <div class="filters">
+            <label for="filter-date">Filtrar por data:</label>
+            <select id="filter-date">
+                <option value="today">Hoje</option>
+                <option value="period">Período</option>
+                <option value="all">Todas</option>
+            </select>
+            <input type="date" id="start-date">
+            <input type="date" id="end-date">
+        </div>
         <table id="requestsTable">
             <thead>
                 <tr>
@@ -33,6 +42,6 @@
             </tbody>
         </table>
     </div>
-    <script src="./paginaCliente.js"></script>
+    <script src="rf0013.js"></script>
 </body>
 </html>
