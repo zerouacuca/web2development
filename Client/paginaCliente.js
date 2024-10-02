@@ -75,6 +75,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // muda status da rejeitada para aprovada
         request.status = "APROVADA";
         statusCell.textContent = request.status;
+        requests[2] = {
+          date: "2024-09-13 08:45",
+          description: "Monitor Samsung",
+          status: "APROVADA",
+        };
       });
     } else if (request.status === "ARRUMADA") {
       const pagarButton = document.createElement("button");

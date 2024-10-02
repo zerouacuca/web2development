@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista Solicitações</title>
+    <link rel="stylesheet" href="rf013.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Razer Manutenções</h1>
+      <nav>
+        <a href="">Solicitações Abertas</a>
+        <a href="#">Todas Solicitações</a>
+        <a href="../Login/login.html">Sair</a>
+      </nav>
+    </header>
+    <div class="container">
+      <h2>Lista das Solicitações</h2>
+      <div class="filters">
+        <label for="filter-date">Filtrar por data:</label>
+        <select id="filter-date">
+          <option value="today">Hoje</option>
+          <option value="period">Período</option>
+          <option value="all">Todas</option>
+        </select>
+        <input type="date" id="start-date" />
+        <input type="date" id="end-date" />
+      </div>
+      <table id="requestsTable">
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Descrição do Equipamento</th>
+            <th>Estado da Solicitação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- As linhas serão adicionadas dinamicamente pelo JavaScript -->
+        </tbody>
+      </table>
+    </div>
+    <script src="rf013.js"></script>
+  </body>
+</html>
