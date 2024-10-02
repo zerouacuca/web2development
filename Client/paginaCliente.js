@@ -86,10 +86,13 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       actionCell.appendChild(pagarButton);
     } else {
-      const visualizarButton = document.createElement("button");
-      visualizarButton.textContent = "Visualizar Serviço";
-      visualizarButton.classList.add("visualizar");
+      const visualizarButton = document.createElement('button');
+      visualizarButton.textContent = 'Visualizar Serviço';
+      visualizarButton.classList.add('visualizar');
       actionCell.appendChild(visualizarButton);
+      visualizarButton.addEventListener('click', function() {
+         window.location.href = '../RF008-VisualizarServico/visualizar.html';
+      });
     }
 
     row.appendChild(actionCell);
