@@ -32,12 +32,6 @@ document
 document
   .getElementById("redirecionarManutencao")
   .addEventListener("click", function () {
-    const confirmacao = confirm(
-      "Você tem certeza que deseja redirecionar a manutenção?"
-    );
-
-    if (confirmacao) {
-      alert("Manutenção redirecionada com sucesso.");
-      window.location.href = "../RF015"; //Faz a lógica e tudo mais do rf015 aqui <<<<<<<<<<<<<<
+      window.location.href = "../RF015/rf015.html";
     }
-  });
+  );
