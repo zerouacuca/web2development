@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
           finalizarButton.textContent = "Finalizar Solicitação";
           finalizarButton.classList.add("paga");
           finalizarButton.addEventListener("click", function () {
-              window.location.href = "../RF016/rf016.html"; 
+              window.location.href = "../RF016/RF016/RF016.html"; 
           });
           actionCell.appendChild(finalizarButton);
 
