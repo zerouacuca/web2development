@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { PgClienteComponent } from '../pg-cliente/pg-cliente.component';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, PgClienteComponent],
+  imports: [RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
