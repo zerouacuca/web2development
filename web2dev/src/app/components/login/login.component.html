@@ -4,20 +4,18 @@
         <h2>Login</h2>
         <form id="loginForm">
             <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" required />
-
+            <input type="email" id="email" name="email" />
             <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" required />
+            <input type="password" id="senha" name="senha"  />
 
             <button
-            onclick="window.location.href ='../Client/paginaCliente.html'"
-            type="submit"
-            >
+            [routerLink]="['/pgcliente']"
+            type="submit">
             Entrar
             </button>
         </form>
         <div class="links">
-            <a href="../Register/autoCadastro.html"
+            <a [routerLink]="['/pg-cliente']"
             >Não tem cadastro? Cadastre-se</a
             >
             <a href="../Recovery/recuperarSenha.html">Esqueceu a senha?</a>
