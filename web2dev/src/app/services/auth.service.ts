@@ -7,8 +7,8 @@ export class AuthService {
 
   constructor() {}
 
-  login(username: string, password: string): boolean {
+  login(email: string, senha: string): boolean {
     // Implementar chamada http backend depois bem aqui.
-    return username === 'usuario' && password === 'senha';
+    return email === 'email' && senha === 'senha';
   }
 }

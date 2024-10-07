@@ -11,4 +11,5 @@ export const routes: Routes = [
     {'path': 'novasolicitacao', component:NovaSolicitacaoComponent},
     {'path': 'cadastro', component:CadastroComponent},
     {'path': 'pgfuncionario', component:PgFuncionarioComponent},
+    { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
