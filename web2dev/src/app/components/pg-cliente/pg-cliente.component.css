@@ -55,7 +55,7 @@ button.rejeitar {
     color: white;
 }
 
-button.resgatar, button.pagar, button.visualizar {
+button.default {
     background-color: #6200ea;
     color: white;
 }
