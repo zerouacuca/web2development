@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +10,17 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  
-  constructor(@Inject(Router) private router: Router) {}
+  username: string = '';
+  password: string = '';
+
+  constructor(private router: Router, private authService: AuthService) {}
+
   onSubmit() {
-    this.router.navigate(['/pg-cliente']);
+    
+    if (this.authService.login(this.username, this.password)) {
+      this.router.navigate(['/pg-cliente']);
+    } else {
+      alert('Nome de usuário ou senha incorretos');
+    }
   }
 }
