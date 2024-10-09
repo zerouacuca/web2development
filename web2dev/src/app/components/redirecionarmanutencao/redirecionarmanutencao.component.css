@@ -1,0 +1,115 @@
+.redirecionarmanutencao {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding-top: 60px; 
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.solicitacao-detalhes {
+    color: #555;
+    margin: 10px 0;
+}
+
+.redirecionar-container {
+    display: flex; 
+    align-items: center; 
+}
+
+.redirecionar-texto {
+    margin: 0; 
+}
+
+.dropdown-funcionarios {
+    display: inline-block;
+    position: relative;
+    margin-left: 10px; 
+}
+
+.dropdown-funcionarios .dropbtn {
+    background-color: #d3d3d3; 
+    color: black;
+    padding: 4px 6px; 
+    font-size: 16px;
+    border: 1px solid #ccc; 
+    cursor: pointer;
+    text-align: left; 
+    display: flex; 
+    align-items: center; 
+}
+
+.dropdown-funcionarios .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-funcionarios .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-funcionarios .dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-funcionarios:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-funcionarios .dropdown-content {
+    transition: all 0.3s ease;
+}
+
+.enviarRedirecionamento {
+    background-color: green;
+    color: white; 
+    padding: 6px 320px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    margin-top: 20px;
+    width: auto;
+}
+
+.enviarRedirecionamento:hover {
+    background-color: darkgreen;
+}
+.voltarEfetuarManutencao {
+    background-color: red;
+    color: white; 
+    padding: 6px 320px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    margin-top: 20px;
+    width: auto;
+}
+
+.voltarEfetuarManutencao:hover {
+    background-color: darkred;
+}

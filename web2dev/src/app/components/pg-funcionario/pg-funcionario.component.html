@@ -1,0 +1,38 @@
+<app-headerfuncionario></app-headerfuncionario>
+<div class="pgfuncionario">
+    <div class="container">
+        <h2>Lista das Solicitações</h2>
+        <div class="filters">
+            <label for="filter-date">Filtrar por data:</label>
+            <select id="filter-date" (change)="onFilterChange($event)">
+                <option value="today">Hoje</option>
+                <option value="period">Período</option>
+                <option value="all">Todas</option>
+            </select>
+            <input type="date" id="start-date" (change)="onStartDateChange($event)">
+            <input type="date" id="end-date" (change)="onEndDateChange($event)">
+        </div>
+        <table id="requestsTable">
+            <thead>
+                <tr>
+                    <th>Data/Hora</th>
+                    <th>Descrição do Equipamento</th>
+                    <th>Estado da Solicitação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let request of filteredRequests">
+                    <td>{{ request.date }}</td>
+                    <td>{{ request.description }}</td>
+                    <td [ngClass]="getStatusClass(request.status)">{{ request.status }}</td>
+                    <td>
+                        <button [ngClass]="getActionButtonClass(request.status)" (click)="efetuarAcao(request)">
+                            {{ getActionButtonText(request.status) }}
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

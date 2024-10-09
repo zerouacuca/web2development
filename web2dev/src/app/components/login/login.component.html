@@ -1,0 +1,23 @@
+<div class="loginpg">
+    <div class="banner-login"></div>
+        <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm"> <!--(ngSubmit)="onSubmit()" Implementar depois que der pra autentificar-->
+            <label for="email">E-mail</label>
+            <input type="email" id="email" [(ngModel)] = "email" name="email" required/>
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" [(ngModel)]="senha" name="senha" required/>
+
+            <button type="submit"
+            [routerLink]="['/pgcliente']"> <!--Apagar isso quando for implementar a autentificação-->
+            Entrar
+            </button>
+        </form>
+        <div class="links">
+            <a [routerLink]="['/cadastro']">
+                Não tem cadastro? Cadastre-se
+            </a>
+            <a [routerLink]="['/pgfuncionario']">Entrar como funcionario</a>
+        </div>
+    </div>
+</div>
