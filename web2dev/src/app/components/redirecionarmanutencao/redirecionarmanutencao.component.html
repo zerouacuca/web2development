@@ -1,0 +1,28 @@
+<app-headerfuncionario></app-headerfuncionario>
+<div class="redirecionarmanutencao">
+    <div class="container">
+        <h2>REDIRECIONAR MANUTENÇÃO</h2>
+        <div class="solicitacao-detalhes">
+            <p><strong>Número da Solicitação:</strong> 1234</p>
+            <p><strong>Descrição do Equipamento:</strong> Notebook Dell Inspiron</p>
+            <p><strong>Categoria:</strong> Notebooks</p>
+            <p><strong>Descrição do Defeito:</strong> A tela do notebook apresenta várias linhas coloridas, dispostas horizontalmente.</p>
+            <p><strong>Estado:</strong> APROVADA</p>
+            <p><strong>Funcionário Responsável:</strong> Maria</p>
+            <div class="redirecionar-container">
+                <p class="redirecionar-texto"><strong>Redirecionar Solicitação para: </strong></p>
+                <div class="dropdown-funcionarios">
+                    <button class="dropbtn">Selecionar &#8250;</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="selectOption('Maria')">Maria</a>
+                        <a href="#" onclick="selectOption('João')">João</a>
+                        <a href="#" onclick="selectOption('Marcos')">Marcos</a>
+                        <a href="#" onclick="selectOption('Silvana')">Silvana</a>
+                    </div>
+                </div>
+            </div>
+            <button class="enviarRedirecionamento">Enviar Redirecionamento</button>
+            <button (click)="voltar()" class="voltarEfetuarManutencao">Voltar</button>
+        </div>
+    </div>
+</div>

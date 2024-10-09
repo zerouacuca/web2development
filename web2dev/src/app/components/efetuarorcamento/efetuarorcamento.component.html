@@ -1,0 +1,25 @@
+<app-headerfuncionario></app-headerfuncionario>
+<div class="efetuarorcamento">
+    <div class="container">
+        <h2>Efetuar Orçamento</h2>
+        <div class="solicitacao-detalhes">
+        <p><strong>Descrição do Equipamento:</strong> Computador Gamer</p>
+        <p><strong>Categoria:</strong> Computadores</p>
+        <p><strong>Descrição do Defeito:</strong> Tela azul ao inicializar</p>
+        <p><strong>Data da Solicitação:</strong> 20/09/2024</p>
+            <strong>Orçar valor:</strong>
+            <form id="valor-orcado" action="/submit" method="post">
+            <label for="numero">R$</label>
+            <input type="number" id="numero" name="numero" required>
+            </form>
+        </div>
+        <div class="popup">
+        <div class="button-container">
+            <button (click)="confirmarOrcamento()"id="aprovar" class="btn btn-success">
+            Confirmar orçamento
+            </button>
+    
+        </div>
+        </div>
+    </div>
+</div>

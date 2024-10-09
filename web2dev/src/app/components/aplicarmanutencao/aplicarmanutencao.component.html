@@ -1,0 +1,26 @@
+<app-headerfuncionario></app-headerfuncionario>
+<div class="aplicarmanutencao"> 
+    <div class="container">
+        <h2>Dados da Solicitação de Manutenção</h2>
+        <div class="solicitacao-detalhes">
+            <p><strong>Nome do Cliente:</strong> João Silva</p>
+            <p><strong>Descrição do Equipamento:</strong> Computador Gamer</p>
+            <p><strong>Categoria:</strong> Computadores</p>
+            <p><strong>Descrição do Defeito:</strong> Tela azul ao inicializar</p>
+            <p><strong>Data da Solicitação:</strong> 20/09/2024</p>
+            <p><strong>Estado:</strong> <span>EM MANUTENÇÃO</span></p>
+        </div>
+
+        <div class="maintenance-actions">
+            <h3>Efetuar Manutenção</h3>
+            <label for="descricaoManutencao">Descrição da Manutenção:</label>
+            <textarea id="descricaoManutencao" class="form-control" rows="4" [(ngModel)]="descricaoManutencao"></textarea>
+
+            <label for="orientacoesCliente">Orientações para o Cliente:</label>
+            <textarea id="orientacoesCliente" class="form-control" rows="4" [(ngModel)]="orientacoesCliente"></textarea>
+
+            <button (click)="efetuarManutencao()" class="btn btn-success">Efetuar Manutenção</button>
+            <button (click)="redirecionarManutencao()" class="btn btn-danger">Redirecionar Manutenção</button>
+        </div>
+    </div>
+</div>

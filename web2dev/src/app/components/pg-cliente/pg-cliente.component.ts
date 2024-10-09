@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component"; 
 import { LoginComponent } from '../login/login.component'; 
 import { NgFor, NgIf, CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-pg-cliente',
   standalone: true,
-  imports: [HeaderComponent, LoginComponent, NgFor, NgIf, CommonModule],
+  imports: [HeaderComponent, LoginComponent, NgFor, NgIf, CommonModule, RouterLink],
   templateUrl: './pg-cliente.component.html',
   styleUrls: ['./pg-cliente.component.css'],
 })
@@ -47,19 +47,21 @@ export class PgClienteComponent implements OnInit {
     }
   }
 
+  constructor(private router: Router) {}
+
   aprovarServico() {
-    [RouterLink];
+    this.router.navigate(['orcamentocliente']);
   }
 
   resgatarServico(index: number) {
     this.requests[index].status = 'APROVADA';
   }
-
   pagarServico() {
-    [RouterLink];
+    this.router.navigate(['pagarservico']);
   }
 
   visualizarServico() {
-    [RouterLink];
+    this.router.navigate(['visualizarservicos']);
   }
 }
+
