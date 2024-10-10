@@ -83,33 +83,43 @@ h2 {
     transition: all 0.3s ease;
 }
 
+.enviarRedirecionamento, .voltarEfetuarManutencao {
+    padding: 12px 48px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    width: 100%; /* Garantir que os botões ocupem 100% da largura */
+    display: block; 
+}
+
 .enviarRedirecionamento {
     background-color: green;
-    color: white; 
-    padding: 6px 320px; 
-    border: none; 
-    border-radius: 5px; 
-    font-size: 16px; 
-    cursor: pointer; 
-    margin-top: 20px;
-    width: auto;
+    color: white;
+    margin-bottom: 10px; 
 }
 
 .enviarRedirecionamento:hover {
     background-color: darkgreen;
+    opacity: 0.9;
 }
+
 .voltarEfetuarManutencao {
     background-color: red;
-    color: white; 
-    padding: 6px 320px; 
-    border: none; 
-    border-radius: 5px; 
-    font-size: 16px; 
-    cursor: pointer; 
-    margin-top: 20px;
-    width: auto;
+    color: white;
 }
 
 .voltarEfetuarManutencao:hover {
     background-color: darkred;
+    opacity: 0.9;
 }
+
+@media (min-width: 768px) {
+    .enviarRedirecionamento, .voltarEfetuarManutencao {
+        width: 100%; 
+        padding: 12px 40px;
+        display: block; /* Para garantir que os botões sejam apresentados sempre, um acima do outro. */
+    }
+}
+
