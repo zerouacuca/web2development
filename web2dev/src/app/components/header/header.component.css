@@ -1,31 +1,5 @@
 header {
     background-color: #415a77; /* Cor de fundo do cabeçalho */
-    color: white; /* Cor do texto */
-    padding: 15px 0; /* Aumenta o padding superior e inferior */
-    text-align: center; /* Centraliza o texto */
-    position: fixed; /* Fixa o cabeçalho no topo */
-    width: 100%; /* Ocupa 100% da largura da tela */
-    top: 0; /* Fica no topo da página */
-    left: 0; /* Alinha à esquerda */
     font-family: 'Roboto', sans-serif; /* Fonte Roboto para o cabeçalho */
-    margin: 0; /* Remove margens padrão */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona sombra sutil ao cabeçalho */
-    z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
 }
-
-header nav {
-    margin-top: 10px; /* Espaçamento acima da navegação */
-}
-
-header nav a {
-    color: white; /* Cor dos links */
-    text-decoration: none; /* Remove o sublinhado dos links */
-    margin: 0 15px; /* Espaçamento lateral entre os links */
-    font-size: 16px; /* Tamanho da fonte dos links */
-    transition: color 0.3s ease; /* Transição suave para a cor */
-}
-
-header nav a:hover {
-    text-decoration: underline; /* Sublinha o texto ao passar o mouse */
-    color: #f1f1f1; /* Muda a cor do link ao passar o mouse */
-}
+/* precisa verificar espacamento pag nova solicitacao */
