@@ -1,62 +1,106 @@
-.efetuarorcamento {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+html, body {
+    height: 100%; /* Garante que o body ocupe toda a altura da tela */
+    margin: 0; /* Remove a margem padrão do body */
+    font-family: Arial, sans-serif; /* Fonte padrão para a página */
+    background-color: #e0e1dd; /* Cor de fundo da página */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
 }
 
 .container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 800px;
+    display: flex; /* Flexbox para centralização */
+    flex-direction: column; /* Direção dos itens no container */
+    justify-content: center; /* Centraliza verticalmente o conteúdo no container */
+    align-items: center; /* Centraliza horizontalmente o conteúdo no container */
+    background-color: #ffffff; /* Fundo do container */
+    padding: 40px; /* Aumentado para melhor espaçamento interno */
+    border-radius: 12px; /* Aumenta as bordas arredondadas */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+    width: 100%; /* Para ocupar toda a largura disponível */
+    max-width: 800px; /* Aumentado a largura máxima do container */
+    margin: 30px auto; /* Margem automática para centralização */
+    transition: all 0.3s ease; /* Transição suave para hover */
+}
+
+.container:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15); /* Efeito de hover no container */
+}
+
+header {
+    background-color: #1b263b; /* Cor de fundo do cabeçalho */
+    color: #ffffff; /* Cor do texto do cabeçalho */
+    padding: 20px; /* Espaçamento interno do cabeçalho */
+    border-radius: 12px 12px 0 0; /* Bordas arredondadas na parte superior */
+    text-align: center; /* Centraliza o texto do cabeçalho */
+    margin: 0;
 }
 
 h2 {
-    text-align: center;
-    color: #333;
+    margin: 0; /* Remove margens do cabeçalho */
+    font-size: 24px; /* Tamanho da fonte do cabeçalho */
+    color: #1b263b; /* Cor do texto */
+    font-family: 'Roboto', sans-serif; /* Fonte Roboto */
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.solicitacao-detalhes p {
+    color: #415a77; /* Cor dos parágrafos */
+    font-size: 16px; /* Tamanho da fonte dos parágrafos */
+    line-height: 1.6; /* Espaçamento entre linhas */
+    margin: 10px 0; /* Margem entre parágrafos */
 }
 
-th, td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
-}
-
-th {
-    background-color: #6200ea;
-    color: white;
+input[type="number"] {
+    width: 100%; /* Faz com que o input ocupe toda a largura disponível */
+    padding: 12px; /* Aumenta o padding para um melhor espaçamento interno */
+    border: 1px solid #415a77; /* Borda com cor consistente */
+    border-radius: 6px; /* Bordas arredondadas */
+    margin-top: 5px; /* Espaçamento acima do input */
+    font-size: 16px; /* Aumenta o tamanho da fonte do input */
+    background-color: #f9f9f9; /* Cor de fundo do input */
 }
 
 button {
-    padding: 5px 10px;
+    padding: 12px 24px; /* Aumenta o padding para botões */
     border: none;
-    border-radius: 4px;
+    border-radius: 6px; /* Bordas arredondadas */
     cursor: pointer;
+    width: 100%; /* Faz o botão ocupar toda a largura do container */
+    margin-top: 15px; /* Espaço entre os botões */
+    font-size: 16px; /* Aumenta o tamanho da fonte do botão */
+    font-family: 'Roboto', sans-serif; /* Fonte Roboto */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Adiciona animação ao passar o mouse */
 }
 
 button.aprovar {
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Verde */
     color: white;
 }
 
 button.rejeitar {
-    background-color: #f44336;
+    background-color: #f44336; /* Vermelho */
     color: white;
 }
 
 button.resgatar, button.pagar, button.visualizar {
-    background-color: #6200ea;
+    background-color: #6200ea; /* Roxo */
     color: white;
+}
+
+button:hover.aprovar {
+    background-color: #45a049; /* Cor de hover para o botão aprovar */
+}
+
+button:hover.rejeitar {
+    background-color: #d32f2f; /* Cor de hover para o botão rejeitar */
+}
+
+button:hover.resgatar, button:hover.pagar, button:hover.visualizar {
+    background-color: #5e35b1; /* Cor de hover para os botões resgatar, pagar e visualizar */
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* Ajusta a largura do container em telas pequenas */
+    }
 }
