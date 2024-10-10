@@ -1,58 +1,65 @@
-.pgnovasolicit{
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    margin: 0;
+.pgnovasolicit {
+    font-family: Arial, sans-serif; /* Fonte da página de novas solicitações */
+    background-color: #f0f0f0; /* Cor de fundo */
+    display: flex; /* Usando flexbox para centralização */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: 100vh; /* Altura total da tela */
+    margin: 0; /* Remove margens padrão */
     padding: 0;
     box-sizing: border-box;
 }
+
 .container {
-    display: flexbox;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 800px;
-    margin: 150px auto 20px; 
+    display: flex; /* Mudado para 'flex' em vez de 'flexbox' */
+    background-color: #ffffff; /* Cor de fundo do container */
+    padding: 25px; /* Aumentado para mais conforto visual */
+    border-radius: 12px; /* Cantos arredondados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    width: 80%; /* Largura ajustável */
+    max-width: 800px; /* Largura máxima do container */
+    margin: 150px auto 20px; /* Centraliza o container */
+    flex-direction: column; /* Alinha os elementos na coluna */
 }
 
 h2 {
-    text-align: center;
-    color: #333;
+    text-align: center; /* Centraliza o título */
+    color: #333; /* Cor do texto */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+    display: flex; /* Usando flexbox para o formulário */
+    flex-direction: column; /* Alinha os elementos na coluna */
 }
 
 label {
-    margin-top: 10px;
-    color: #555;
+    margin-top: 15px; /* Aumentado para um espaçamento melhor */
+    color: #555; /* Cor do rótulo */
+    font-weight: bold; /* Deixa o texto em negrito */
 }
 
 input, textarea {
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 10px; /* Aumentado para conforto */
+    margin-top: 5px; /* Espaçamento acima do input/textarea */
+    border: 1px solid #415a77; /* Cor da borda */
+    border-radius: 6px; /* Cantos arredondados */
+    font-size: 14px; /* Tamanho da fonte */
 }
 
 button {
-    margin-top: 20px;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #6200ea;
-    color: white;
-    cursor: pointer;
+    margin-top: 20px; /* Espaçamento acima do botão */
+    padding: 12px; /* Aumentado para conforto */
+    border: none; /* Remove a borda padrão */
+    border-radius: 6px; /* Cantos arredondados */
+    background-color: #415a77; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    cursor: pointer; /* Muda o cursor ao passar o mouse */
+    font-size: 16px; /* Tamanho da fonte do botão */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transição suave para o botão */
 }
 
 button:hover {
-    background-color: #3700b3;
+    background-color: #1b263b; /* Muda a cor do botão ao passar o mouse */
+    transform: scale(1.05); /* Aumenta levemente o botão ao passar o mouse */
 }

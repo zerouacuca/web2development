@@ -1,162 +1,166 @@
-.orcamento{
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
+.orcamento {
+  font-family: Arial, sans-serif;
+  background-color: #e0e1dd; /* Cor de fundo */
+  margin: 0;
 }
+
 #valor-orcado {
-    color: red;
-    font-weight: bold;
-  }
+  color: #ff0000; /* Mantido como vermelho */
+  font-weight: bold;
+}
 
 .container {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 800px;
-    margin: 150px auto 20px; 
+  display: flex;
+  flex-direction: column;
+  background-color: #fff; /* Cor de fundo do container */
+  padding: 20px;
+  border: 2px solid #415a77; /* Bordas engrossadas */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 800px;
+  margin: 150px auto 20px; 
 }
 
 h2 {
-    text-align: center;
-    color: #333;
+  text-align: center;
+  color: #1b263b; /* Cor do título */
 }
 
 .solicitacao-detalhes p {
-    color: #555;
-    margin: 10px 0;
+  color: #415a77; /* Cor dos detalhes */
+  margin: 10px 0;
 }
 
 .button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.8mm;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8mm;
 }
 
 .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;  
-
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;  
 }
 
 .btn-success {
-    background-color: green;
-    color: white;
+  background-color: #4CAF50; /* Verde */
+  color: white;
 }
 
 .btn-danger {
-    background-color: red;
-    color: white;  
-
+  background-color: #ff0000; /* Vermelho */
+  color: white;  
 }
+
 button {
-    margin-top: 20px;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #6200ea;
-    color: white;
-    cursor: pointer;
-    text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #415a77; /* Cor do botão */
+  color: white;
+  cursor: pointer;
+  text-align: center;
 }
 
 button:hover {
-    background-color: lightblue;
+  background-color: #1b263b; /* Cor do botão ao passar o mouse */
 }
 
 .popup {
-    position: relative;
-    display: none;
-    margin: 0;
-  }
-  
+  position: relative;
+  display: none;
+  margin: 0;
+}
+
 .popup.show {
-    display: flex; 
-    position: absolute;
-    background-color: #6200ea;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1000;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
+  display: flex; 
+  position: absolute;
+  background-color: #415a77; /* Cor do popup */
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .popup .popuptext {
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px;
-  }
-  
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+}
+
 .popup .popuptext button {
-    margin-top: 10px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+  margin-top: 10px;
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .popup .popuptext button:hover {
-    background-color: #45a049;
-  }
+  background-color: #45a049; /* Verde escuro */
+}
+
 @-webkit-keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
 @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
+
 .modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn-secondary {
-    background-color: grey;
-    color: white;
-  }
-  
-  .btn-primary {
-    background-color: blue;
-    color: white;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff; /* Cor de fundo do modal */
+  padding: 20px;
+  border: 2px solid #415a77; /* Bordas engrossadas do modal */
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background-color: #ccc; /* Cinza para botão secundário */
+  color: white;
+}
+
+.btn-primary {
+  background-color: #415a77; /* Azul */
+  color: white;
+}
