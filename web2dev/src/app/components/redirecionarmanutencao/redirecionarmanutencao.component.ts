@@ -9,8 +9,13 @@ import { Router } from '@angular/router';
   styleUrl: './redirecionarmanutencao.component.css'
 })
 export class RedirecionarmanutencaoComponent {
+  funcionarioSelecionado: string = "Selecionar";
   constructor(private router: Router) {}
   voltar(){
     this.router.navigate(["aplicarmanutencao"]);
+  }
+
+  selectOption(funcionario: string) {
+    this.funcionarioSelecionado = funcionario;
   }
 }
