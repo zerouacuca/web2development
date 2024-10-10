@@ -7,7 +7,17 @@
             <input type="text" id="descricaoEquipamento" name="descricaoEquipamento" required>
 
             <label for="categoriaEquipamento">Categoria do Equipamento</label>
-            <input type="text" id="categoriaEquipamento" name="categoriaEquipamento" required>
+            <input 
+                type="text" 
+                id="categoriaEquipamento" 
+                name="categoriaEquipamento"
+                class="form-control"
+                [ngbTypeahead]="search"
+                (focus)="focus$.next($any($event).target.value)"
+	            (click)="click$.next($any($event).target.value)"
+	            #instance="ngbTypeahead"
+                required
+            />
 
             <label for="descricaoDefeito">Descrição do Defeito</label>
             <textarea id="descricaoDefeito" name="descricaoDefeito" required></textarea>
