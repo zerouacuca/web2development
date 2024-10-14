@@ -12,12 +12,14 @@ import { EfetuarorcamentoComponent } from './components/efetuarorcamento/efetuar
 import { FinalizarsolicitComponent } from './components/finalizarsolicit/finalizarsolicit.component';
 import { VisualizarsevicosComponent } from './components/visualizarsevicos/visualizarsevicos.component';
 import { PagarservicoComponent } from './components/pagarservico/pagarservico.component';
+import { CrudFuncionarioComponent } from './components/crud-funcionario/crud-funcionario.component';
 
 export const routes: Routes = [
     {'path': 'login', component:LoginComponent},
     {'path': 'pgcliente', component:PgClienteComponent},
     {'path': 'novasolicitacao', component:NovaSolicitacaoComponent},
     {'path': 'cadastro', component:CadastroComponent},
+    {'path': 'crud-funcionario', component:CrudFuncionarioComponent},
     {'path': 'pgfuncionario', component:PgFuncionarioComponent},
     {'path': 'orcamentocliente', component:OrcamentoclienteComponent},
     {'path': 'solicitabertas', component:SolicitabertafuncComponent},
