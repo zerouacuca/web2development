@@ -12,14 +12,15 @@ import { EfetuarorcamentoComponent } from './components/efetuarorcamento/efetuar
 import { FinalizarsolicitComponent } from './components/finalizarsolicit/finalizarsolicit.component';
 import { VisualizarsevicosComponent } from './components/visualizarsevicos/visualizarsevicos.component';
 import { PagarservicoComponent } from './components/pagarservico/pagarservico.component';
-import { CrudFuncionarioComponent } from './components/crud-funcionario/crud-funcionario.component';
+import { ListarFuncionarioComponent } from './pages/listar-funcionario/listar-funcionario.component';
+import { InserirFuncionarioComponent } from './pages/inserir-funcionario/inserir-funcionario.component';
+import { EditarFuncionarioComponent } from './pages/editar-funcionario/editar-funcionario.component';
 
 export const routes: Routes = [
     {'path': 'login', component:LoginComponent},
     {'path': 'pgcliente', component:PgClienteComponent},
     {'path': 'novasolicitacao', component:NovaSolicitacaoComponent},
     {'path': 'cadastro', component:CadastroComponent},
-    {'path': 'crud-funcionario', component:CrudFuncionarioComponent},
     {'path': 'pgfuncionario', component:PgFuncionarioComponent},
     {'path': 'orcamentocliente', component:OrcamentoclienteComponent},
     {'path': 'solicitabertas', component:SolicitabertafuncComponent},
@@ -29,5 +30,21 @@ export const routes: Routes = [
     {'path': 'finalizarsolicitacao', component:FinalizarsolicitComponent},
     {'path': 'visualizarservicos', component:VisualizarsevicosComponent},
     {'path': 'pagarservico', component:PagarservicoComponent},
-    { path: '', redirectTo: '/login', pathMatch: 'full' }
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'crud-funcionario', 
+      redirectTo: 'funcionarios/listar',
+      pathMatch: 'full'
+    },
+    {
+        path: 'funcionarios/listar',
+        component: ListarFuncionarioComponent
+    },
+    {
+        path: 'funcionarios/novo',
+        component: InserirFuncionarioComponent
+    },
+    {
+        path: 'funcionarios/editar/:id',
+        component: EditarFuncionarioComponent
+    }
 ];
