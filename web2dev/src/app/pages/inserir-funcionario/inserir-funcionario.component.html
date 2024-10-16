@@ -1,0 +1,106 @@
+<h1>Novo Funcionário</h1>
+<div class="well">
+    <form #formFuncionario="ngForm">
+        <!-- Dados Pessoais -->
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="number" class="form-control" id="id" name="id" [(ngModel)]="funcionario.id" #id="ngModel"
+                required>
+            <div [hidden]="!id.errors?.['required']" class="alert alert-danger">ID é obrigatório.</div>
+        </div>
+        <div class="form-group">
+            <label for="cpf">CPF:</label>
+            <input type="text" class="form-control" id="cpf" name="cpf" [(ngModel)]="funcionario.cpf" #cpf="ngModel"
+                required>
+            <div [hidden]="!cpf.errors?.['required']" class="alert alert-danger">CPF é obrigatório.</div>
+        </div>
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="funcionario.nome" #nome="ngModel"
+                minlength="2" required>
+            <div [hidden]="!nome.errors?.['required']" class="alert alert-danger">Digite o nome do funcionário.</div>
+            <div [hidden]="!nome.errors?.['minlength']" class="alert alert-danger">O nome deve conter ao menos 2
+                caracteres.</div>
+        </div>
+        <div class="form-group">
+            <label for="nascimento">Data de nascimento:</label>
+            <input type="date" class="form-control" id="nascimento" name="nascimento"
+                [(ngModel)]="funcionario.nascimento" #nascimento="ngModel" required>
+            <div *ngIf="nascimento.errors && (nascimento.dirty || nascimento.touched)" class="alert alert-danger">
+                <div [hidden]="!nascimento.errors['required']">Digite a data de nascimento.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="funcionario.email"
+                #email="ngModel" required>
+            <div [hidden]="!email.errors?.['required']" class="alert alert-danger">E-mail é obrigatório.</div>
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone:</label>
+            <input type="tel" class="form-control" id="telefone" name="telefone" [(ngModel)]="funcionario.telefone"
+                #telefone="ngModel" required>
+            <div [hidden]="!telefone.errors?.['required']" class="alert alert-danger">Telefone é obrigatório.</div>
+        </div>
+
+        <!-- Endereço -->
+        <h3>Endereço</h3>
+        <div class="form-group">
+            <label for="cep">CEP:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="cep" name="cep" [(ngModel)]="funcionario.cep" #cep="ngModel"
+                    required>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary">
+                        Buscar
+                    </button>
+                </span>
+            </div>
+            <div [hidden]="!cep.errors?.['required']" class="alert alert-danger">CEP é obrigatório.</div>
+        </div>
+        <div class="form-group">
+            <label for="estado">Estado:</label>
+            <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="funcionario.estado"
+                #estado="ngModel" required>
+            <div [hidden]="!estado.errors?.['required']" class="alert alert-danger">Estado é obrigatório.</div>
+        </div>
+        <div class="form-group">
+            <label for="cidade">Cidade:</label>
+            <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="funcionario.cidade"
+                #cidade="ngModel" required>
+            <div [hidden]="!cidade.errors?.['required']" class="alert alert-danger">Cidade é obrigatória.</div>
+        </div>
+        <div class="form-group">
+            <label for="bairro">Bairro:</label>
+            <input type="text" class="form-control" id="bairro" name="bairro" [(ngModel)]="funcionario.bairro"
+                #bairro="ngModel" required>
+            <div [hidden]="!bairro.errors?.['required']" class="alert alert-danger">Bairro é obrigatório.</div>
+        </div>
+        <div class="form-group">
+            <label for="rua">Rua:</label>
+            <input type="text" class="form-control" id="rua" name="rua" [(ngModel)]="funcionario.rua" #rua="ngModel"
+                required>
+            <div [hidden]="!rua.errors?.['required']" class="alert alert-danger">Rua é obrigatória.</div>
+        </div>
+        <div class="form-group">
+            <label for="numero">Número:</label>
+            <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="funcionario.numero"
+                #numero="ngModel" required>
+            <div [hidden]="!numero.errors?.['required']" class="alert alert-danger">Número é obrigatório.</div>
+        </div>
+        <div class="form-group">
+            <label for="complemento">Complemento:</label>
+            <input type="text" class="form-control" id="complemento" name="complemento"
+                [(ngModel)]="funcionario.complemento" #complemento="ngModel">
+        </div>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formFuncionario.form.valid">
+                <i class="fa fa-save" aria-hidden="true"></i> Salvar
+            </button>
+            <a class="btn btn-secondary" [routerLink]="['/funcionarios/listar']">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+            </a>
+        </div>
+    </form>
+</div>
