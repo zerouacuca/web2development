@@ -1,7 +1,8 @@
+
 <h1>Nova Categoria</h1>
 <div class="well">
-    <form>
-        <!-- Dados Pessoais -->
+    <form #formCategoria="ngForm">
+        <!-- Dados Categoria -->
         <div class="form-group">
             <label for="id">ID:</label>
             <input type="number" class="form-control" id="id" name="id" [(ngModel)]="categoria.id" #id="ngModel"
@@ -17,6 +18,20 @@
             <div [hidden]="!nome.errors?.['minlength']" class="alert alert-danger">O nome da categoria deve conter ao menos 2
                 caracteres.</div>
         </div>
+
+        <!-- botoes -->
+        <div class="form-group">
+            
+            <a class="btn btn-secondary" [routerLink]="['/categorias/listar']">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+            </a>
+
+            <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formCategoria.form.valid">
+                <i class="fa fa-save" aria-hidden="true"></i> Salvar
+            </button>
+            
+        </div>
+
     
     </form>
 </div>
