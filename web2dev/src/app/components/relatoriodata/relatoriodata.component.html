@@ -1,0 +1,40 @@
+<app-headerfuncionario></app-headerfuncionario>
+<div class="relatoriodata">
+    <div class="container">
+        <!-- Filtros de data, mantidos à esquerda -->
+        <div class="filter-container">
+            <label for="startDate">Data Inicial:</label>
+            <input type="date" id="startDate" [(ngModel)]="startDate" />
+
+            <label for="endDate">Data Final:</label>
+            <input type="date" id="endDate" [(ngModel)]="endDate" />
+
+            <button (click)="filtrarPorData()">Filtrar</button>
+            
+            <!-- Botão de imprimir -->
+            <button class="imprimir-button">
+                <img src="assets/imprimir.png" alt="Imprimir" />
+            </button>
+        </div>
+
+        <!-- Tabela de receitas, movida para a direita -->
+        <div class="table-container">
+            <h2>Relatório de Receitas por Data</h2>
+            <table id="requestsTable">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Receita (R$)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Renderização dinâmica com *ngFor -->
+                    <tr *ngFor="let request of filteredRequests">
+                        <td>{{ request.date }}</td>
+                        <td>{{ request.receita | currency:'BRL' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
