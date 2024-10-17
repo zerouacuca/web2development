@@ -17,6 +17,7 @@ import { InserirFuncionarioComponent } from './components/inserir-funcionario/in
 import { EditarFuncionarioComponent } from './components/editar-funcionario/editar-funcionario.component';
 import { ListarCategoriaComponent } from './components/listar-categoria/listar-categoria.component';
 import { InserirCategoriaComponent } from './components/inserir-categoria/inserir-categoria.component';
+import { RelatoriodataComponent} from './components/relatoriodata/relatoriodata.component';
 import { RelatorioCategoriaComponent } from './components/relatoriocategoria/relatoriocategoria.component';
 
 
@@ -35,6 +36,7 @@ export const routes: Routes = [
     {'path': 'finalizarsolicitacao', component:FinalizarsolicitComponent},
     {'path': 'visualizarservicos', component:VisualizarsevicosComponent},
     {'path': 'pagarservico', component:PagarservicoComponent},
+    {'path': 'relatoriodata', component:RelatoriodataComponent},
     {'path': 'relatorioCategoria', component:RelatorioCategoriaComponent},
     {'path': 'crud-funcionario', redirectTo: 'funcionarios/listar', pathMatch: 'full'},
     {'path': 'funcionarios/listar', component: ListarFuncionarioComponent},
