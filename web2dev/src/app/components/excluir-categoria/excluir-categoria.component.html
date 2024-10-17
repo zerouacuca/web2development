@@ -1,0 +1,7 @@
+<h2>Excluir Categoria</h2>
+<ul>
+  <li *ngFor="let funcionario of funcionarios">
+    <span>{{ funcionario.nome }} - Categoria: {{ funcionario.categoriaId }}</span>
+    <button (click)="excluir($event, funcionario)">Excluir Categoria</button>
+  </li>
+</ul>

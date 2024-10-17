@@ -24,6 +24,7 @@
       </tr>
     </thead>
     <tbody>
+
       <tr *ngFor="let categoria of categorias">
         <td>{{ categoria.id }}</td>
         <td>{{ categoria.nome }}</td>
@@ -48,6 +49,7 @@
           </a>
         </td>
       </tr>
+
     </tbody>
   </table>
   <p *ngIf="categorias.length === 0">Nenhuma categoria cadastrado.</p>
