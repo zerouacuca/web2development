@@ -11,7 +11,7 @@
 }
 
 .container {
-    display: flex; /* Mudado para 'flex' em vez de 'flexbox' */
+    display: flex; 
     background-color: #ffffff; /* Cor de fundo do container */
     padding: 25px; /* Aumentado para mais conforto visual */
     border-radius: 12px; /* Cantos arredondados */

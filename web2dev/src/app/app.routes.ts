@@ -15,6 +15,7 @@ import { PagarservicoComponent } from './components/pagarservico/pagarservico.co
 import { ListarFuncionarioComponent } from './pages/listar-funcionario/listar-funcionario.component';
 import { InserirFuncionarioComponent } from './pages/inserir-funcionario/inserir-funcionario.component';
 import { EditarFuncionarioComponent } from './pages/editar-funcionario/editar-funcionario.component';
+import { RelatorioCategoriaComponent } from './components/relatoriocategoria/relatoriocategoria.component';
 
 export const routes: Routes = [
     {'path': 'login', component:LoginComponent},
@@ -30,6 +31,7 @@ export const routes: Routes = [
     {'path': 'finalizarsolicitacao', component:FinalizarsolicitComponent},
     {'path': 'visualizarservicos', component:VisualizarsevicosComponent},
     {'path': 'pagarservico', component:PagarservicoComponent},
+    {'path': 'relatorioCategoria', component:RelatorioCategoriaComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'crud-funcionario', 
       redirectTo: 'funcionarios/listar',
