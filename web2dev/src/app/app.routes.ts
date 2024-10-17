@@ -19,6 +19,8 @@ import { ListarCategoriaComponent } from './components/listar-categoria/listar-c
 import { InserirCategoriaComponent } from './components/inserir-categoria/inserir-categoria.component';
 import { RelatoriodataComponent} from './components/relatoriodata/relatoriodata.component';
 import { RelatorioCategoriaComponent } from './components/relatoriocategoria/relatoriocategoria.component';
+import { ExcluirCategoriaComponent } from './components/excluir-categoria/excluir-categoria.component';
+import { AtualizarCategoriaComponent } from './components/atualizar-categoria/atualizar-categoria.component';
 
 
 export const routes: Routes = [
@@ -43,5 +45,7 @@ export const routes: Routes = [
     {'path': 'funcionarios/novo', component: InserirFuncionarioComponent},
     {'path': 'funcionarios/editar/:id', component: EditarFuncionarioComponent},
     {'path': 'categorias/listar', component: ListarCategoriaComponent},
-    {'path': 'categorias/novo', component: InserirCategoriaComponent}
+    {'path': 'categorias/novo', component: InserirCategoriaComponent},
+    {'path': 'categorias/excluir', component: ExcluirCategoriaComponent},
+    {'path': 'categorias/atualizar', component: AtualizarCategoriaComponent}
 ];
