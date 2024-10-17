@@ -18,12 +18,12 @@
             <td>{{categoria.id}}</td>
             <td>{{categoria.nome}} </td>
             <td class="text-center" style="width: 300px">
-                <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info"
+                <a [routerLink]="['/categorias/atualizar']" href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info"
                     >
                     <!-- [routerLink]="['/funcionarios/editar', funcionario.id]" -->
                     <i class="fa fa-edit" aria-hidden="true"></i> Editar
                 </a>
-                <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger"
+                <a onclick="excluir($event,funcionario)" title="Remover" alt="Remover" class="btn btn-xs btn-danger"
                     
                     >
                     <!-- (click)="remover($event, funcionario)" -->
