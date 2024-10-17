@@ -19,11 +19,11 @@ export class ListarCategoriaComponent {
   constructor(private categoriaService : CategoriaService){}
 
   listarTodos() : Categoria[]{
-    // return this.categoriaService.listarTodos();
-    return[
-      new Categoria(1, "Notebook"),
-      new Categoria(2, "teclado")
-    ]
+    return this.categoriaService.listarTodos();
+    // return[
+    //   new Categoria(1, "Notebook"),
+    //   new Categoria(2, "teclado")
+    // ]
   }
 
   ngOnInit() : void{

@@ -1,12 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Categoria } from '../../shared/models/categoria.model';
 import { CategoriaService } from '../../services/categoria.service';
-import { Route, Router } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-inserir-categoria',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './inserir-categoria.component.html',
   styleUrl: './inserir-categoria.component.css'
 })
@@ -19,5 +21,16 @@ export class InserirCategoriaComponent {
     private categoriaService : CategoriaService,
     private router: Router
   ){}
+
+  inserir() : void{
+    if(this.formCategoria.form.valid){
+      this.categoriaService.inserir(this.categoria);
+      this.router.navigate(["/categorias"])
+    }
+  }
+
+  listarTodos(): Categoria[]{
+    return this.categoriaService.listarTodos();
+  }
 
 }
