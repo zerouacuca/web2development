@@ -15,7 +15,8 @@ import { PagarservicoComponent } from './components/pagarservico/pagarservico.co
 import { ListarFuncionarioComponent } from './pages/listar-funcionario/listar-funcionario.component';
 import { InserirFuncionarioComponent } from './pages/inserir-funcionario/inserir-funcionario.component';
 import { EditarFuncionarioComponent } from './pages/editar-funcionario/editar-funcionario.component';
-
+import { ListarCategoriaComponent } from './pages/listar-categoria/listar-categoria.component';
+import { InserirCategoriaComponent } from './pages/inserir-categoria/inserir-categoria.component';
 export const routes: Routes = [
     {'path': 'login', component:LoginComponent},
     {'path': 'pgcliente', component:PgClienteComponent},
@@ -46,5 +47,14 @@ export const routes: Routes = [
     {
         path: 'funcionarios/editar/:id',
         component: EditarFuncionarioComponent
-    }
+    },
+    // path categoria
+    {
+        path: 'categorias/listar',
+        component: ListarCategoriaComponent
+    },
+    {
+        path: 'categorias/novo',
+        component: InserirCategoriaComponent
+    },
 ];
