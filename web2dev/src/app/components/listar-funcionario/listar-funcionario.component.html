@@ -12,6 +12,11 @@
                     <i class="fa fa-plus" aria-hidden="true"></i> Novo
                 </a>
             </th>
+            <th>
+                <a class="btn btn-danger me-1" [routerLink]="['/login']">
+                <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Voltar
+                </a>
+            </th>
         </tr>
         <tr *ngFor="let funcionario of funcionarios">
             <td> {{ funcionario.cpf }} </td>

@@ -12,15 +12,16 @@ import { EfetuarorcamentoComponent } from './components/efetuarorcamento/efetuar
 import { FinalizarsolicitComponent } from './components/finalizarsolicit/finalizarsolicit.component';
 import { VisualizarsevicosComponent } from './components/visualizarsevicos/visualizarsevicos.component';
 import { PagarservicoComponent } from './components/pagarservico/pagarservico.component';
-import { ListarFuncionarioComponent } from './pages/listar-funcionario/listar-funcionario.component';
-import { InserirFuncionarioComponent } from './pages/inserir-funcionario/inserir-funcionario.component';
-import { EditarFuncionarioComponent } from './pages/editar-funcionario/editar-funcionario.component';
-import { ListarCategoriaComponent } from './pages/listar-categoria/listar-categoria.component';
-import { InserirCategoriaComponent } from './pages/inserir-categoria/inserir-categoria.component';
+import { ListarFuncionarioComponent } from './components/listar-funcionario/listar-funcionario.component';
+import { InserirFuncionarioComponent } from './components/inserir-funcionario/inserir-funcionario.component';
+import { EditarFuncionarioComponent } from './components/editar-funcionario/editar-funcionario.component';
+import { ListarCategoriaComponent } from './components/listar-categoria/listar-categoria.component';
+import { InserirCategoriaComponent } from './components/inserir-categoria/inserir-categoria.component';
 import { RelatorioCategoriaComponent } from './components/relatoriocategoria/relatoriocategoria.component';
 
 
 export const routes: Routes = [
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
     {'path': 'login', component:LoginComponent},
     {'path': 'pgcliente', component:PgClienteComponent},
     {'path': 'novasolicitacao', component:NovaSolicitacaoComponent},
@@ -35,30 +36,10 @@ export const routes: Routes = [
     {'path': 'visualizarservicos', component:VisualizarsevicosComponent},
     {'path': 'pagarservico', component:PagarservicoComponent},
     {'path': 'relatorioCategoria', component:RelatorioCategoriaComponent},
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: 'crud-funcionario', 
-      redirectTo: 'funcionarios/listar',
-      pathMatch: 'full'
-    },
-    {
-        path: 'funcionarios/listar',
-        component: ListarFuncionarioComponent
-    },
-    {
-        path: 'funcionarios/novo',
-        component: InserirFuncionarioComponent
-    },
-    {
-        path: 'funcionarios/editar/:id',
-        component: EditarFuncionarioComponent
-    },
-    // path categoria
-    {
-        path: 'categorias/listar',
-        component: ListarCategoriaComponent
-    },
-    {
-        path: 'categorias/novo',
-        component: InserirCategoriaComponent
-    },
+    {'path': 'crud-funcionario', redirectTo: 'funcionarios/listar', pathMatch: 'full'},
+    {'path': 'funcionarios/listar', component: ListarFuncionarioComponent},
+    {'path': 'funcionarios/novo', component: InserirFuncionarioComponent},
+    {'path': 'funcionarios/editar/:id', component: EditarFuncionarioComponent},
+    {'path': 'categorias/listar', component: ListarCategoriaComponent},
+    {'path': 'categorias/novo', component: InserirCategoriaComponent}
 ];
