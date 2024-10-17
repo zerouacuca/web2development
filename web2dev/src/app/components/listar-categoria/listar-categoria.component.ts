@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../shared/models/categoria.model';
 import { CommonModule } from '@angular/common';
-import { HeaderfuncionarioComponent } from "../../components/headerfuncionario/headerfuncionario.component";
+import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { RouterModule } from '@angular/router';
 
 
