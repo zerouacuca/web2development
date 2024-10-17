@@ -26,12 +26,14 @@ export class InserirCategoriaComponent {
   inserir() : void{
     if(this.formCategoria.form.valid){
       this.categoriaService.inserir(this.categoria);
-      this.router.navigate(["/categorias"])
+      this.router.navigate(["/categorias/listar"])
     }
   }
 
   listarTodos(): Categoria[]{
     return this.categoriaService.listarTodos();
   }
+
+  
 
 }
