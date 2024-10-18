@@ -1,37 +1,60 @@
-
-<h1>Nova Categoria</h1>
+<app-headerfuncionario></app-headerfuncionario>
+<h2 class="title-table">Nova Categoria</h2>
 <div class="well">
-    <form #formCategoria="ngForm">
-        <!-- Dados Categoria -->
-        <div class="form-group">
-            <label for="id">ID:</label>
-            <input type="number" class="form-control" id="id" name="id" [(ngModel)]="categoria.id" #id="ngModel"
-                required>
-            <div [hidden]="!id.errors?.['required']" class="alert alert-danger">Codigo é obrigatório.</div>
+  <form #formCategoria="ngForm">
+    <div class="container">
+      <!-- Dados Categoria -->
+      <div class="form-group">
+        <label for="id">ID:</label>
+        <input
+          type="number"
+          class="form-control"
+          id="id"
+          name="id"
+          [(ngModel)]="categoria.id"
+          #id="ngModel"
+          required
+        />
+        <div [hidden]="!id.errors?.['required']" class="alert alert-danger">
+          Codigo é obrigatório.
         </div>
-       
-        <div class="form-group">
-            <label for="nome">Nome:</label>
-            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="categoria.nome" #nome="ngModel"
-                minlength="2" required>
-            <div [hidden]="!nome.errors?.['required']" class="alert alert-danger">Digite o nome da categoria.</div>
-            <div [hidden]="!nome.errors?.['minlength']" class="alert alert-danger">O nome da categoria deve conter ao menos 2
-                caracteres.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nome"
+          name="nome"
+          [(ngModel)]="categoria.nome"
+          #nome="ngModel"
+          minlength="2"
+          required
+        />
+        <div [hidden]="!nome.errors?.['required']" class="alert alert-danger">
+          Digite o nome da categoria.
         </div>
-
-        <!-- botoes -->
-        <div class="form-group">
-            
-            <a class="btn btn-secondary" [routerLink]="['/categorias/listar']">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
-            </a>
-
-            <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formCategoria.form.valid">
-                <i class="fa fa-save" aria-hidden="true"></i> Salvar
-            </button>
-            
+        <div [hidden]="!nome.errors?.['minlength']" class="alert alert-danger">
+          O nome da categoria deve conter ao menos 2 caracteres.
         </div>
+      </div>
 
-    
-    </form>
+      <!-- botoes -->
+      <div class="form-group">
+        <a class="btn btn-secondary" [routerLink]="['/categorias/listar']">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+        </a>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="inserir()"
+          [disabled]="!formCategoria.form.valid"
+        >
+          <i class="fa fa-save" aria-hidden="true"></i> Salvar
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
