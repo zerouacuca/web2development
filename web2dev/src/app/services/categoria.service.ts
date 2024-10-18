@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Categoria } from '../shared/models/categoria.model';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http'; // Importe o HttpClient
 
 const LS_CHAVE = "categorias"
 
@@ -8,7 +10,9 @@ const LS_CHAVE = "categorias"
 })
 export class CategoriaService {
 
-  constructor() { }
+  private apiUrl = 'http://localhost:4200/categorias/';
+
+  constructor(private http: HttpClient) { }
 
   listarTodos(): Categoria[] {
     const categorias = localStorage[LS_CHAVE];
@@ -33,9 +37,10 @@ export class CategoriaService {
     });
     localStorage[LS_CHAVE] = JSON.stringify(categorias);
   }
-  remover(id: number): void {
+  excluir(id: number): Observable<void> {
     let categorias = this.listarTodos();
     categorias = categorias.filter(categoria => categoria.id !== id);
     localStorage[LS_CHAVE] = JSON.stringify(categorias);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
