@@ -45,7 +45,7 @@
             alt="Editar"
             class="btn btn-sm btn-info btn table"
           >
-            <!-- [routerLink]="['/funcionarios/editar', funcionario.id]" -->
+
             <i class="fa fa-edit" aria-hidden="true"></i> Editar
           </a>
           <a
@@ -53,8 +53,8 @@
             title="Remover"
             alt="Remover"
             class="btn btn-sm btn-danger btn table"
+            (click)="remover($event, categoria)"
           >
-            <!-- (click)="remover($event, funcionario)" -->
             <i class="fa fa-times" aria-hidden="true"></i> Remover
           </a>
         </td>
