@@ -30,4 +30,12 @@ export class ListarCategoriaComponent {
     this.categorias = this.listarTodos();
   }
 
+  remover($event: any, categoria: Categoria): void {
+    $event.preventDefault();
+    if (confirm(`Deseja realmente remover a categoria? ${categoria.nome}?`)) {
+      this.categoriaService.remover(categoria.id!);
+      this.categorias = this.categorias.filter(f => f.id !== categoria.id);
+    }
+  }
+
 }

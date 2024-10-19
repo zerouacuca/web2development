@@ -5,11 +5,12 @@ import { Categoria } from '../../shared/models/categoria.model';
 import { CategoriaService } from '../../services/categoria.service';
 import { Route, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 
 @Component({
   selector: 'app-inserir-categoria',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, HeaderfuncionarioComponent],
   templateUrl: './inserir-categoria.component.html',
   styleUrl: './inserir-categoria.component.css'
 })

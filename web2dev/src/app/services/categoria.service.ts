@@ -37,7 +37,7 @@ export class CategoriaService {
     });
     localStorage[LS_CHAVE] = JSON.stringify(categorias);
   }
-  excluir(id: number): Observable<void> {
+  remover(id: number): Observable<void> {
     let categorias = this.listarTodos();
     categorias = categorias.filter(categoria => categoria.id !== id);
     localStorage[LS_CHAVE] = JSON.stringify(categorias);
