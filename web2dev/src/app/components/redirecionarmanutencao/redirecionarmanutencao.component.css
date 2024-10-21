@@ -48,7 +48,8 @@ h2 {
     color: black;
     padding: 4px 6px; 
     font-size: 16px;
-    border: 1px solid #ccc; 
+    border: 1px solid #050505; 
+    border-radius: 8px;
     cursor: pointer;
     text-align: left; 
     display: flex; 
@@ -90,7 +91,7 @@ h2 {
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
-    width: 100%; /* Garantir que os botões ocupem 100% da largura */
+    width: 100%; 
     display: block; 
 }
 
@@ -119,7 +120,48 @@ h2 {
     .enviarRedirecionamento, .voltarEfetuarManutencao {
         width: 100%; 
         padding: 12px 40px;
-        display: block; /* Para garantir que os botões sejam apresentados sempre, um acima do outro. */
+        display: block; 
     }
 }
 
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 800px; 
+    margin: auto;  
+    position: relative;
+}
+
+.close {
+    color: red;  
+    position: absolute;
+    top: 10px;   
+    right: 10px; 
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover, .close:focus {
+    color: darkred;
+}
+
+.show-modal {
+    display: flex;
+}

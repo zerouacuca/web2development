@@ -21,8 +21,20 @@
                     </div>
                 </div>
             </div>
-            <button class="enviarRedirecionamento">Enviar Redirecionamento</button>
+            <button class="enviarRedirecionamento" (click)="mostrarModal()">Enviar Redirecionamento</button>
             <button (click)="voltar()" class="voltarEfetuarManutencao">Voltar</button>
         </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" [class.show-modal]="modalVisivel">
+    <div class="modal-content">
+        <span class="close" (click)="fecharModal()">&times;</span>
+        <p>{{ mensagemModal }}</p> 
+        @if (mensagemModal === 'Redirecionamento enviado com sucesso!') {
+            <p><strong>Número da Solicitação:</strong> 1234</p>
+            <p><strong>Redirecionado para:</strong> {{ funcionarioSelecionado }}</p>
+        }
     </div>
 </div>
