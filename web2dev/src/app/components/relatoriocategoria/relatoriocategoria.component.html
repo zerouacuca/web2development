@@ -1,7 +1,6 @@
 <app-headerfuncionario></app-headerfuncionario>
 <div class="relatoriocategoria">
   <div class="container">
-    <!-- Filtros de categoria, mantidos à esquerda -->
     <div class="filter-container">
       <label for="category">Categoria:</label>
       <select id="category" [(ngModel)]="selectedCategory" (change)="filtrarPorCategoria()">
@@ -13,13 +12,11 @@
         <option value="Perifericos">Periféricos</option>
       </select>
       
-      <!-- Botão de imprimir -->
-      <button class="imprimir-button">
+      <button class="imprimir-button" (click)="abrirModalImprimir()">
         <img src="assets/imprimir.png" alt="Imprimir" />
       </button>
     </div>
 
-    <!-- Tabela de receitas, movida para a direita -->
     <div class="table-container">
       <h2>Relatório de Receitas por Categoria</h2>
       <table id="requestsTable">
@@ -28,17 +25,62 @@
             <th>Data</th>
             <th>Receita (R$)</th>
             <th>Categoria</th>
+            <th>Conferir</th> 
           </tr>
         </thead>
         <tbody>
-          <!-- Renderização dinâmica com *ngFor -->
           <tr *ngFor="let request of filteredRequests">
             <td>{{ request.date }}</td>
             <td>{{ request.receita | currency:'BRL' }}</td>
             <td>{{ request.categoria }}</td>
+            <td>
+              <button class="conferir-button" (click)="conferir(request)">
+                Conferir
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+
+  <div class="modal" [class.show-modal]="modalVisivel">
+    <div class="modal-content">
+      <span class="close" (click)="fecharModal()">&times;</span>
+      <div class="modal-row">
+        <p class="negrito">Número do Pedido:</p>
+        <p>{{ pedidoSelecionado.numero }}</p>
+      </div>
+      <div class="modal-row">
+        <p class="negrito">Receita:</p>
+        <p>{{ pedidoSelecionado.receita | currency:'BRL' }}</p>
+      </div>
+      <div class="modal-row">
+        <p class="negrito">Data:</p>
+        <p>{{ pedidoSelecionado.date }}</p>
+      </div>
+      <div class="modal-row">
+        <p class="negrito">Categoria:</p>
+        <p>{{ pedidoSelecionado.categoria }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-imprimir" [class.show-imprimir-modal]="modalImprimirVisivel">
+  <div class="modal-imprimir-content">
+    <span class="close" (click)="fecharModalImprimir()">&times;</span>
+    <div class="modal-row">
+      <p class="negrito">IMPRIMIR RELATÓRIO POR CATEGORIA</p>
+    </div>
+    <div class="modal-row">
+      <p class="negrito">Tipo de Categoria:</p>
+      <p class="negrito">{{ selectedCategory === 'all' ? 'Todas' : selectedCategory }}</p>
+    </div>
+    <div class="modal-row">
+      <p class="negrito">Soma da Receita:</p>
+      <p>{{ calcularSomaReceita() | currency:'BRL' }}</p>
+    </div>
+    <button class="conferir-button" (click)="confirmarImpressao()">Confirmar Impressão</button>
+  </div>
+</div>
 </div>

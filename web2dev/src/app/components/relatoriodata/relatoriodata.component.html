@@ -1,7 +1,6 @@
 <app-headerfuncionario></app-headerfuncionario>
 <div class="relatoriodata">
     <div class="container">
-        <!-- Filtros de data, mantidos à esquerda -->
         <div class="filter-container">
             <label for="startDate">Data Inicial:</label>
             <input type="date" id="startDate" [(ngModel)]="startDate" />
@@ -10,14 +9,12 @@
             <input type="date" id="endDate" [(ngModel)]="endDate" />
 
             <button (click)="filtrarPorData()">Filtrar</button>
-            
-            <!-- Botão de imprimir -->
-            <button class="imprimir-button">
+
+            <button class="imprimir-button" (click)="abrirModalImprimir()">
                 <img src="assets/imprimir.png" alt="Imprimir" />
             </button>
         </div>
 
-        <!-- Tabela de receitas, movida para a direita -->
         <div class="table-container">
             <h2>Relatório de Receitas por Data</h2>
             <table id="requestsTable">
@@ -25,6 +22,7 @@
                     <tr>
                         <th>Data</th>
                         <th>Receita (R$)</th>
+                        <th>Conferir</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -32,9 +30,59 @@
                     <tr *ngFor="let request of filteredRequests">
                         <td>{{ request.date }}</td>
                         <td>{{ request.receita | currency:'BRL' }}</td>
+                        <td>
+                            <button class="conferir-button" (click)="conferir(request)">
+                                Conferir
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="modal" [class.show-modal]="modalVisivel">
+        <div class="modal-content">
+            <span class="close" (click)="fecharModal()">&times;</span>
+            <div class="modal-row">
+                <p class="negrito">Número do Pedido:</p>
+                <p>{{ pedidoSelecionado.numeroPedido }}</p>
+            </div>
+            <div class="modal-row">
+                <p class="negrito">Categoria:</p>
+                <p>{{ pedidoSelecionado.categoria }}</p>
+            </div>
+            <div class="modal-row">
+                <p class="negrito">Data:</p>
+                <p>{{ pedidoSelecionado.date }}</p>
+            </div>
+            <div class="modal-row">
+                <p class="negrito">Receita:</p>
+                <p>{{ pedidoSelecionado.receita | currency:'BRL' }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Impressão -->
+<div class="modal-imprimir" [class.show-imprimir-modal]="modalImprimirVisivel">
+    <div class="modal-imprimir-content">
+        <span class="close" (click)="fecharModalImprimir()">&times;</span>
+        <div class="modal-row">
+            <p class="negrito">IMPRIMIR RELATÓRIO POR DATA</p>
+        </div>
+        <div class="modal-row">
+            <p class="negrito">Data Inicial:</p>
+            <p class="negrito">{{ startDate }}</p>
+        </div>
+        <div class="modal-row">
+            <p class="negrito">Data Final:</p>
+            <p class="negrito">{{ endDate }}</p>
+        </div>
+        <div class="modal-row">
+            <p class="negrito">Soma da Receita:</p>
+            <p>{{ calcularSomaReceita() | currency:'BRL' }}</p>
+        </div>
+        <button class="conferir-button" (click)="confirmarImpressao()">Confirmar Impressão</button>
     </div>
 </div>
