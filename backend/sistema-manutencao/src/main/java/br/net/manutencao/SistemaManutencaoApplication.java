@@ -1,4 +1,4 @@
-package br.net.manutencao.sistema_manutencao;
+package br.net.manutencao;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
