@@ -27,6 +27,7 @@ public class Cliente {
     private String rua;
     private String cep;
     private String UF;
+    private String bairro;
 
     public Long getId() {
         return id;
@@ -89,5 +90,11 @@ public class Cliente {
     }
     public void setUF(String UF) {
         this.UF = UF;
+    }
+    public String getBairro() {
+        return bairro;
+    }
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 }
