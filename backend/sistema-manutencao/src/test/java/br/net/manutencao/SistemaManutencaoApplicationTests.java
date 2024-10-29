@@ -1,4 +1,4 @@
-package br.net.manutencao.sistema_manutencao;
+package br.net.manutencao;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
