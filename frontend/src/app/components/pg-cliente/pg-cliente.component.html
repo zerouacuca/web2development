@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let request of requests; let i = index">
-            <td>{{ request.date }}</td>
+            <td>{{ request.date | date: 'dd MMM. yyyy'}}</td>
             <td>{{ request.description.substring(0, 30) }}</td>
             <td>{{ request.status }}</td>
             <td>
