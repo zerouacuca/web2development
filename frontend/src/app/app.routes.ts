@@ -10,7 +10,7 @@ import { AplicarmanutencaoComponent } from './components/aplicarmanutencao/aplic
 import { RedirecionarmanutencaoComponent } from './components/redirecionarmanutencao/redirecionarmanutencao.component';
 import { EfetuarorcamentoComponent } from './components/efetuarorcamento/efetuarorcamento.component';
 import { FinalizarsolicitComponent } from './components/finalizarsolicit/finalizarsolicit.component';
-import { VisualizarsevicosComponent } from './components/visualizarsevicos/visualizarsevicos.component';
+import { VisualizarservicosComponent } from './components/visualizarservicos/visualizarservicos.component';
 import { PagarservicoComponent } from './components/pagarservico/pagarservico.component';
 import { ListarFuncionarioComponent } from './components/listar-funcionario/listar-funcionario.component';
 import { InserirFuncionarioComponent } from './components/inserir-funcionario/inserir-funcionario.component';
@@ -36,7 +36,7 @@ export const routes: Routes = [
     {'path': 'redirecionarmanutencao', component:RedirecionarmanutencaoComponent},
     {'path': 'efetuarorcamento', component:EfetuarorcamentoComponent},
     {'path': 'finalizarsolicitacao', component:FinalizarsolicitComponent},
-    {'path': 'visualizarservicos', component:VisualizarsevicosComponent},
+    {'path': 'visualizarservicos', component:VisualizarservicosComponent},
     {'path': 'pagarservico', component:PagarservicoComponent},
     {'path': 'relatoriodata', component:RelatoriodataComponent},
     {'path': 'relatorioCategoria', component:RelatorioCategoriaComponent},
