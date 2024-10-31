@@ -12,15 +12,30 @@ import { FormsModule } from '@angular/forms';
 export class FinalizarsolicitComponent {
 
   dataHora: string = '';
+ 
+  
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    const agora: Date = new Date();
+    const dataHoraFormatada: string = agora.toLocaleString('pt-BR', {
+      dateStyle: 'long',
+      timeStyle: 'short'
+    });
+
+    this.dataHora = `${dataHoraFormatada}`
+  }
 
   finalizarSolicitacao() {
+    const agora: Date = new Date();
+    const dataHoraFormatada: string = agora.toLocaleString('pt-BR', {
+      dateStyle: 'long',
+      timeStyle: 'short'
+    });
+
+    this.dataHora = `${dataHoraFormatada}`
     if (this.dataHora) {
       alert(`Solicitação finalizada com sucesso em: ${this.dataHora}`);
       this.router.navigate(['pgfuncionario']);
-    } else {
-      alert('Por favor, preencha a data e hora da finalização.');
     }
   }
 }
