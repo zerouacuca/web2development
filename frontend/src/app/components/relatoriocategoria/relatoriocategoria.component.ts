@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { NgFor, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-relatoriocategoria',
@@ -60,7 +63,26 @@ export class RelatorioCategoriaComponent implements OnInit {
   }
 
   confirmarImpressao() {
-    console.log('Relatório a ser impresso:', this.filteredRequests);
-    this.fecharModalImprimir();
+
+    const data = document.getElementById('requestsTable') as HTMLElement;
+
+    if (data) {
+      html2canvas(data, { scale: 2 }).then((canvas) => {
+        const imgWidth = 190;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        let position = 0;
+
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        pdf.save('relatorio_categoria.pdf');
+      }).catch((error) => {
+        console.error('Erro ao gerar o PDF:', error);
+      });
+    } else {
+      console.error('Elemento da tabela não encontrado');
+    }
+    
+    // this.fecharModalImprimir();
   }
 }
