@@ -2,87 +2,77 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { NgFor, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-
+import { jsPDF } from 'jspdf';
 
 @Component({
-  selector: 'app-relatoriocategoria',
-  standalone: true,
-  imports: [HeaderfuncionarioComponent, NgFor, CommonModule, FormsModule],
-  templateUrl: './relatoriocategoria.component.html',
-  styleUrls: ['./relatoriocategoria.component.css']
+    selector: 'app-relatoriocategoria',
+    standalone: true,
+    imports: [HeaderfuncionarioComponent, NgFor, CommonModule, FormsModule],
+    templateUrl: './relatoriocategoria.component.html',
+    styleUrls: ['./relatoriocategoria.component.css']
 })
 export class RelatorioCategoriaComponent implements OnInit {
+    requests = [
+        { categoria: 'Computador', receita: 150.50 },
+        { categoria: 'Notebook', receita: 220.75 },
+        { categoria: 'Celular', receita: 100.00 },
+        { categoria: 'Tablet', receita: 200.00 },
+        { categoria: 'Periféricos', receita: 80.00 },
+        { categoria: 'Celular', receita: 70.00 }
+    ];
 
-  requests = [
-    { date: '2023-10-01', receita: 150.50, categoria: 'Computador', numero: '12345' },
-    { date: '2023-10-02', receita: 220.75, categoria: 'Notebook', numero: '12346' },
-    { date: '2023-10-03', receita: 100.00, categoria: 'Celular', numero: '12347' },
-    { date: '2023-10-03', receita: 200.00, categoria: 'Tablet', numero: '12348' },
-    { date: '2023-10-08', receita: 80.00, categoria: 'Perifericos', numero: '12349' },
-  ];
+    filteredRequests: { categoria: string; receita: number }[] = [];
+    selectedCategory: string = 'all';
 
-  filteredRequests = this.requests;
-  selectedCategory = 'all';
-  modalVisivel = false;
-  modalImprimirVisivel = false;
-  pedidoSelecionado: any = {};
-
-  ngOnInit() {
-    this.filtrarPorCategoria();
-  }
-
-  filtrarPorCategoria() {
-    if (this.selectedCategory === 'all') {
-      this.filteredRequests = this.requests; 
-    } else {
-      this.filteredRequests = this.requests.filter(request => request.categoria === this.selectedCategory);
+    ngOnInit() {
+        this.filtrarPorCategoria();
     }
-  }
 
-  calcularSomaReceita(): number {
-    return this.filteredRequests.reduce((acc, request) => acc + request.receita, 0);
-  }
-
-  conferir(request: any) {
-    this.pedidoSelecionado = request;
-    this.modalVisivel = true;
-  }
-
-  abrirModalImprimir() {
-    this.modalImprimirVisivel = true;
-  }
-
-  fecharModal() {
-    this.modalVisivel = false;
-  }
-
-  fecharModalImprimir() {
-    this.modalImprimirVisivel = false;
-  }
-
-  confirmarImpressao() {
-
-    const data = document.getElementById('requestsTable') as HTMLElement;
-
-    if (data) {
-      html2canvas(data, { scale: 2 }).then((canvas) => {
-        const imgWidth = 190;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        let position = 0;
-
-        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-        pdf.save('relatorio_categoria.pdf');
-      }).catch((error) => {
-        console.error('Erro ao gerar o PDF:', error);
-      });
-    } else {
-      console.error('Elemento da tabela não encontrado');
+    filtrarPorCategoria() {
+        if (this.selectedCategory === 'all') {
+            this.filteredRequests = this.agruparReceitas(this.requests);
+        } else {
+            const filtered = this.requests.filter(request => request.categoria === this.selectedCategory);
+            this.filteredRequests = this.agruparReceitas(filtered);
+        }
     }
-    
-    // this.fecharModalImprimir();
-  }
+
+    gerarPDF() {
+        const doc = new jsPDF();
+
+        doc.setFontSize(22);
+        doc.text("Relatório de Receitas por Categoria", 105, 20, { align: 'center' });
+
+        doc.setFontSize(12);
+        doc.text("Categoria", 20, 30);
+        doc.text("Receita (R$)", 100, 30);
+
+        let y = 40;
+        for (const request of this.filteredRequests) {
+            doc.text(request.categoria, 20, y);
+            doc.text(request.receita.toFixed(2), 100, y);
+            y += 10;
+        }
+
+        const total = `TOTAL: ${this.calcularSomaReceita().toFixed(2)}`;
+        doc.setFont("helvetica", "bold");
+        doc.text(total, 100, y);
+
+        doc.save("relatorio_receitas_categoria.pdf");
+    }
+
+    calcularSomaReceita(): number {
+        return this.filteredRequests.reduce((soma, request) => soma + request.receita, 0);
+    }
+
+    private agruparReceitas(requests: { categoria: string; receita: number }[]): { categoria: string; receita: number }[] {
+        const mapaReceitas = new Map<string, number>();
+
+        requests.forEach(request => {
+            const receitaAtual = mapaReceitas.get(request.categoria) || 0;
+            mapaReceitas.set(request.categoria, receitaAtual + request.receita);
+        });
+
+        return Array.from(mapaReceitas.entries()).map(([categoria, receita]) => ({ categoria, receita }));
+    }
 }
