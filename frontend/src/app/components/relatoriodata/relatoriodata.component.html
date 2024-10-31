@@ -10,79 +10,31 @@
 
             <button (click)="filtrarPorData()">Filtrar</button>
 
-            <button class="imprimir-button" (click)="abrirModalImprimir()">
+            <button class="imprimir-button" (click)="gerarPDF()">
                 <img src="assets/imprimir.png" alt="Imprimir" />
             </button>
         </div>
 
         <div class="table-container">
-            <h2>Relatório de Receitas por Data</h2>
+            <h2 class="titulo">Relatório de Receitas por Data/Período</h2>
             <table id="requestsTable">
                 <thead>
                     <tr>
                         <th>Data</th>
                         <th>Receita (R$)</th>
-                        <th>Conferir</th> 
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Renderização dinâmica com *ngFor -->
                     <tr *ngFor="let request of filteredRequests">
-                        <td>{{ request.date }}</td>
-                        <td>{{ request.receita | currency:'BRL' }}</td>
-                        <td>
-                            <button class="conferir-button" (click)="conferir(request)">
-                                Conferir
-                            </button>
-                        </td>
+                        <td class="centralizado">{{ request.date }}</td>
+                        <td class="centralizado">{{ request.receita | currency:'BRL' }}</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-
-    <div class="modal" [class.show-modal]="modalVisivel">
-        <div class="modal-content">
-            <span class="close" (click)="fecharModal()">&times;</span>
-            <div class="modal-row">
-                <p class="negrito">Número do Pedido:</p>
-                <p>{{ pedidoSelecionado.numeroPedido }}</p>
-            </div>
-            <div class="modal-row">
-                <p class="negrito">Categoria:</p>
-                <p>{{ pedidoSelecionado.categoria }}</p>
-            </div>
-            <div class="modal-row">
-                <p class="negrito">Data:</p>
-                <p>{{ pedidoSelecionado.date }}</p>
-            </div>
-            <div class="modal-row">
-                <p class="negrito">Receita:</p>
-                <p>{{ pedidoSelecionado.receita | currency:'BRL' }}</p>
+            <div class="total-container">
+                <p class="centralizado">Período: {{ (startDate && endDate) ? (startDate | date:'dd/MM/yyyy') + ' a ' + (endDate | date:'dd/MM/yyyy') : 'Todo o Período' }}</p>
+                <p class="centralizado">Total: {{ calcularSomaReceita() | currency:'BRL' }}</p>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Modal de Impressão -->
-<div class="modal-imprimir" [class.show-imprimir-modal]="modalImprimirVisivel">
-    <div class="modal-imprimir-content">
-        <span class="close" (click)="fecharModalImprimir()">&times;</span>
-        <div class="modal-row">
-            <p class="negrito">IMPRIMIR RELATÓRIO POR DATA</p>
-        </div>
-        <div class="modal-row">
-            <p class="negrito">Data Inicial:</p>
-            <p class="negrito">{{ startDate }}</p>
-        </div>
-        <div class="modal-row">
-            <p class="negrito">Data Final:</p>
-            <p class="negrito">{{ endDate }}</p>
-        </div>
-        <div class="modal-row">
-            <p class="negrito">Soma da Receita:</p>
-            <p>{{ calcularSomaReceita() | currency:'BRL' }}</p>
-        </div>
-        <button class="conferir-button" (click)="confirmarImpressao()">Confirmar Impressão</button>
     </div>
 </div>

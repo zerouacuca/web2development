@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { NgFor, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { jsPDF } from 'jspdf';
 
 @Component({
     selector: 'app-relatoriodata',
@@ -12,19 +13,17 @@ import { FormsModule } from '@angular/forms';
 })
 export class RelatoriodataComponent implements OnInit {
     requests = [
-        { date: '2023-10-01', receita: 150.50, numero: '12345', categoria: 'Computador' },
-        { date: '2023-10-02', receita: 220.75, numero: '12346', categoria: 'Notebook' },
-        { date: '2023-10-03', receita: 100.00, numero: '12347', categoria: 'Celular' },
-        { date: '2023-10-03', receita: 200.00, numero: '12348', categoria: 'Tablet' },
-        { date: '2023-10-08', receita: 80.00, numero: '12349', categoria: 'Perifericos' },
+        { date: '2023-10-01', receita: 150.50 },
+        { date: '2023-10-02', receita: 220.75 },
+        { date: '2023-10-03', receita: 100.00 },
+        { date: '2023-10-03', receita: 200.00 },
+        { date: '2023-10-08', receita: 80.00 },
+        { date: '2023-10-08', receita: 70.00 }
     ];
 
-    filteredRequests = this.requests;
+    filteredRequests: { date: string; receita: number }[] = [];
     startDate: string = '';
     endDate: string = '';
-    modalVisivel = false;
-    modalImprimirVisivel = false;
-    pedidoSelecionado: any = {};
 
     ngOnInit() {
         this.filtrarPorData();
@@ -32,40 +31,69 @@ export class RelatoriodataComponent implements OnInit {
 
     filtrarPorData() {
         if (!this.startDate && !this.endDate) {
-            this.filteredRequests = this.requests;
+            
+            this.filteredRequests = this.agruparReceitas(this.requests);
         } else {
             const start = new Date(this.startDate);
             const end = new Date(this.endDate);
-            this.filteredRequests = this.requests.filter(request => {
+            const filtered = this.requests.filter(request => {
                 const requestDate = new Date(request.date);
                 return requestDate >= start && requestDate <= end;
             });
+            
+            this.filteredRequests = this.agruparReceitas(filtered);
         }
     }
 
-    conferir(request: any) {
-        this.pedidoSelecionado = request;
-        this.modalVisivel = true;
-    }
+    gerarPDF() {
+        const doc = new jsPDF();
 
-    abrirModalImprimir() {
-        this.modalImprimirVisivel = true;
-    }
+        
+        doc.setFontSize(22);
+        doc.text("Relatório de Receitas por Data/Período", 105, 20, { align: 'center' });
 
-    fecharModal() {
-        this.modalVisivel = false;
-    }
+        
+        doc.setFontSize(12);
+        doc.text("Data", 20, 30);
+        doc.text("Receita (R$)", 100, 30);
 
-    fecharModalImprimir() {
-        this.modalImprimirVisivel = false;
-    }
+       
+        let y = 40;
+        for (const request of this.filteredRequests) {
+            doc.text(request.date, 20, y);
+            doc.text(request.receita.toFixed(2), 100, y);
+            y += 10;
+        }
 
-    confirmarImpressao() {
-        console.log('Relatório a ser impresso:', this.filteredRequests);
-        this.fecharModalImprimir();
+        
+        const periodo = (!this.startDate && !this.endDate) ? 'Todo o Período' : `${this.startDate || ''} a ${this.endDate || ''}`;
+        const total = `TOTAL: ${this.calcularSomaReceita().toFixed(2)}`;
+
+        
+        doc.setFont("helvetica", "bold");
+        doc.text(`PERÍODO: ${periodo}`, 20, y);
+        doc.text(total, 100, y); 
+        y += 10;
+
+    
+        doc.setFont("helvetica", "normal");
+
+        
+        doc.save("relatorio_receitas.pdf");
     }
 
     calcularSomaReceita(): number {
         return this.filteredRequests.reduce((soma, request) => soma + request.receita, 0);
+    }
+
+    private agruparReceitas(requests: { date: string; receita: number }[]): { date: string; receita: number }[] {
+        const mapaReceitas = new Map<string, number>();
+
+        requests.forEach(request => {
+            const receitaAtual = mapaReceitas.get(request.date) || 0;
+            mapaReceitas.set(request.date, receitaAtual + request.receita);
+        });
+
+        return Array.from(mapaReceitas.entries()).map(([date, receita]) => ({ date, receita }));
     }
 }
