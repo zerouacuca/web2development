@@ -1,57 +1,62 @@
 package br.net.manutencao.service;
 
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.net.manutencao.dto.ClienteDTO;
 import br.net.manutencao.model.Cliente;
 import br.net.manutencao.repository.ClienteRepository;
-import br.net.manutencao.service.ViaCepService.Endereco;
+
+import java.security.SecureRandom;
 
 @Service
 public class ClienteService {
-    
+
     @Autowired
     private ClienteRepository clienteRepository;
 
     @Autowired
-    private EmailService emailService;
+    private JavaMailSender mailSender;
 
     @Autowired
-    private ViaCepService viaCepService;
+    private PasswordEncoder passwordEncoder;
 
-    public Cliente registrarCliente(ClienteDTO clienteDTO){
-
-        if(clienteRepository.existsByCpf(clienteDTO.getCpf()) || clienteRepository.existsByEmail(clienteDTO.getEmail())){
-            throw new IllegalArgumentException("Cliente já cadastrado");
+    public Cliente autocadastrar(Cliente cliente) throws Exception {
+        if (clienteRepository.existsByEmail(cliente.getEmail())) {
+            throw new Exception("E-mail já cadastrado.");
+        }
+        if (clienteRepository.existsByCpf(cliente.getCpf())) {
+            throw new Exception("CPF já cadastrado.");
         }
 
-        Cliente cliente = new Cliente();
-        cliente.setCpf(clienteDTO.getCpf());
-        cliente.setNome(clienteDTO.getNome());
-        cliente.setEmail(clienteDTO.getEmail());
-        cliente.setTelefone(clienteDTO.getTelefone());
+        // Gera uma senha aleatória de 4 dígitos
+        String senha = gerarSenha();
+        String senhaCriptografada = passwordEncoder.encode(senha);
+        cliente.setSenha(senhaCriptografada);
 
-        Endereco endereco = viaCepService.buscarEnderecoPorCep(clienteDTO.getCep());
-        if(endereco != null){
-            cliente.setBairro(endereco.getBairro());
-            cliente.setRua(endereco.getRua());
-            cliente.setUF(endereco.getUF());
-            cliente.setCep(clienteDTO.getCep());
-        }
+        // Salva o cliente
+        clienteRepository.save(cliente);
 
-        String senhaGerada = gerarSenhaAleatoria();
-        cliente.setSenha(senhaGerada);
+        // Envia o e-mail com a senha
+        enviarEmailComSenha(cliente.getEmail(), senha);
 
-        emailService.enviarEmail(cliente.getEmail(), "Cadastro no sistema realizado!", "Sua senha é: " + senhaGerada);
-
-        return clienteRepository.save(cliente);
+        return cliente;
     }
-    private String gerarSenhaAleatoria(){
-        Random random = new Random();
-        int numero = random.nextInt(10000);
-        return String.format("%04d", numero);
+
+    private String gerarSenha() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[4];
+        random.nextBytes(bytes);
+        return String.valueOf(Math.abs(bytes[0]) % 10000);
+    }
+
+    private void enviarEmailComSenha(String email, String senha) {
+        SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setTo(email);
+        mensagem.setSubject("Senha de Acesso");
+        mensagem.setText("Bem-vindo ao sistema! Sua senha é: " + senha);
+        mailSender.send(mensagem);
     }
 }
