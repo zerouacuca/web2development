@@ -1,35 +1,22 @@
 package br.net.manutencao.service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-public class ViaCepService {
-    public Endereco buscarEnderecoPorCep(String cep){
-        String url = "https://viacep.com.br/ws/" + cep + "/json/";
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url, Endereco.class);
-    }
-    class Endereco{
-        private String rua;
-        private String UF;
-        private String bairro;
+import br.net.manutencao.ViaCepResponse;
 
-        public String getUF(){
-            return UF;
+@Service
+public class ViaCepService {
+
+    public String buscarEnderecoPorCEP(String cep) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://viacep.com.br/ws/" + cep + "/json/";
+        ViaCepResponse response = restTemplate.getForObject(url, ViaCepResponse.class);
+        
+        if (response != null && response.getErro() == null) {
+            return response.getLogradouro() + ", " + response.getBairro() + ", " +
+                   response.getLocalidade() + " - " + response.getUf();
         }
-        public String getRua(){
-            return rua;
-        }
-        public String getBairro(){
-            return bairro;
-        }
-        void setUF(String UF){
-            this.UF = UF;
-        }
-        void setRua(String rua){
-            this.rua = rua;
-        }
-        void setBairro(String bairro){
-            this.bairro = bairro;
-        }
+        throw new RuntimeException("CEP inválido ou não encontrado.");
     }
 }
