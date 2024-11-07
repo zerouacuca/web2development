@@ -71,6 +71,7 @@ export class PgFuncionarioComponent implements OnInit {
             case 'APROVADA': return 'aprovada';
             case 'PAGA': return 'paga';
             case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
+            case 'FINALIZADA': return 'finalizada';
             default: return '';
         }
     }
@@ -84,6 +85,7 @@ export class PgFuncionarioComponent implements OnInit {
             case 'APROVADA': return 'Efetuar Manutenção';
             case 'PAGA': return 'Finalizar Solicitação';
             case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
+            case 'FINALIZADA': return 'finalizada';
             default: return 'Ação Indefinida';
         }
     }
@@ -104,6 +106,8 @@ export class PgFuncionarioComponent implements OnInit {
                 return 'paga';
             case 'AGUARDANDO PAGAMENTO':
                 return 'aguardandoPagamento';
+            case 'FINALIZADA':
+                    return 'finalizada';
             default:
                 return '';
         }

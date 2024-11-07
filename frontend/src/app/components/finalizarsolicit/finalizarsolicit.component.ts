@@ -36,6 +36,8 @@ export class FinalizarsolicitComponent {
     if (this.dataHora) {
       alert(`Solicitação finalizada com sucesso em: ${this.dataHora}`);
       this.router.navigate(['pgfuncionario']);
+
+      localStorage.setItem("statusSolicitacao", "FINALIZADA");
     }
   }
 }

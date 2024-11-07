@@ -61,6 +61,12 @@ export class SolicitabertafuncComponent {
             class: 'rejeitada',
             action: () => {} 
           };
+          case 'PAGA':
+            return {
+              text: 'Finalizada',
+              class: 'finalizada',
+              action: () => {} 
+            };
         default:
           return {
             text: 'Ação Desconhecida',
