@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./components/header/header.component";
 import { PgClienteComponent } from "./components/pg-cliente/pg-cliente.component";
-import { LoginComponent } from "./components/login/login.component";
+import { LoginComponent } from "./auth/login/login.component";
 
 @Component({
   selector: 'app-root',

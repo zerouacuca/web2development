@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { PgClienteComponent } from './components/pg-cliente/pg-cliente.component';
 import { NovaSolicitacaoComponent } from './components/nova-solicitacao/nova-solicitacao.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';

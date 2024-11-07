@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component"; 
-import { LoginComponent } from '../login/login.component'; 
+import { LoginComponent } from '../../auth/login/login.component'; 
 import { NgFor, NgIf, CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 @Component({
