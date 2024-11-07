@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Usuario, Login } from '../shared/models';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 const LS_CHAVE: string = "usuarioLogado";
 
@@ -8,6 +9,7 @@ const LS_CHAVE: string = "usuarioLogado";
   providedIn: 'root'
 })
 export class LoginService {
+  constructor(private router: Router) {}  
   
   public get usuarioLogado(): Usuario {
     let usu = localStorage[LS_CHAVE];
@@ -23,18 +25,19 @@ export class LoginService {
   }
   
   login(login: Login): Observable<Usuario | null> {
-    let usu = new Usuario(1, login.login,
-      login.login, login.senha, "FUNC");
-    if (login.login == login.senha) {
-      if (login.login == "admin") {
+    let usu = new Usuario(1, login.login, login.login, login.senha, "FUNC");
+
+    if (login.login === login.senha) {
+      if (login.login === "admin") {
         usu.perfil = "ADMIN";
-      }
-      else if (login.login == "gerente") {
+      } else if (login.login === "gerente") {
         usu.perfil = "GERENTE";
       }
+
+      this.usuarioLogado = usu;  
+      this.router.navigate(['/pgFuncionario']);  
       return of(usu);
-    }
-    else {
+    } else {
       return of(null);
     }
   }

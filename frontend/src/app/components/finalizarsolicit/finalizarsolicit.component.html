@@ -9,15 +9,6 @@
             <p><strong>Status Atual:</strong> PAGA</p>
         </div>
 
-        <div class="form-group">
-            <label for="dataHora">Data e Hora da Finalização</label>
-            <input type="datetime-local" id="dataHora" [(ngModel)]="dataHora" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="funcionario">Funcionário Responsável</label>
-            <input type="text" id="funcionario" value="Maria" disabled>
-        </div>
 
         <button (click) = "finalizarSolicitacao()" id="finalizar-btn">Finalizar Solicitação</button>
     </div>
