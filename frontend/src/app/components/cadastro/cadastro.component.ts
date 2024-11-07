@@ -3,13 +3,15 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CepService } from '../../services/cep.service'; 
 import { HttpClient } from '@angular/common/http';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, NgxMaskDirective],
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.css']
+  styleUrls: ['./cadastro.component.css'],
+  providers: [provideNgxMask()]
 })
 export class CadastroComponent {
   cpf: string = '';
@@ -20,6 +22,9 @@ export class CadastroComponent {
   rua: string = '';
   bairro: string = '';
   localidade: string = '';
+  estado: string = ''; // Adicionando campo para o estado
+  numero: string = ''; // Adicionando campo para o número
+  complemento: string = ''; // Adicionando campo para o complemento
 
   constructor(private cepService: CepService, private http: HttpClient) {}
 
@@ -29,6 +34,7 @@ export class CadastroComponent {
         this.rua = data.logradouro;
         this.bairro = data.bairro;
         this.localidade = data.localidade;
+        this.estado = data.uf; // Preenchendo o estado com o dado da API
       },
       (error) => {
         console.error('Erro ao buscar CEP', error);
@@ -45,7 +51,10 @@ export class CadastroComponent {
       cep: this.cep,
       rua: this.rua,
       bairro: this.bairro,
-      localidade: this.localidade
+      localidade: this.localidade,
+      estado: this.estado, // Adicionando estado ao objeto de cadastro
+      numero: this.numero, // Adicionando número ao objeto de cadastro
+      complemento: this.complemento // Adicionando complemento ao objeto de cadastro
     };
 
     this.http.post('/clientes/autocadastro', cadastroData).subscribe(
