@@ -26,7 +26,6 @@ public class Cliente {
 
     private String telefone;
 
-
     private String logradouro;
     private String cep;
     private String uf;
