@@ -28,5 +28,17 @@ abstract class Usuario {
 
     private String senha;
 
+    private String telefone;
+
+    private String logradouro;
+    private String cep;
+    private String uf;
+    private String bairro;
+    private String cidade;
     
+    enum Perfil {
+        ADMIN,
+        CLIENTE,
+        FUNCIONARIO
+    }
 }

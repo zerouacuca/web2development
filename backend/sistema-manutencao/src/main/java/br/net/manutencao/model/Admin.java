@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Funcionario extends Usuario {
-    private String perfil = "FUNCIONARIO";
+public class Admin extends Usuario {
+    private String perfil = "ADMIN";
+    
 }
