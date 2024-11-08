@@ -7,15 +7,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.net.manutencao.model.Cliente;
-import br.net.manutencao.repository.ClienteRepository;
+import br.net.manutencao.repository.CadastroRepository;
 
 import java.security.SecureRandom;
 
 @Service
-public class ClienteService {
+public class CadastroService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private CadastroRepository cadastroRepository;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -24,11 +24,14 @@ public class ClienteService {
     private PasswordEncoder passwordEncoder;
 
     public Cliente autocadastrar(Cliente cliente) throws Exception {
-        if (clienteRepository.existsByEmail(cliente.getEmail())) {
-            throw new Exception("E-mail já cadastrado.");
+        // Verifica se o email ja esta cadastrado
+        if (cadastroRepository.existsByEmail(cliente.getEmail())) {
+            throw new IllegalArgumentException("E-mail já cadastrado.");
         }
-        if (clienteRepository.existsByCpf(cliente.getCpf())) {
-            throw new Exception("CPF já cadastrado.");
+
+        // Verifica se o CPF ja existe no cadastro
+        if (cadastroRepository.existsByCpf(cliente.getCpf())) {
+            throw new IllegalArgumentException("CPF já cadastrado.");
         }
 
         // Gera uma senha aleatória de 4 dígitos
@@ -36,22 +39,23 @@ public class ClienteService {
         String senhaCriptografada = passwordEncoder.encode(senha);
         cliente.setSenha(senhaCriptografada);
 
-        // Salva o cliente
-        clienteRepository.save(cliente);
+        // Salva o cliente no repository
+        cadastroRepository.save(cliente);
 
-        // Envia o e-mail com a senha
+        // Envia o email com a senha gerada
         enviarEmailComSenha(cliente.getEmail(), senha);
 
         return cliente;
     }
 
+    // Gera senha aleatória de 4 dígitos
     private String gerarSenha() {
         SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[4];
-        random.nextBytes(bytes);
-        return String.valueOf(Math.abs(bytes[0]) % 10000);
+        int senha = random.nextInt(10000);  // Gera um número entre 0 e 9999
+        return String.format("%04d", Math.abs(senha));  // Formata para ter 4 dígitos
     }
 
+    // Envia o email com a senha gerada
     private void enviarEmailComSenha(String email, String senha) {
         SimpleMailMessage mensagem = new SimpleMailMessage();
         mensagem.setTo(email);
