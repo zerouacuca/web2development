@@ -10,6 +10,7 @@ import lombok.Data;
 
 @Entity
 @Data
+public
 abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,4 +42,15 @@ abstract class Usuario {
         CLIENTE,
         FUNCIONARIO
     }
+
+    public abstract Object getLogin();
+
+    public abstract void setLogin(Object login);
+
+    public Object getPerfil() {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'getPerfil'");
+    }
+
+    public abstract void setPerfil(Object perfil);
 }
