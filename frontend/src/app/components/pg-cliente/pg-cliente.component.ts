@@ -3,6 +3,15 @@ import { HeaderComponent } from "../header/header.component";
 import { LoginComponent } from '../../auth/login/login.component'; 
 import { NgFor, NgIf, CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+
+interface Request {
+  date: string;
+  description: string;
+  status: string;
+  id_employee?: string;
+}
+
+
 @Component({
   selector: 'app-pg-cliente',
   standalone: true,
@@ -63,5 +72,72 @@ export class PgClienteComponent implements OnInit {
   visualizarServico() {
     this.router.navigate(['visualizarservicos']);
   }
+  getStatusClass(status: string): string {
+    switch (status) {
+        case 'ORÇADA': return 'orcada';
+        case 'REJEITADA': return 'rejeitada';
+        case 'ABERTA': return 'aberta';
+        case 'ARRUMADA': return 'arrumada';
+        case 'APROVADA': return 'aprovada';
+        case 'PAGA': return 'paga';
+        case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
+        default: return '';
+    }
+}
+
+getActionButtonText(status: string): string {
+  switch (status) {
+      case 'ORÇADA': return 'Em espera de aprovação';
+      case 'REJEITADA': return 'Resgatar Serviço';
+      case 'ABERTA': return 'Efetuar Orçamento';
+      case 'ARRUMADA': return 'Efetuar Manutenção?';
+      case 'APROVADA': return 'Efetuar Manutenção';
+      case 'PAGA': return 'Finalizar Solicitação';
+      case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
+      default: return 'Ação Indefinida';
+  }
+}
+
+getActionButtonClass(status: string): string {
+  switch (status) {
+      case 'ORÇADA':
+          return 'orcada';
+      case 'REJEITADA':
+          return 'rejeitar';
+      case 'ABERTA':
+          return 'aberta';
+      case 'ARRUMADA':
+          return 'arrumada';
+      case 'APROVADA':
+          return 'aprovada';
+      case 'PAGA':
+          return 'paga';
+      case 'AGUARDANDO PAGAMENTO':
+          return 'aguardandoPagamento';
+      default:
+          return '';
+  }
+}
+
+efetuarAcao(request: Request) {
+  switch (request.status) {
+      case "REJEITADA":
+          request.status = "ABERTA";
+          break;
+      case "ABERTA":
+        this.router.navigate(["efetuarorcamento"]);
+          break;
+      case "ARRUMADA":
+          break;
+      case "APROVADA":
+          this.router.navigate(["aplicarmanutencao"]);
+          break;
+      case "PAGA":
+        this.router.navigate(["finalizarsolicitacao"]);
+          break;
+      default:
+          break;
+  }
+}
 }
 
