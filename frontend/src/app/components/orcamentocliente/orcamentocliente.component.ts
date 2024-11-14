@@ -1,27 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MostrarOrcamentoService } from '../../services/mostrarorcamento.service';
 
 @Component({
   selector: 'app-orcamentocliente',
   standalone: true,
   imports: [HeaderComponent, RouterLink, NgIf, CommonModule, FormsModule],
   templateUrl: './orcamentocliente.component.html',
-  styleUrl: './orcamentocliente.component.css'
+  styleUrls: ['./orcamentocliente.component.css']
 })
+export class OrcamentoclienteComponent implements OnInit {
 
-export class OrcamentoclienteComponent {
-
-  valorOrcado = 'R$ 450,00';
-  estadoSolicitacao = 'ORÇADA';
+  valorOrcado: string = 'R$ 0,00';
+  estadoSolicitacao: string = 'ORÇADA';
+  descricaoEquipamento: string = 'Não informado';
+  categoria: string = 'Não informado';
+  descricaoDefeito: string = 'Não informado';
+  dataSolicitacao: string = 'Não informado';
   popupVisible = false;
   popupMessage = '';
   modalVisible = false;
   justificativa = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private orcamentoService: MostrarOrcamentoService
+  ) {}
+
+  ngOnInit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      this.orcamentoService.getOrcamento(id).subscribe(
+        data => {
+          this.valorOrcado = data.valorOrcado ? `R$ ${data.valorOrcado}` : 'R$ 0,00';
+          this.estadoSolicitacao = data.estado ? data.estado : 'ORÇADA';
+          this.descricaoEquipamento = data.descricaoEquipamento || 'Não informado';
+          this.categoria = data.categoria || 'Não informado';
+          this.descricaoDefeito = data.descricaoDefeito || 'Não informado';
+          this.dataSolicitacao = data.dataSolicitacao || 'Não informado';
+        },
+        error => {
+          console.error('Erro ao buscar orçamento:', error);
+        }
+      );
+    }
+  }
 
   aprovarOrcamento() {
     this.popupMessage = `Serviço Aprovado no Valor ${this.valorOrcado}`;
@@ -53,5 +80,3 @@ export class OrcamentoclienteComponent {
     this.router.navigate(['pgcliente']);
   }
 }
-  
-
