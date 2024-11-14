@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   login: Login = new Login();
   loading: boolean = false;
   message!: string;
+  isPasswordVisible: boolean = false;
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -32,6 +33,11 @@ export class LoginComponent implements OnInit {
         });
     }
   }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
   logar(): void {
     this.loading = true;
     if (this.formLogin.form.valid) {
