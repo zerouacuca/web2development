@@ -13,8 +13,13 @@ import { FormsModule } from '@angular/forms';
 export class LoginComponent {
   email: string = '';
   senha: string = '';
+  isPasswordVisible: boolean = false;
 
   constructor(private router: Router, private authService: AuthService) {}
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
 
   onSubmit() {
     
