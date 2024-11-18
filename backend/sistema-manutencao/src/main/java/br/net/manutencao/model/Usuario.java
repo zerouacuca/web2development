@@ -5,52 +5,33 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Entity
 @Data
-public
-abstract class Usuario {
+@Table(name="td_usuario")
+public abstract class Usuario {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_usu")
     private Long id;
 
-    @NotBlank
-    @Column(unique = true, nullable = false)
-    private String cpf;
-
+    @Column(name="nome_usu")
     @NotBlank
     private String nome;
 
-    @NotBlank
-    @Column(unique = true, nullable = false)
-    private String email;
-
+    @Column(name="login_usu")
+    private String login;
+    
+    @Column(name="senha_usu")
     private String senha;
 
-    private String telefone;
+    @Column(name="perfil_usu")
+    private String perfil;
+   
 
-    private String logradouro;
-    private String cep;
-    private String uf;
-    private String bairro;
-    private String cidade;
-    
-    enum Perfil {
-        ADMIN,
-        CLIENTE,
-        FUNCIONARIO
-    }
-
-    public abstract Object getLogin();
-
-    public abstract void setLogin(Object login);
-
-    public Object getPerfil() {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getPerfil'");
-    }
-
-    public abstract void setPerfil(Object perfil);
+   
 }
