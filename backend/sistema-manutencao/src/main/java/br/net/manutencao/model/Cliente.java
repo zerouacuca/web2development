@@ -8,14 +8,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "Usuario")
 @Data
-@EqualsAndHashCode(callSuper = true) // Aqui é para que o lombok gere os getters e setter para o que precisas da superclasse
+@EqualsAndHashCode(callSuper = true) // Aqui é para que o lombok gere os getters e setter para o que precisa da superclasse
 public class Cliente extends Usuario {
-    private String perfil = "CLIENTE";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nome;
-    private String login;
-    private String senha;  
+    public Cliente() {
+        super.setPerfil(Perfil.CLIENTE); 
+    }
 }

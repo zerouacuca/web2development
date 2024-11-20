@@ -5,77 +5,65 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import br.net.manutencao.model.Cliente;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.UsuarioRepository;
 
-
 import java.util.List;
 import java.util.Optional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 @CrossOrigin(origins = "http://localhost:4200") // Permitindo o CORS para o frontend Angular
 public class UsuarioController {
-    // Injetar o repositorio
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @GetMapping("/usuarios")
+    @GetMapping
     public ResponseEntity<List<Usuario>> listarUsuarios() {
         List<Usuario> lista = usuarioRepository.findAll();
         return ResponseEntity.ok(lista);
     }
 
-    @GetMapping("usuarios/{id}")
-    public ResponseEntity<Usuario> obterUsuarioPorId(@PathVariable("id") int id) {
-        Optional<Usuario> op = usuarioRepository.findById(Integer.valueOf(id));
-
-        if(op.isPresent()){
-            return ResponseEntity.ok(op.get());
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-    @PostMapping("/usuarios")
-    public ResponseEntity<Usuario> inserir(@RequestBody Usuario usuario) {
-        Optional<Usuario> op = usuarioRepository.findByLogin(usuario.getLogin());
-        if(op.isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(op.get());
-        }else{
-            usuario.setId((long) -1);
-            usuarioRepository.save(usuario);
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> obterUsuarioPorId(@PathVariable("id") Long id) {
+        Optional<Usuario> op = usuarioRepository.findById(id);
+        return op.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @PostMapping("/clientes")
+    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
+        Optional<Usuario> existente = usuarioRepository.findByLogin(cliente.getLogin());
+        if (existente.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
 
-    @PutMapping("/usuarios/{id}")
+        Cliente novoCliente = (Cliente) usuarioRepository.save(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
+    }
+
+    @PutMapping("/{id}")
     public ResponseEntity<Usuario> alterar(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
-        Optional<Usuario> op = usuarioRepository.findById(Long.valueOf(id));
-        if(op.isPresent()){
+        Optional<Usuario> op = usuarioRepository.findById(id);
+        if (op.isPresent()) {
             usuario.setId(id);
             usuarioRepository.save(usuario);
             return ResponseEntity.ok(usuario);
-        }
-        else{
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
     }
 
-    @DeleteMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> remover(@PathVariable("id") Long id) {
-        Optional<Usuario> op = usuarioRepository.findById(Long.valueOf(id));
-        if(op.isPresent()){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remover(@PathVariable("id") Long id) {
+        Optional<Usuario> op = usuarioRepository.findById(id);
+        if (op.isPresent()) {
             usuarioRepository.delete(op.get());
-            return ResponseEntity.ok(op.get());
-        }else{
+            return ResponseEntity.noContent().build();
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-    
 }

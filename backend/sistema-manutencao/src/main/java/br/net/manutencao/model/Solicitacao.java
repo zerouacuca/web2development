@@ -33,5 +33,4 @@ public class Solicitacao {
     @OneToMany(mappedBy = "solicitacao", cascade = CascadeType.ALL)
     private List<HistoricoEstado> historicoEstados;
 
-    // Getters e Setters
 }

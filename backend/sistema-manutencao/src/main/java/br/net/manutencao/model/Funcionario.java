@@ -1,5 +1,7 @@
 package br.net.manutencao.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Data;
@@ -9,8 +11,13 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Funcionario extends Usuario {
-    private String perfil = "FUNCIONARIO";
 
     @Column(name="datanasc_func")
-    private String dataNasc;
+    private LocalDate dataNasc;
+
+    public Funcionario() {
+        super.setPerfil(Perfil.FUNCIONARIO); 
+    }
+
+
 }

@@ -49,7 +49,7 @@ public class SolicitacaoController {
     }
 
     // Endpoint para atualizar uma solicitação existente
-    @PutMapping("/{id}")
+    @PutMapping("/{id}")  
     public ResponseEntity<Solicitacao> atualizarSolicitacao(@PathVariable Long id, @RequestBody Solicitacao solicitacaoAtualizada) {
         return solicitacaoRepository.findById(id).map(solicitacao -> {
             solicitacao.setDescricaoEquipamento(solicitacaoAtualizada.getDescricaoEquipamento());
@@ -64,7 +64,7 @@ public class SolicitacaoController {
 
     // Endpoint para deletar uma solicitação
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarSolicitacao(@PathVariable Long id) {
+    public ResponseEntity<Object> deletarSolicitacao(@PathVariable Long id) {
         return solicitacaoRepository.findById(id).map(solicitacao -> {
             solicitacaoRepository.delete(solicitacao);
             return ResponseEntity.noContent().build();

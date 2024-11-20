@@ -24,12 +24,11 @@ public class CadastroService {
     private PasswordEncoder passwordEncoder;
 
     public Cliente autocadastrar(Cliente cliente) throws Exception {
-        // Verifica se o email ja esta cadastrado
+
         if (cadastroRepository.existsByEmail(cliente.getEmail())) {
             throw new IllegalArgumentException("E-mail já cadastrado.");
         }
 
-        // Verifica se o CPF ja existe no cadastro
         if (cadastroRepository.existsByCpf(cliente.getCpf())) {
             throw new IllegalArgumentException("CPF já cadastrado.");
         }
@@ -39,19 +38,16 @@ public class CadastroService {
         String senhaCriptografada = passwordEncoder.encode(senha);
         cliente.setSenha(senhaCriptografada);
 
-        // Salva o cliente no repository
         cadastroRepository.save(cliente);
 
-        // Envia o email com a senha gerada
         enviarEmailComSenha(cliente.getEmail(), senha);
 
         return cliente;
     }
 
-    // Gera senha aleatória de 4 dígitos
     private String gerarSenha() {
         SecureRandom random = new SecureRandom();
-        int senha = random.nextInt(10000);  // Gera um número entre 0 e 9999
+        int senha = random.nextInt(10000);  // 0 e 9999
         return String.format("%04d", Math.abs(senha));  // Formata para ter 4 dígitos
     }
 

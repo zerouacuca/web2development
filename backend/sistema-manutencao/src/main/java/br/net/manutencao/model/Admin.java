@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Admin extends Usuario {
-    private String perfil = "ADMIN";
+    public Admin() {
+        super.setPerfil(Perfil.ADMIN); 
+    }
     
 }
