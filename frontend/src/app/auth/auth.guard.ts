@@ -3,10 +3,13 @@ import { LoginService } from '../services/login.service';
 import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = (route, state) => {
+
   const loginService = inject(LoginService);
   const router = inject(Router);
+
   const usuarioLogado = loginService.usuarioLogado;
   let url = state.url;
+  
   if (usuarioLogado) {
     if (route.data?.['role'] && route.data?.['role'].indexOf(usuarioLogado.perfil) === -1) {
       // Se o perfil do usuário não está no perfil da rota

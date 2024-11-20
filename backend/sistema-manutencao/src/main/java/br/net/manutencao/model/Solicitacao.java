@@ -1,12 +1,15 @@
-package br.net.manutencao.model;
+package br.net.manutencao.controller;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+
+
 @Entity
 @Table(name = "solicitacoes")
 public class Solicitacao {
-      @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -18,17 +21,16 @@ public class Solicitacao {
 
     private String estado; //  "ABERTA", "ORÇADA" e tals
 
-    
     private LocalDateTime dataHoraAbertura;
     private LocalDateTime dataHoraOrcamento;
-    private LocalDateTime dataHoraAprovacao;
-    private LocalDateTime dataHoraRejeicao;
+
     private Double valorOrcamento;
 
     @Column(name = "funcionario_orcamento")
     private String funcionarioOrcamento;
 
-      public Long getId() {
+
+    public Long getId() {
         return id;
     }
 
@@ -92,7 +94,7 @@ public class Solicitacao {
         this.funcionarioOrcamento = funcionarioOrcamento;
     }
 
-   
+    // toString para facilitar o debug
     @Override
     public String toString() {
         return "Solicitacao{" +
@@ -107,31 +109,22 @@ public class Solicitacao {
                 '}';
     }
 
-    private String motivoRejeicao;
+    private LocalDateTime dataHoraFinalizacao; 
+    private String funcionarioFinalizacao; 
 
-     public String getMotivoRejeicao() {
-        return motivoRejeicao;
+    public LocalDateTime getDataHoraFinalizacao() {
+    return dataHoraFinalizacao;
     }
 
-    public void setMotivoRejeicao(String motivoRejeicao) {
-        this.motivoRejeicao = motivoRejeicao;
+    public void setDataHoraFinalizacao(LocalDateTime dataHoraFinalizacao) {
+    this.dataHoraFinalizacao = dataHoraFinalizacao;
     }
 
-    public LocalDateTime getDataHoraAprovacao() {
-        return dataHoraAprovacao;
+    public String getFuncionarioFinalizacao() {
+    return funcionarioFinalizacao;
     }
 
-    public void setDataHoraAprovacao(LocalDateTime dataHoraAprovacao) {
-        this.dataHoraAprovacao = dataHoraAprovacao;
-    }
-
-    public LocalDateTime getDataHoraRejeicao() {
-        return dataHoraRejeicao;
-    }
-
-    public void setDataHoraRejeicao(LocalDateTime dataHoraRejeicao) {
-        this.dataHoraRejeicao = dataHoraRejeicao;
+    public void setFuncionarioFinalizacao(String funcionarioFinalizacao) {
+    this.funcionarioFinalizacao = funcionarioFinalizacao;
     }
 }
-    
-

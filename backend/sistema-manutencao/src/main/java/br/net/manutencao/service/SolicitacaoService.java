@@ -51,4 +51,20 @@ public class SolicitacaoService {
 
         return solicitacaoRepository.save(solicitacao);
     }
+
+    public List<Solicitacao> listarSolicitacoesFiltradas(
+            String estado, LocalDateTime inicio, LocalDateTime fim, String destino) {
+        return solicitacaoRepository.findSolicitacoesFiltradas(estado, inicio, fim, destino);
+    }
+
+    public Solicitacao finalizarSolicitacao(Long id, String funcionario) {
+        Solicitacao solicitacao = solicitacaoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
+
+        solicitacao.setEstado("FINALIZADA");
+        solicitacao.setDataHoraFinalizacao(LocalDateTime.now());
+        solicitacao.setFuncionarioFinalizacao(funcionario);
+
+        return solicitacaoRepository.save(solicitacao);
+    }
 }
