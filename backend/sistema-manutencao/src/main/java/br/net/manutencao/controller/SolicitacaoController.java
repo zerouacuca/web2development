@@ -2,6 +2,11 @@ package br.net.manutencao.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import br.net.manutencao.model.Solicitacao;
+import br.net.manutencao.repository.SolicitacaoRepository;
+import br.net.manutencao.service.SolicitacaoService;
+
 import java.util.List;
 
 @RestController
@@ -9,9 +14,11 @@ import java.util.List;
 public class SolicitacaoController {
 
     private final SolicitacaoRepository solicitacaoRepository;
+    private final SolicitacaoService solicitacaoService;
 
-    public SolicitacaoController(SolicitacaoRepository solicitacaoRepository) {
+    public SolicitacaoController(SolicitacaoRepository solicitacaoRepository, SolicitacaoService solicitacaoService) {
         this.solicitacaoRepository = solicitacaoRepository;
+        this.solicitacaoService = solicitacaoService;
     }
 
     // Endpoint para listar todas as solicitações
@@ -27,6 +34,12 @@ public class SolicitacaoController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    
+    // Vizualisar serviços do cliente
+    public ResponseEntity<List<Solicitacao>> visualizarServicos(@PathVariable Long idCliente) { 
+        List<Solicitacao> solicitacoes = solicitacaoService.buscarPorCliente(idCliente);
+        return ResponseEntity.ok(solicitacoes);
+    }
 
     // Endpoint para criar uma nova solicitação
     @PostMapping
@@ -36,7 +49,7 @@ public class SolicitacaoController {
     }
 
     // Endpoint para atualizar uma solicitação existente
-    @PutMapping("/{id}")
+    @PutMapping("/{id}")  
     public ResponseEntity<Solicitacao> atualizarSolicitacao(@PathVariable Long id, @RequestBody Solicitacao solicitacaoAtualizada) {
         return solicitacaoRepository.findById(id).map(solicitacao -> {
             solicitacao.setDescricaoEquipamento(solicitacaoAtualizada.getDescricaoEquipamento());
@@ -51,7 +64,7 @@ public class SolicitacaoController {
 
     // Endpoint para deletar uma solicitação
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarSolicitacao(@PathVariable Long id) {
+    public ResponseEntity<Object> deletarSolicitacao(@PathVariable Long id) {
         return solicitacaoRepository.findById(id).map(solicitacao -> {
             solicitacaoRepository.delete(solicitacao);
             return ResponseEntity.noContent().build();
