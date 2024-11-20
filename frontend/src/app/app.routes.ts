@@ -21,12 +21,22 @@ import { RelatoriodataComponent} from './components/relatoriodata/relatoriodata.
 import { RelatorioCategoriaComponent } from './components/relatoriocategoria/relatoriocategoria.component';
 // import { ExcluirCategoriaComponent } from './components/excluir-categoria/excluir-categoria.component';
 import { AtualizarCategoriaComponent } from './components/atualizar-categoria/atualizar-categoria.component';
+import { authGuard } from './auth/auth.guard';
 
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     {'path': 'login', component:LoginComponent},
-    {'path': 'pgcliente', component:PgClienteComponent},
+    {
+
+        'path': 'pgcliente', 
+         component : PgClienteComponent,
+        // o que precisa add permissoes de rotas
+         canActivate: [authGuard],
+        data: {
+            role: 'CLIENTE'
+        }},
+        // 
     {'path': 'novasolicitacao', component:NovaSolicitacaoComponent},
     {'path': 'cadastro', component:CadastroComponent},
     {'path': 'pgfuncionario', component:PgFuncionarioComponent},
@@ -39,7 +49,14 @@ export const routes: Routes = [
     {'path': 'visualizarservicos', component:VisualizarservicosComponent},
     {'path': 'pagarservico', component:PagarservicoComponent},
     {'path': 'relatoriodata', component:RelatoriodataComponent},
-    {'path': 'relatorioCategoria', component:RelatorioCategoriaComponent},
+    {
+        'path': 'relatorioCategoria',
+         component:RelatorioCategoriaComponent,
+         canActivate: [authGuard],
+         data: {
+             role: 'ADMIN'
+
+        }},
     {'path': 'crud-funcionario', redirectTo: 'funcionarios/listar', pathMatch: 'full'},
     {'path': 'funcionarios/listar', component: ListarFuncionarioComponent},
     {'path': 'funcionarios/novo', component: InserirFuncionarioComponent},
