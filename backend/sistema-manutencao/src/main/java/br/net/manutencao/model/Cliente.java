@@ -17,17 +17,5 @@ public class Cliente extends Usuario {
     private Long id;
     private String nome;
     private String login;
-    private String senha;
-    @Override
-    public void setLogin(Object login) {
-       
-        throw new UnsupportedOperationException("Unimplemented method 'setLogin'");
-    }
-    @Override
-    public void setPerfil(Object perfil) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'setPerfil'");
-    }
-    
+    private String senha;  
 }
-

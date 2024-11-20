@@ -2,6 +2,11 @@ package br.net.manutencao.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import br.net.manutencao.model.Solicitacao;
+import br.net.manutencao.repository.SolicitacaoRepository;
+import br.net.manutencao.service.SolicitacaoService;
+
 import java.util.List;
 
 @RestController
@@ -9,9 +14,11 @@ import java.util.List;
 public class SolicitacaoController {
 
     private final SolicitacaoRepository solicitacaoRepository;
+    private final SolicitacaoService solicitacaoService;
 
-    public SolicitacaoController(SolicitacaoRepository solicitacaoRepository) {
+    public SolicitacaoController(SolicitacaoRepository solicitacaoRepository, SolicitacaoService solicitacaoService) {
         this.solicitacaoRepository = solicitacaoRepository;
+        this.solicitacaoService = solicitacaoService;
     }
 
     // Endpoint para listar todas as solicitações
@@ -26,6 +33,12 @@ public class SolicitacaoController {
         return solicitacaoRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+    
+    // Vizualisar serviços do cliente
+    public ResponseEntity<List<Solicitacao>> visualizarServicos(@PathVariable Long idCliente) { 
+        List<Solicitacao> solicitacoes = solicitacaoService.buscarPorCliente(idCliente);
+        return ResponseEntity.ok(solicitacoes);
     }
 
     // Endpoint para criar uma nova solicitação

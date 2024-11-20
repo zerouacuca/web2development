@@ -1,5 +1,6 @@
 package br.net.manutencao.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,21 +11,6 @@ import lombok.EqualsAndHashCode;
 public class Funcionario extends Usuario {
     private String perfil = "FUNCIONARIO";
 
-    @Override
-    public Object getLogin() {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getLogin'");
-    }
-
-    @Override
-    public void setLogin(Object login) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'setLogin'");
-    }
-
-    @Override
-    public void setPerfil(Object perfil) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'setPerfil'");
-    }
+    @Column(name="datanasc_func")
+    private String dataNasc;
 }

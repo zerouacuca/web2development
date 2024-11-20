@@ -31,7 +31,15 @@ public abstract class Usuario {
 
     @Column(name="perfil_usu")
     private String perfil;
-   
+
+    @Column(name="email_usu")
+    private String email;
+
+    @Column(name="telefone_usu")
+    private String telefone;
+    
+    @Column(name="endereco_usu")
+    private String endereco;
 
    
 }
