@@ -6,6 +6,8 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { SolicitacaoManutencaoService, Solicitacao } from '../../services/solicitacaomanutencao.service';
+
 
 const states = [
 	'Computador',
@@ -32,23 +34,36 @@ export class NovaSolicitacaoComponent {
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
 
-  constructor(private router: Router) {}
+  solicitacao: Solicitacao = {
+    descricaoEquipamento: '',
+    categoriaEquipamento: '',
+    descricaoDefeito: '',
+};
 
-  // Método para exibir alerta e redirecionar
-  realizarSolicitacao() {
-    alert('Solicitação realizada com sucesso!');
-    this.router.navigate(["pgcliente"]);
+  constructor(private solicitacaoService: SolicitacaoManutencaoService, private router: Router) {}
+
+  realizarSolicitacao(): void {
+    this.solicitacaoService.enviarSolicitacao(this.solicitacao).subscribe({
+        next: () => {
+            alert('Solicitação realizada com sucesso!');
+            this.router.navigate(['pgcliente']);
+        },
+        error: (err) => {
+            alert('Erro ao enviar solicitação. Por favor, tente novamente.');
+            console.error('Erro ao enviar solicitação:', err);
+        },
+    });
   }
-  
-  search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
-    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-    const inputFocus$ = this.focus$;
 
-    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
+  const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+  const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+  const inputFocus$ = this.focus$;
+
+  return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map((term) =>
-        (term === '' ? states : states.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
+          (term === '' ? states : states.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
       ),
-    );
-  };
+  );
+};
 }
