@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "td_cliente")
 @Data
 @EqualsAndHashCode(callSuper = true) // Aqui é para que o lombok gere os getters e setter para o que precisa da superclasse
 public class Cliente extends Usuario {
