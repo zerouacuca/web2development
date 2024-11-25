@@ -9,13 +9,23 @@ import br.net.manutencao.model.Cliente;
 import br.net.manutencao.model.Login;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.UsuarioRepository;
-//teste
+import br.net.manutencao.service.CadastroService;
+import br.net.manutencao.service.UsuarioService;
+import br.net.manutencao.HashUtil;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200") // Permitindo o CORS para o frontend Angular
 public class UsuarioController {
+
+
+    @Autowired
+    private UsuarioService usuarioService;
+    
+    @Autowired
+    private  CadastroService cadastroService;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -34,15 +44,28 @@ public class UsuarioController {
     }
 
     @PostMapping("/clientes")
-    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<Usuario> cadastrarCliente(@RequestBody Cliente cliente) throws Exception {
         Optional<Usuario> existente = usuarioRepository.findByLogin(cliente.getLogin());
         if (existente.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-        Cliente novoCliente = (Cliente) usuarioRepository.save(cliente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
+        // Gera um salt aleatório (caso esteja no CadastroService, use ele corretamente)
+        String salt = cadastroService.gerarSalt();
+        
+        // Chama o método do UsuarioService
+        String senhaHash = HashUtil.hashSenhaComSalt(cliente.getSenha(), salt);
+
+        // Salva o hash da senha e o salt
+        cliente.setSenha(senhaHash);
+        cliente.setSalt(salt);
+
+        Usuario novoUsuario = usuarioRepository.save(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
+
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> alterar(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
@@ -68,15 +91,23 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public  ResponseEntity<Usuario> login(@RequestBody Login login) {
-       Optional<Usuario> op = usuarioRepository.findByLoginAndSenha(
-        login.getLogin(), login.getSenha());
-        if(op.isPresent()){
-            System.out.println(op);
-            return ResponseEntity.ok(op.get());
+    public ResponseEntity<Usuario> login(@RequestBody Login login) {
+        Optional<Usuario> op = usuarioRepository.findByLogin(login.getLogin());
+        
+        if (op.isPresent()) {
+            Usuario usuario = op.get();
+            try {
+                if (usuarioService.verificarSenha(login.getSenha(), usuario.getSenha(), usuario.getSalt())) {
+                    return ResponseEntity.ok(usuario);
+                } else {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
         }
-        else{
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+    
 }

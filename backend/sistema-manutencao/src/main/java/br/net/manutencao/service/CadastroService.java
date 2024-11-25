@@ -3,23 +3,17 @@ package br.net.manutencao.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.net.manutencao.HashUtil;
 import br.net.manutencao.model.Cliente;
 import br.net.manutencao.repository.CadastroRepository;
 
 import java.security.SecureRandom;
+import java.util.Base64;
 
 @Service
 public class CadastroService {
-
-    private final PasswordEncoder passwordEncoder;
-
-    
-    public CadastroService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Autowired
     private CadastroRepository cadastroRepository;
@@ -40,15 +34,18 @@ public class CadastroService {
             throw new IllegalArgumentException("CPF já cadastrado.");
         }
     
-        // Preenche o login automaticamente com o e-mail (ou qualquer outra lógica)
+        // Preenche o login automaticamente com o e-mail
         if (cliente.getLogin() == null || cliente.getLogin().isEmpty()) {
-            cliente.setLogin(cliente.getEmail().split("@")[0]);  // Exemplo: "usuario@dominio.com" -> "usuario"
+            cliente.setLogin(cliente.getEmail());  // "usuario@dominio.com" -> "usuario"
         }
     
         // Gera uma senha aleatória de 4 dígitos
         String senha = gerarSenha();
-        String senhaCriptografada = passwordEncoder.encode(senha);
-        cliente.setSenha(senhaCriptografada); 
+        String salt = HashUtil.gerarSalt();
+        String senhaHash = HashUtil.hashSenhaComSalt(senha, salt);
+
+        cliente.setSenha(senhaHash);
+        cliente.setSalt(salt);
     
         cadastroRepository.save(cliente);
     
@@ -62,6 +59,13 @@ public class CadastroService {
         SecureRandom random = new SecureRandom();
         int senha = random.nextInt(10000);  // 0 e 9999
         return String.format("%04d", Math.abs(senha));  // Formata para ter 4 dígitos
+    }
+
+    public String gerarSalt() {
+        byte[] salt = new byte[16];
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(salt);
+        return Base64.getEncoder().encodeToString(salt); // Converte o salt para Base64
     }
 
     // Envia o email com a senha gerada

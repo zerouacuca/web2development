@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.net.manutencao.model.Cliente;
 import br.net.manutencao.service.CadastroService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/clientes")
@@ -18,15 +19,14 @@ public class CadastroController {
     private CadastroService cadastroService;
 
     @PostMapping("/autocadastro")
-    public ResponseEntity<?> autocadastrar(@RequestBody Cliente cliente) {
+    public ResponseEntity<?> autocadastrar(@Valid @RequestBody Cliente cliente) {
         try {
-            cadastroService.autocadastrar(cliente);
-            return ResponseEntity.ok("Cadastro realizado com sucesso! Verifique seu e-mail para obter a senha.");
+            Cliente clienteCadastrado = cadastroService.autocadastrar(cliente);
+            return ResponseEntity.status(201).body(clienteCadastrado);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+            return ResponseEntity.status(409).body(Map.of("message", e.getMessage()));
         } catch (Exception e) {
-            e.printStackTrace(); // Exibe o erro no console para análise
-            return ResponseEntity.status(500).body(Map.of("message", e.getMessage()));
+            return ResponseEntity.status(500).body(Map.of("message", "Erro no servidor. Tente novamente mais tarde."));
         }
     }
 }

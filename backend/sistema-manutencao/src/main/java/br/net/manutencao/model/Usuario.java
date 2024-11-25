@@ -48,6 +48,9 @@ public abstract class Usuario {
     @Column(name = "cpf_usu", nullable = false, unique = true)
     @NotBlank(message = "O CPF não pode estar vazio.")
     private String cpf;
+    
+    @Column(nullable = false)
+    private String salt; 
 
     public enum Perfil {
         ADMIN("Administrador"),
