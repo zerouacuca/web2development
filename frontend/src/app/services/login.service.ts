@@ -1,44 +1,59 @@
-import { Injectable } from '@angular/core';
-import { Usuario, Login } from '../shared/models';
-import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
+import{ Injectable} from'@angular/core';
+import{ catchError, map, Observable, of, throwError} from 'rxjs';
+import { Usuario, Login } from '../shared/models'
 
-const LS_CHAVE: string = "usuarioLogado";
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+const LS_CHAVE: string= "usuarioLogado";
+
+@Injectable({ providedIn: 'root'})
 export class LoginService {
-  constructor(private router: Router) {}  
-  
-  public get usuarioLogado(): Usuario {
-    let usu = localStorage[LS_CHAVE];
-    return (usu ? JSON.parse(localStorage[LS_CHAVE]) : null);
-  }
-  
-  public set usuarioLogado(usuario: Usuario) {
-    localStorage[LS_CHAVE] = JSON.stringify(usuario);
-  }
-  
-  logout() {
-    delete localStorage[LS_CHAVE];
-  }
-  
-  login(login: Login): Observable<Usuario | null> {
-    let usu = new Usuario(1, login.login, login.login, login.senha, "FUNC");
 
-    if (login.login === login.senha) {
-      if (login.login === "admin") {
-        usu.perfil = "ADMIN";
-      } else if (login.login === "gerente") {
-        usu.perfil = "GERENTE";
-      }
+  BASE_URL = "http://localhost:8081/login";
 
-      this.usuarioLogado = usu;  
-      this.router.navigate(['/pgFuncionario']);  
-      return of(usu);
-    } else {
-      return of(null);
+  httpOptions = {
+
+    observe : "response" as "response",
+    headers : new HttpHeaders({
+      'Content-Type' : 'application/json'
+    })
+  }
+  constructor(private httpClient : HttpClient) { }
+
+  public get usuarioLogado(): Usuario{
+    let usu= localStorage[LS_CHAVE];
+    return(usu? JSON.parse(localStorage[LS_CHAVE]) : null);
     }
-  }
+    public set usuarioLogado(usuario: Usuario) {
+    localStorage[LS_CHAVE] = JSON.stringify(usuario);
+    } 
+   logout() {
+    delete localStorage[LS_CHAVE];
+    }
+
+    login(login: Login): Observable<Usuario | null> {
+
+      return this.httpClient.post<Usuario>
+      (this.BASE_URL, JSON.stringify(login),this.httpOptions)
+      .pipe(
+        map(( resp : HttpResponse<Usuario>) => {
+          if (resp.status === 200) {
+            return resp.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((err) => {
+          if (err.status === 401) {
+            return of(null);  // Retorna null em caso de erro 401
+          } else {
+            return throwError(() => err);  // Lança outro erro caso contrário
+          }
+        })
+      );
+      
+    }
+    
+    
+      
 }

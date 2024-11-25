@@ -2,29 +2,20 @@
     <div class="banner-login"></div>
         <div class="login-container">
         <h2>Login</h2>
-        <form id="loginForm"> <!--(ngSubmit)="onSubmit()" Implementar depois que der pra autentificar-->
+        <form #formLogin="ngForm" (ngSubmit)="logar()">
             <label for="email">E-mail</label>
-            <input type="email" id="email" [(ngModel)] = "email" name="email" required/>
+            <input type="email" id="email" name="login" [(ngModel)]="login.login" required />
+            
             <label for="senha">Senha</label>
-            <div style="display: flex; align-items: center;">
-                <input [type]="isPasswordVisible ? 'text' : 'password'" id="senha" [(ngModel)]="senha" name="senha" required/>
-                <button type="button" (click)="togglePasswordVisibility()">
-                    {{ isPasswordVisible ? 'Ocultar' : 'Mostrar' }}
-                </button>
-            </div>
-            <input type="password" id="senha" [(ngModel)]="senha" name="senha" required/>
-
-            <button type="submit"
-            [routerLink]="['/pgcliente']"> <!--Apagar isso quando for implementar a autentificação-->
-            Entrar  
-            </button>
-        </form>
-        <div class="links">
-            <a [routerLink]="['/cadastro']">
-                Não tem cadastro? Cadastre-se
-            </a>
-            <a [routerLink]="['/pgfuncionario']">Entrar como funcionario</a>
-            <a [routerLink]="['/funcionarios/listar']">Cadastrar funcionário</a>
-        </div>
+            <input type="password" id="senha" name="senha" [(ngModel)]="login.senha"required />
+            
+            <button type="button" class="btn btn-primary" (click)="logar()" [disabled]="!formLogin.form.valid">
+                <i class="fa fa-save" aria-hidden="true"></i> Logar
+              </button>
+          </form>
+          
+        <br>
+        <a [routerLink]="['/cadastro']">Não tem cadastro? Cadastre-se</a>
+       
     </div>
 </div>

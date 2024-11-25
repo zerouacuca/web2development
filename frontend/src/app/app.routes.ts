@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { PgClienteComponent } from './components/pg-cliente/pg-cliente.component';
 import { NovaSolicitacaoComponent } from './components/nova-solicitacao/nova-solicitacao.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
@@ -34,35 +34,152 @@ export const routes: Routes = [
         // o que precisa add permissoes de rotas
          canActivate: [authGuard],
         data: {
-            role: 'CLIENTE'
+            role: ['CLIENTE']
         }},
         // 
-    {'path': 'novasolicitacao', component:NovaSolicitacaoComponent},
+    {
+        'path': 'novasolicitacao',
+        canActivate: [authGuard],
+        data: {
+            role: ['CLIENTE']
+        }   
+        },
     {'path': 'cadastro', component:CadastroComponent},
-    {'path': 'pgfuncionario', component:PgFuncionarioComponent},
-    {'path': 'orcamentocliente', component:OrcamentoclienteComponent},
-    {'path': 'solicitabertas', component:SolicitabertafuncComponent},
-    {'path': 'aplicarmanutencao', component:AplicarmanutencaoComponent},
-    {'path': 'redirecionarmanutencao', component:RedirecionarmanutencaoComponent},
-    {'path': 'efetuarorcamento', component:EfetuarorcamentoComponent},
-    {'path': 'finalizarsolicitacao', component:FinalizarsolicitComponent},
-    {'path': 'visualizarservicos', component:VisualizarservicosComponent},
-    {'path': 'pagarservico', component:PagarservicoComponent},
-    {'path': 'relatoriodata', component:RelatoriodataComponent},
+    {
+        'path': 'pgfuncionario',
+         component:PgFuncionarioComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ["ADMIN", "FUNCIONARIO"]
+         
+        }
+    },
+    {
+        'path': 'orcamentocliente',
+         component:OrcamentoclienteComponent,
+         data: {
+            role: ['CLIENTE']
+        }
+        
+        },
+    {
+        'path': 'solicitabertas',
+         component:SolicitabertafuncComponent,
+         data: {
+            role: ['FUNCIONARIO']
+        }
+        },
+    {
+        'path': 'aplicarmanutencao',
+         component:AplicarmanutencaoComponent,
+         data: {
+            role: ['FUNCIONARIO']
+        }
+        },
+    {
+        'path': 'redirecionarmanutencao',
+         component:RedirecionarmanutencaoComponent,
+         data: {
+            role: ['FUNCIONARIO']
+        }
+    },
+    {
+        'path': 'efetuarorcamento',
+         component:EfetuarorcamentoComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }},
+    {
+        'path': 'finalizarsolicitacao',
+         component:FinalizarsolicitComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }},
+    {
+        'path': 'visualizarservicos', 
+        component:VisualizarservicosComponent,
+        canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }
+    },
+    {
+        'path': 'pagarservico',
+         component:PagarservicoComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['CLIENTE']
+         }
+        },
+    {
+        'path': 'relatoriodata',
+         component:RelatoriodataComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN']
+         }
+        },
     {
         'path': 'relatorioCategoria',
          component:RelatorioCategoriaComponent,
          canActivate: [authGuard],
          data: {
-             role: 'ADMIN'
+             role: ['ADMIN']
 
         }},
-    {'path': 'crud-funcionario', redirectTo: 'funcionarios/listar', pathMatch: 'full'},
-    {'path': 'funcionarios/listar', component: ListarFuncionarioComponent},
-    {'path': 'funcionarios/novo', component: InserirFuncionarioComponent},
-    {'path': 'funcionarios/editar/:id', component: EditarFuncionarioComponent},
-    {'path': 'categorias/listar', component: ListarCategoriaComponent},
-    {'path': 'categorias/novo', component: InserirCategoriaComponent},
+    {
+        'path': 'crud-funcionario', redirectTo: 'funcionarios/listar', pathMatch: 'full'},
+    {
+        'path': 'funcionarios/listar',
+         component: ListarFuncionarioComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }
+        },
+    {
+        'path': 'funcionarios/novo',
+         component: InserirFuncionarioComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }
+        },
+    {
+        
+        // VERIFICAR ESSA ROTA??? PODE USAR O VERBO EDITAR?
+        'path': 'funcionarios/editar/:id',
+         component: EditarFuncionarioComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }
+        },
+    {
+        'path': 'categorias/listar',
+         component: ListarCategoriaComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }
+        },
+    {
+        'path': 'categorias/novo',
+         component: InserirCategoriaComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }
+        },
     // {'path': 'categorias/excluir', component: ExcluirCategoriaComponent},
-    {'path': 'categorias/atualizar', component: AtualizarCategoriaComponent}
+    {
+        'path': 'categorias/atualizar',
+         component: AtualizarCategoriaComponent,
+         canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'FUNCIONARIO']
+         }
+        }
 ];
