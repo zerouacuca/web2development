@@ -35,22 +35,28 @@ public class CadastroService {
         if (cadastroRepository.existsByEmail(cliente.getEmail())) {
             throw new IllegalArgumentException("E-mail já cadastrado.");
         }
-
+    
         if (cadastroRepository.existsByCpf(cliente.getCpf())) {
             throw new IllegalArgumentException("CPF já cadastrado.");
         }
-
+    
+        // Preenche o login automaticamente com o e-mail (ou qualquer outra lógica)
+        if (cliente.getLogin() == null || cliente.getLogin().isEmpty()) {
+            cliente.setLogin(cliente.getEmail().split("@")[0]);  // Exemplo: "usuario@dominio.com" -> "usuario"
+        }
+    
         // Gera uma senha aleatória de 4 dígitos
         String senha = gerarSenha();
         String senhaCriptografada = passwordEncoder.encode(senha);
-        cliente.setSenha(senhaCriptografada);
-
+        cliente.setSenha(senhaCriptografada); 
+    
         cadastroRepository.save(cliente);
-
+    
         enviarEmailComSenha(cliente.getEmail(), senha);
-
+    
         return cliente;
     }
+    
 
     private String gerarSenha() {
         SecureRandom random = new SecureRandom();

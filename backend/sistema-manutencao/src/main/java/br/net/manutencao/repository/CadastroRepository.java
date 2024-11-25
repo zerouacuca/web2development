@@ -8,3 +8,4 @@ public interface CadastroRepository extends JpaRepository<Cliente, Long> {
     boolean existsByEmail(String email);
     boolean existsByCpf(String cpf);
 }
+ 
