@@ -3,31 +3,27 @@ package br.net.manutencao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();  // Ou qualquer outro encoder que você prefira
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Desabilita CSRF para facilitar testes
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/clientes/autocadastro").permitAll() // Permite acesso sem autenticação
-                .anyRequest().authenticated() // Requer autenticação para outros endpoints
+            .authorizeHttpRequests(authorizeRequests ->
+                authorizeRequests
+                    .requestMatchers("/**").permitAll() // Permite todas as rotas
+                    .anyRequest().authenticated() // Requer autenticação em outras rotas
             )
-            .httpBasic(withDefaults()); // Habilita autenticação básica
+            .csrf(csrf -> csrf.disable()); // Desativa CSRF
         return http.build();
     }
-
 }
+
