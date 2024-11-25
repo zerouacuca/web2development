@@ -41,7 +41,7 @@ export class CadastroComponent {
       }
     );
   }
-
+ 
   onSubmit() {
     const cadastroData = {
       cpf: this.cpf,
@@ -57,7 +57,7 @@ export class CadastroComponent {
       complemento: this.complemento // Adicionando complemento ao objeto de cadastro
     };
 
-    this.http.post('/clientes/autocadastro', cadastroData).subscribe(
+    this.http.post('http://localhost:8081/clientes/autocadastro', cadastroData).subscribe(
       () => {
         alert('Cadastro realizado com sucesso! Verifique seu email para receber a senha.')
       },

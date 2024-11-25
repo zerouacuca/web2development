@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
           // Verificar o perfil do usuário e redirecionar
           switch (usu.perfil.toString()) {
 
-            case "ADMIN" :
+            case "ADMIN" : //Aqui é melhor ser o perfil funcionario. O admin é um perfil "mestre", criado  manualmente no bd
               this.router.navigate(['/pgfuncionario']);
               break;
             case "CLIENTE":
