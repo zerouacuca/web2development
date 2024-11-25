@@ -1,19 +1,19 @@
-package br.net.manutencao.controller;
+// package br.net.manutencao.controller;
 
-import br.net.manutencao.model.Orcamento;
-import br.net.manutencao.service.OrcamentoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+// import br.net.manutencao.model.Orcamento;
+// import br.net.manutencao.service.OrcamentoService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/orcamento")
-public class MostrarOrcamentoController {
+// @RestController
+// @RequestMapping("/api/orcamento")
+// public class MostrarOrcamentoController {
 
-    @Autowired
-    private OrcamentoService orcamentoService;
+//     @Autowired
+//     private OrcamentoService orcamentoService;
 
-    @GetMapping("/{id}")
-    public Orcamento getOrcamento(@PathVariable Long id) {
-        return orcamentoService.buscarOrcamentoPorId(id);
-    }
-}
+//     @GetMapping("/{id}")
+//     public Orcamento getOrcamento(@PathVariable Long id) {
+//         return orcamentoService.buscarOrcamentoPorId(id);
+//     }
+// }

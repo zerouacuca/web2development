@@ -1,76 +1,76 @@
-package br.net.manutencao.service;
+// package br.net.manutencao.service;
 
-import java.util.List;
+// import java.util.List;
 
-import org.springframework.stereotype.Service;
+// import org.springframework.stereotype.Service;
 
-import br.net.manutencao.model.Solicitacao;
-import br.net.manutencao.repository.SolicitacaoRepository;
+// import br.net.manutencao.model.Solicitacao;
+// import br.net.manutencao.repository.SolicitacaoRepository;
 
-@Service
-public class SolicitacaoService {
+// @Service
+// public class SolicitacaoService {
 
-    private final SolicitacaoRepository solicitacaoRepository;
+//     private final SolicitacaoRepository solicitacaoRepository;
 
-    public SolicitacaoService(SolicitacaoRepository solicitacaoRepository) {
-        this.solicitacaoRepository = solicitacaoRepository;
-    }
+//     public SolicitacaoService(SolicitacaoRepository solicitacaoRepository) {
+//         this.solicitacaoRepository = solicitacaoRepository;
+//     }
     
-    public List<Solicitacao> buscarPorCliente(Long idCliente) {
-        return solicitacaoRepository.findByClienteId(idCliente);
-    }
-      public Solicitacao aprovarServico(Long id) {
-        Solicitacao solicitacao = solicitacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
+//     public List<Solicitacao> buscarPorCliente(Long idCliente) {
+//         return solicitacaoRepository.findByClienteId(idCliente);
+//     }
+//       public Solicitacao aprovarServico(Long id) {
+//         Solicitacao solicitacao = solicitacaoRepository.findById(id)
+//                 .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
 
-        solicitacao.setEstado("APROVADA");
-        solicitacao.setDataHoraAprovacao(LocalDateTime.now());
+//         solicitacao.setEstado("APROVADA");
+//         solicitacao.setDataHoraAprovacao(LocalDateTime.now());
 
-        return solicitacaoRepository.save(solicitacao);
-    }
+//         return solicitacaoRepository.save(solicitacao);
+//     }
 
-    public Solicitacao rejeitarServico(Long id, String motivo) {
-        Solicitacao solicitacao = solicitacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
+//     public Solicitacao rejeitarServico(Long id, String motivo) {
+//         Solicitacao solicitacao = solicitacaoRepository.findById(id)
+//                 .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
 
-        solicitacao.setEstado("REJEITADA");
-        solicitacao.setMotivoRejeicao(motivo);
-        solicitacao.setDataHoraRejeicao(LocalDateTime.now());
+//         solicitacao.setEstado("REJEITADA");
+//         solicitacao.setMotivoRejeicao(motivo);
+//         solicitacao.setDataHoraRejeicao(LocalDateTime.now());
 
-        return solicitacaoRepository.save(solicitacao);
-    }
+//         return solicitacaoRepository.save(solicitacao);
+//     }
     
-    public List<Solicitacao> getSolicitacoesAbertas() {
-        return solicitacaoRepository.findByEstado("ABERTA");
-    }
+//     public List<Solicitacao> getSolicitacoesAbertas() {
+//         return solicitacaoRepository.findByEstado("ABERTA");
+//     }
 
-    public Solicitacao efetuarOrcamento(Long id, Double valorOrcamento, String funcionario) {
-        Solicitacao solicitacao = solicitacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
+//     public Solicitacao efetuarOrcamento(Long id, Double valorOrcamento, String funcionario) {
+//         Solicitacao solicitacao = solicitacaoRepository.findById(id)
+//                 .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
 
-        solicitacao.setValorOrcamento(valorOrcamento);
-        solicitacao.setFuncionarioOrcamento(funcionario);
-        solicitacao.setDataHoraOrcamento(LocalDateTime.now());
-        solicitacao.setEstado("ORÇADA");
+//         solicitacao.setValorOrcamento(valorOrcamento);
+//         solicitacao.setFuncionarioOrcamento(funcionario);
+//         solicitacao.setDataHoraOrcamento(LocalDateTime.now());
+//         solicitacao.setEstado("ORÇADA");
 
-        return solicitacaoRepository.save(solicitacao);
-    }
+//         return solicitacaoRepository.save(solicitacao);
+//     }
 
-    public List<Solicitacao> listarSolicitacoesFiltradas(
-            String estado, LocalDateTime inicio, LocalDateTime fim, String destino) {
-        return solicitacaoRepository.findSolicitacoesFiltradas(estado, inicio, fim, destino);
-    }
+//     public List<Solicitacao> listarSolicitacoesFiltradas(
+//             String estado, LocalDateTime inicio, LocalDateTime fim, String destino) {
+//         return solicitacaoRepository.findSolicitacoesFiltradas(estado, inicio, fim, destino);
+//     }
 
-    public Solicitacao finalizarSolicitacao(Long id, String funcionario) {
-        Solicitacao solicitacao = solicitacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
+//     public Solicitacao finalizarSolicitacao(Long id, String funcionario) {
+//         Solicitacao solicitacao = solicitacaoRepository.findById(id)
+//                 .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
 
-        solicitacao.setEstado("FINALIZADA");
-        solicitacao.setDataHoraFinalizacao(LocalDateTime.now());
-        solicitacao.setFuncionarioFinalizacao(funcionario);
+//         solicitacao.setEstado("FINALIZADA");
+//         solicitacao.setDataHoraFinalizacao(LocalDateTime.now());
+//         solicitacao.setFuncionarioFinalizacao(funcionario);
 
-        return solicitacaoRepository.save(solicitacao);
-    }
-}
+//         return solicitacaoRepository.save(solicitacao);
+//     }
+// }
 
 
