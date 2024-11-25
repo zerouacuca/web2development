@@ -14,14 +14,21 @@ import java.security.SecureRandom;
 @Service
 public class CadastroService {
 
+    private final PasswordEncoder passwordEncoder;
+
+    
+    public CadastroService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Autowired
     private CadastroRepository cadastroRepository;
 
     @Autowired
     private JavaMailSender mailSender;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // @Autowired
+    // private PasswordEncoder passwordEncoder;
 
     public Cliente autocadastrar(Cliente cliente) throws Exception {
 

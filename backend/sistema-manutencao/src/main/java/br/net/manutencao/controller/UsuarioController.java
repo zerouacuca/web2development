@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.net.manutencao.model.Cliente;
+import br.net.manutencao.model.Login;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.UsuarioRepository;
 //teste
@@ -13,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/usuarios")
 @CrossOrigin(origins = "http://localhost:4200") // Permitindo o CORS para o frontend Angular
 public class UsuarioController {
 
@@ -64,6 +64,19 @@ public class UsuarioController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("/login")
+    public  ResponseEntity<Usuario> login(@RequestBody Login login) {
+       Optional<Usuario> op = usuarioRepository.findByLoginAndSenha(
+        login.getLogin(), login.getSenha());
+        if(op.isPresent()){
+            System.out.println(op);
+            return ResponseEntity.ok(op.get());
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }
