@@ -22,27 +22,76 @@ export class CadastroComponent {
   rua: string = '';
   bairro: string = '';
   localidade: string = '';
-  estado: string = ''; // Adicionando campo para o estado
-  numero: string = ''; // Adicionando campo para o número
-  complemento: string = ''; // Adicionando campo para o complemento
+  estado: string = ''; 
+  numero: string = ''; 
+  complemento: string = ''; 
 
   constructor(private cepService: CepService, private http: HttpClient) {}
 
   buscarCep() {
+    if (!this.cep) {
+      alert('Por favor, informe um CEP válido.');
+      return;
+    }
+
     this.cepService.buscarCep(this.cep).subscribe(
       (data) => {
         this.rua = data.logradouro;
         this.bairro = data.bairro;
         this.localidade = data.localidade;
-        this.estado = data.uf; // Preenchendo o estado com o dado da API
+        this.estado = data.uf;
       },
       (error) => {
         console.error('Erro ao buscar CEP', error);
+        alert('Erro ao buscar o CEP. Por favor, tente novamente.');
       }
     );
   }
- 
+
+  validarFormulario(): boolean {
+    if (!this.nome || !this.email || !this.cpf || !this.cep || !this.tel) {
+      alert('Por favor, preencha todos os campos obrigatórios!');
+      return false;
+    }
+    if (!this.validarEmail(this.email)) {
+      alert('E-mail inválido!');
+      return false;
+    }
+    if (!this.validarCPF(this.cpf)) {
+      alert('CPF inválido!');
+      return false;
+    }
+    return true;
+  }
+
+  validarEmail(email: string): boolean {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  validarCPF(cpf: string): boolean {
+    cpf = cpf.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+    let soma = 0;
+    let resto;
+    for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+    soma = 0;
+    for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+  }
+
   onSubmit() {
+    if (!this.validarFormulario()) return;
+
     const cadastroData = {
       cpf: this.cpf,
       nome: this.nome,
@@ -52,19 +101,29 @@ export class CadastroComponent {
       rua: this.rua,
       bairro: this.bairro,
       localidade: this.localidade,
-      estado: this.estado, // Adicionando estado ao objeto de cadastro
-      numero: this.numero, // Adicionando número ao objeto de cadastro
-      complemento: this.complemento // Adicionando complemento ao objeto de cadastro
+      estado: this.estado,
+      numero: this.numero,
+      complemento: this.complemento
     };
 
     this.http.post('http://localhost:8081/clientes/autocadastro', cadastroData).subscribe(
       () => {
-        alert('Cadastro realizado com sucesso! Verifique seu email para receber a senha.')
+        alert('Cadastro realizado com sucesso! Verifique seu email para receber a senha.');
+        this.redirecionarParaLogin();
       },
       (error) => {
         console.error('Erro ao cadastrar:', error);
-        alert('Erro ao cadastrar: ' + error.error.message);
+        if (error.status === 409) {
+          alert('E-mail ou CPF já cadastrado. Redirecionando para a página de login.');
+          this.redirecionarParaLogin();
+        } else {
+          alert('Erro ao cadastrar: ' + (error.error.message || 'Tente novamente mais tarde.'));
+        }
       }
     );
+  }
+
+  redirecionarParaLogin() {
+    window.location.href = '/login';
   }
 }
