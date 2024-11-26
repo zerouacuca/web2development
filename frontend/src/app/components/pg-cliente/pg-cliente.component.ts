@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { NgFor, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';  // Importe o HttpClient
+import { Observable } from 'rxjs';
 
 interface Request {
   date: string;
@@ -9,7 +11,6 @@ interface Request {
   status: string;
   id_employee?: string;
 }
-
 
 @Component({
   selector: 'app-pg-cliente',
@@ -19,35 +20,13 @@ interface Request {
   styleUrls: ['./pg-cliente.component.css'],
 })
 export class PgClienteComponent implements OnInit {
-  requests = [
-    {
-      date: '2024-09-15 10:00',
-      description: 'Impressora HP LaserJet',
-      status: 'ORÇADA',
-    },
-    {
-      date: '2024-09-14 09:30',
-      description: 'Notebook Dell Inspiron',
-      status: 'APROVADA',
-    },
-    {
-      date: '2024-09-13 08:45',
-      description: 'Monitor Samsung',
-      status: 'REJEITADA',
-    },
-    {
-      date: '2024-09-12 11:15',
-      description: 'Teclado Logitech',
-      status: 'ARRUMADA',
-    },
-    {
-      date: '2024-09-11 14:00',
-      description: 'Mouse Microsoft',
-      status: 'OUTRO',
-    },
-  ];
+  requests: Request[] = [];  // A lista de solicitações será preenchida pela API
 
-  ngOnInit() {
+  constructor(private router: Router, private http: HttpClient) { }
+
+  ngOnInit(): void {
+    this.listarSolicitacoes();
+
     const statusAtualizado = localStorage.getItem('statusSolicitacao');
     if (statusAtualizado) {
       this.requests[0].status = statusAtualizado;
@@ -55,7 +34,19 @@ export class PgClienteComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router) { }
+  // Função que faz a requisição para a API
+  listarSolicitacoes(): void {
+    const clienteId = 1;  // Substituir por um valor dinâmico
+    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${clienteId}`).subscribe(
+      (data) => {
+        console.log(data);
+        this.requests = data;  // Preenche a lista de solicitações com a resposta da API
+      },
+      (error) => {
+        console.error('Erro ao buscar as solicitações:', error);
+      }
+    );
+  }
 
   aprovarServico() {
     this.router.navigate(['orcamentocliente']);
@@ -64,6 +55,7 @@ export class PgClienteComponent implements OnInit {
   resgatarServico(index: number) {
     this.requests[index].status = 'APROVADA';
   }
+
   pagarServico() {
     this.router.navigate(['pagarservico']);
   }
@@ -71,6 +63,7 @@ export class PgClienteComponent implements OnInit {
   visualizarServico() {
     this.router.navigate(['visualizarservicos']);
   }
+
   getStatusClass(status: string): string {
     switch (status) {
       case 'ORÇADA': return 'orcada';
@@ -99,20 +92,13 @@ export class PgClienteComponent implements OnInit {
 
   getActionButtonClass(status: string): string {
     switch (status) {
-      case 'ORÇADA':
-        return 'orcada';
-      case 'REJEITADA':
-        return 'rejeitar';
-      case 'ABERTA':
-        return 'aberta';
-      case 'ARRUMADA':
-        return 'arrumada';
-      case 'PAGA':
-        return 'paga';
-      case 'AGUARDANDO PAGAMENTO':
-        return 'aguardandoPagamento';
-      default:
-        return 'visualizarServico';
+      case 'ORÇADA': return 'orcada';
+      case 'REJEITADA': return 'rejeitar';
+      case 'ABERTA': return 'aberta';
+      case 'ARRUMADA': return 'arrumada';
+      case 'PAGA': return 'paga';
+      case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
+      default: return 'visualizarServico';
     }
   }
 
@@ -139,4 +125,3 @@ export class PgClienteComponent implements OnInit {
     }
   }
 }
-
