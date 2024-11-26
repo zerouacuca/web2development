@@ -5,11 +5,22 @@ import { NgFor, CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+interface Cliente {
+    id: number;
+    nome: string;
+    login: string;
+    email: string;
+    telefone: string | null;
+    endereco: string | null;
+    cpf: string;
+  }
+
 interface Request {
     date: string;
     description: string;
     status: string;
     id_employee: string;
+    cliente: Cliente;
 }
 
 @Component({
@@ -26,7 +37,7 @@ export class PgFuncionarioComponent implements OnInit {
 
     filteredRequests: Request[] = [...this.requests];
     startDate: string | undefined;
-    endDate: string | undefined;
+    endDate: string | undefined;   
 
     listarSolicitacoes(): void {
         const usuarioId = 1;  // Substituir por um valor dinâmico
