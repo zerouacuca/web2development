@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-import { LoginComponent } from '../login/login.component';
-import { NgFor, NgIf, CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { NgFor, CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Request {
   date: string;
@@ -15,7 +14,7 @@ interface Request {
 @Component({
   selector: 'app-pg-cliente',
   standalone: true,
-  imports: [HeaderComponent, LoginComponent, NgFor, NgIf, CommonModule, RouterLink],
+  imports: [HeaderComponent, NgFor, CommonModule],
   templateUrl: './pg-cliente.component.html',
   styleUrls: ['./pg-cliente.component.css'],
 })
