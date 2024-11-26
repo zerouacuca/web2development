@@ -37,13 +37,6 @@ export const routes: Routes = [
             role: ['CLIENTE']
         }},
         // 
-    {
-        'path': 'novasolicitacao',
-        canActivate: [authGuard],
-        data: {
-            role: ['CLIENTE']
-        }   
-        },
     {'path': 'cadastro', component:CadastroComponent},
     {
         'path': 'pgfuncionario',
@@ -102,7 +95,15 @@ export const routes: Routes = [
         component:VisualizarservicosComponent,
         canActivate: [authGuard],
          data: {
-             role: ['ADMIN', 'FUNCIONARIO']
+             role: ['ADMIN', 'FUNCIONARIO', 'CLIENTE']
+         }
+    },
+    {
+        'path': 'novasolicitacao', 
+        component:NovaSolicitacaoComponent,
+        canActivate: [authGuard],
+         data: {
+             role: ['ADMIN', 'CLIENTE']
          }
     },
     {
