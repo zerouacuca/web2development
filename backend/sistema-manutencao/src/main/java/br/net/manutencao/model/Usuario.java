@@ -49,6 +49,10 @@ public abstract class Usuario {
     @NotBlank(message = "O CPF não pode estar vazio.")
     private String cpf;
     
+    @Column(name = "dataNasc", nullable = false, unique = true)
+    @NotBlank(message = "A data de nascimento não pode estar vazia.")
+    private String dataNasc;
+    
     @Column(nullable = false)
     private String salt; 
 

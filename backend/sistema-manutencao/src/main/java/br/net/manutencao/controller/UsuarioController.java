@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import br.net.manutencao.model.Cliente;
 import br.net.manutencao.model.Login;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.UsuarioRepository;
@@ -44,7 +43,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/clientes")
-    public ResponseEntity<Usuario> cadastrarCliente(@RequestBody Cliente cliente) throws Exception {
+    public ResponseEntity<Usuario> cadastrarCliente(@RequestBody Usuario cliente) throws Exception {
         Optional<Usuario> existente = usuarioRepository.findByLogin(cliente.getLogin());
         if (existente.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();

@@ -32,9 +32,9 @@ public class Solicitacao {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
+    private Usuario cliente;
 
     @ManyToOne
     @JoinColumn(name = "funcionario_id", nullable = false)
-    private Funcionario funcionario;
+    private Usuario funcionario;
 }
