@@ -28,7 +28,7 @@ public class Solicitacao {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Estado status;
+    private EnumStatus status;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -37,4 +37,5 @@ public class Solicitacao {
     @ManyToOne
     @JoinColumn(name = "funcionario_id", nullable = false)
     private Usuario funcionario;
+
 }

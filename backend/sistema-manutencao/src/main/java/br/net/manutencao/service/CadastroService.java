@@ -34,11 +34,6 @@ public class CadastroService {
             throw new IllegalArgumentException("CPF já cadastrado.");
         }
     
-        // Preenche o login automaticamente com o e-mail
-        if (usuario.getLogin() == null || usuario.getLogin().isEmpty()) {
-            usuario.setLogin(usuario.getEmail());  // "usuario@dominio.com" -> "usuario"
-        }
-    
         // Gera uma senha aleatória de 4 dígitos
         String senha = gerarSenha();
         String salt = HashUtil.gerarSalt();

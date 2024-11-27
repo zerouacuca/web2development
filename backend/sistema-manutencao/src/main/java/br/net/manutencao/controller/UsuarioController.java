@@ -44,7 +44,7 @@ public class UsuarioController {
 
     @PostMapping("/clientes")
     public ResponseEntity<Usuario> cadastrarCliente(@RequestBody Usuario cliente) throws Exception {
-        Optional<Usuario> existente = usuarioRepository.findByLogin(cliente.getLogin());
+        Optional<Usuario> existente = usuarioRepository.findByEmail(cliente.getEmail());
         if (existente.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
@@ -91,7 +91,7 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<Usuario> login(@RequestBody Login login) {
-        Optional<Usuario> op = usuarioRepository.findByLogin(login.getLogin());
+        Optional<Usuario> op = usuarioRepository.findByEmail(login.getLogin());
         
         if (op.isPresent()) {
             Usuario usuario = op.get();

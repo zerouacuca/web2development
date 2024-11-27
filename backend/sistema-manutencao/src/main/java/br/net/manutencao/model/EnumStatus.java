@@ -1,6 +1,6 @@
 package br.net.manutencao.model;
 
-public enum Estado {
+public enum EnumStatus {
     ORCADA,
     APROVADA,
     REJEITADA,
