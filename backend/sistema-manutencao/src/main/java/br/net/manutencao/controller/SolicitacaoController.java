@@ -32,4 +32,6 @@ public class SolicitacaoController {
         // Retorna 200 OK com as solicitações
         return ResponseEntity.ok(solicitacoes);
     }
+
+    
 }

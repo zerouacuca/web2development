@@ -41,7 +41,7 @@ export class SolicitabertafuncComponent {
   // Método para listar solicitações
   listarSolicitacoes(): void {
     const usuarioId = 1;  // Substituir por um valor dinâmico
-    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${usuarioId}`).subscribe(
+    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listarabertas/${usuarioId}`).subscribe(
       (data) => {
         console.log(data);
         this.requests = data;
