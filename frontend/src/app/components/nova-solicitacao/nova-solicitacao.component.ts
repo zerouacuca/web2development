@@ -4,7 +4,6 @@ import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { SolicitacaoManutencaoService, Solicitacao } from '../../services/solicitacaomanutencao.service';
 
@@ -15,13 +14,13 @@ const states = [
 	'Tablet',
 	'Fone de ouvido',
 	'Mouse',
-  	'Teclado',
+  'Teclado',
 ];
 
 @Component({
   selector: 'app-nova-solicitacao',
   standalone: true,
-  imports: [NgbTypeaheadModule, FormsModule, JsonPipe, HeaderComponent],
+  imports: [NgbTypeaheadModule, FormsModule, HeaderComponent],
   templateUrl: './nova-solicitacao.component.html',
   styleUrls: ['./nova-solicitacao.component.css']
 })

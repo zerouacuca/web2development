@@ -17,16 +17,16 @@ export class LoginComponent implements OnInit {
   @ViewChild('formLogin') formLogin!: NgForm;  // Corrigido para garantir que a referência seja de um formulário
   login: Login = new Login();
   loading: boolean = false;
-  message!: string ;  
+  message!: string;
 
   constructor(
     private loginService: LoginService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    
+
     if (this.loginService.usuarioLogado) {
       // this.router.navigate(['/home']);
       console.log(this.loginService.usuarioLogado)
@@ -46,16 +46,20 @@ export class LoginComponent implements OnInit {
         if (usu != null) {
           this.loginService.usuarioLogado = usu;
           this.loading = false;
-  
+
           // Verificar o perfil do usuário e redirecionar
           switch (usu.perfil.toString()) {
 
-            case "ADMIN" : //Aqui é melhor ser o perfil funcionario. O admin é um perfil "mestre", criado  manualmente no bd
+            case "ADMIN": //Aqui é melhor ser o perfil funcionario. O admin é um perfil "mestre", criado  manualmente no bd
               this.router.navigate(['/pgfuncionario']);
               break;
             case "CLIENTE":
               this.router.navigate(['/pgcliente']);
               break;
+            case "FUNCIONARIO":
+              this.router.navigate(['/pgfuncionario']);
+              break;
+
             default:
               this.router.navigate(['/login']);
               break;
@@ -69,5 +73,5 @@ export class LoginComponent implements OnInit {
     }
     this.loading = false;
   }
-  
+
 }

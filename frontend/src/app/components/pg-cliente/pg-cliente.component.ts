@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from "../header/header.component"; 
-import { LoginComponent } from '../login/login.component'; 
-import { NgFor, NgIf, CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { HeaderComponent } from "../header/header.component";
+import { NgFor, CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';  // Importe o HttpClient
+import { Observable } from 'rxjs';
 
 interface Request {
   date: string;
@@ -11,44 +12,21 @@ interface Request {
   id_employee?: string;
 }
 
-
 @Component({
   selector: 'app-pg-cliente',
   standalone: true,
-  imports: [HeaderComponent, LoginComponent, NgFor, NgIf, CommonModule, RouterLink],
+  imports: [HeaderComponent, NgFor, CommonModule],
   templateUrl: './pg-cliente.component.html',
   styleUrls: ['./pg-cliente.component.css'],
 })
 export class PgClienteComponent implements OnInit {
-  requests = [
-    {
-      date: '2024-09-15 10:00',
-      description: 'Impressora HP LaserJet',
-      status: 'ORÇADA',
-    },
-    {
-      date: '2024-09-14 09:30',
-      description: 'Notebook Dell Inspiron',
-      status: 'APROVADA',
-    },
-    {
-      date: '2024-09-13 08:45',
-      description: 'Monitor Samsung',
-      status: 'REJEITADA',
-    },
-    {
-      date: '2024-09-12 11:15',
-      description: 'Teclado Logitech',
-      status: 'ARRUMADA',
-    },
-    {
-      date: '2024-09-11 14:00',
-      description: 'Mouse Microsoft',
-      status: 'OUTRO',
-    },
-  ];
+  requests: Request[] = [];  // A lista de solicitações será preenchida pela API
 
-  ngOnInit() {
+  constructor(private router: Router, private http: HttpClient) { }
+
+  ngOnInit(): void {
+    this.listarSolicitacoes();
+
     const statusAtualizado = localStorage.getItem('statusSolicitacao');
     if (statusAtualizado) {
       this.requests[0].status = statusAtualizado;
@@ -56,7 +34,19 @@ export class PgClienteComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router) {}
+  // Função que faz a requisição para a API
+  listarSolicitacoes(): void {
+    const clienteId = 1;  // Substituir por um valor dinâmico
+    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${clienteId}`).subscribe(
+      (data) => {
+        console.log(data);
+        this.requests = data;  // Preenche a lista de solicitações com a resposta da API
+      },
+      (error) => {
+        console.error('Erro ao buscar as solicitações:', error);
+      }
+    );
+  }
 
   aprovarServico() {
     this.router.navigate(['orcamentocliente']);
@@ -65,6 +55,7 @@ export class PgClienteComponent implements OnInit {
   resgatarServico(index: number) {
     this.requests[index].status = 'APROVADA';
   }
+
   pagarServico() {
     this.router.navigate(['pagarservico']);
   }
@@ -72,72 +63,65 @@ export class PgClienteComponent implements OnInit {
   visualizarServico() {
     this.router.navigate(['visualizarservicos']);
   }
+
   getStatusClass(status: string): string {
     switch (status) {
-        case 'ORÇADA': return 'orcada';
-        case 'REJEITADA': return 'rejeitada';
-        case 'ABERTA': return 'aberta';
-        case 'ARRUMADA': return 'arrumada';
-        case 'APROVADA': return 'aprovada';
-        case 'PAGA': return 'paga';
-        case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
-        default: return '';
+      case 'ORÇADA': return 'orcada';
+      case 'REJEITADA': return 'rejeitada';
+      case 'ABERTA': return 'aberta';
+      case 'ARRUMADA': return 'arrumada';
+      case 'APROVADA': return 'aprovada';
+      case 'PAGA': return 'paga';
+      case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
+      default: return '';
     }
-}
+  }
 
-getActionButtonText(status: string): string {
-  switch (status) {
-      case 'ORÇADA': return 'Em espera de aprovação';
+  getActionButtonText(status: string): string {
+    switch (status) {
+      case 'ORÇADA': return 'Aprovar/Rejeitar serviço';
       case 'REJEITADA': return 'Resgatar Serviço';
       case 'ABERTA': return 'Efetuar Orçamento';
-      case 'ARRUMADA': return 'Efetuar Manutenção?';
-      case 'APROVADA': return 'Efetuar Manutenção';
+      case 'ARRUMADA': return 'Pagar Serviço';
+      case 'APROVADA': return 'Em manutenção';
       case 'PAGA': return 'Finalizar Solicitação';
       case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
-      default: return 'Ação Indefinida';
+      default: return 'Visualizar serviço';
+    }
   }
-}
 
-getActionButtonClass(status: string): string {
-  switch (status) {
-      case 'ORÇADA':
-          return 'orcada';
-      case 'REJEITADA':
-          return 'rejeitar';
-      case 'ABERTA':
-          return 'aberta';
-      case 'ARRUMADA':
-          return 'arrumada';
-      case 'APROVADA':
-          return 'aprovada';
-      case 'PAGA':
-          return 'paga';
-      case 'AGUARDANDO PAGAMENTO':
-          return 'aguardandoPagamento';
-      default:
-          return '';
+  getActionButtonClass(status: string): string {
+    switch (status) {
+      case 'ORÇADA': return 'orcada';
+      case 'REJEITADA': return 'rejeitar';
+      case 'ABERTA': return 'aberta';
+      case 'ARRUMADA': return 'arrumada';
+      case 'PAGA': return 'paga';
+      case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
+      default: return 'visualizarServico';
+    }
   }
-}
 
-efetuarAcao(request: Request) {
-  switch (request.status) {
+  efetuarAcao(request: Request) {
+    switch (request.status) {
       case "REJEITADA":
-          request.status = "ABERTA";
-          break;
+        request.status = "APROVADA";
+        break;
       case "ABERTA":
         this.router.navigate(["efetuarorcamento"]);
-          break;
+        break;
+      case "ORÇADA":
+        this.router.navigate(["orcamentocliente"]);
+        break;
       case "ARRUMADA":
-          break;
-      case "APROVADA":
-          this.router.navigate(["aplicarmanutencao"]);
-          break;
+        this.router.navigate(["pagarservico"]);
+        break;
       case "PAGA":
         this.router.navigate(["finalizarsolicitacao"]);
-          break;
+        break;
       default:
-          break;
+        this.router.navigate(["visualizarservicos"]);
+        break;
+    }
   }
 }
-}
-

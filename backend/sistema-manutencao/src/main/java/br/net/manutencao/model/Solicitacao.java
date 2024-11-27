@@ -1,38 +1,40 @@
-// package br.net.manutencao.model;
-// import jakarta.persistence.*;
-// import java.time.LocalDateTime;
-// import java.util.List;
-// import lombok.Data;
+package br.net.manutencao.model;
 
-// @Entity
-// @Data
-// public class Solicitacao {
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;  // Importação necessária
 
-//     @Column(nullable = false)
-//     private String descricaoEquipamento;
+@Entity
+@Data
+@Table(name = "td_solicitacao")
+public class Solicitacao {
 
-//     @ManyToOne
-//     @JoinColumn(name = "categoria_id", nullable = false)
-//     private Categoria categoria;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     @Column(nullable = false)
-//     private String descricaoDefeito;
+    @Column(nullable = false)
+    private String description;
 
-//     @Column(nullable = false)
-//     private LocalDateTime dataHora;
+    // Relacionamento com Categoria
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    @JsonManagedReference  // Indica que a serialização da categoria deve ser controlada pela solicitacao
+    private Categoria categoria;
 
-//     @Enumerated(EnumType.STRING)
-//     @Column(nullable = false)
-//     private Estado estado;
+    @Column(nullable = false)
+    private LocalDateTime date;
 
-//     @ManyToOne
-//     @JoinColumn(name = "cliente_id", nullable = false)
-//     private Cliente cliente;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Estado status;
 
-//     @OneToMany(mappedBy = "solicitacao", cascade = CascadeType.ALL)
-//     private List<HistoricoEstado> historicoEstados;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
 
-// }
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Funcionario funcionario;
+}
