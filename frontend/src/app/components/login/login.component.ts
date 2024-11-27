@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/pgcliente']);
               break;
             case "FUNCIONARIO":
-              this.router.navigate(['/pgfuncionario']);
+              this.router.navigate(['/solicitabertas']);
               break;
 
             default:

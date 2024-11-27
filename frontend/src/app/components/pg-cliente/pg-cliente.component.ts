@@ -34,13 +34,13 @@ export class PgClienteComponent implements OnInit {
     }
   }
 
-  // Função que faz a requisição para a API
+ 
   listarSolicitacoes(): void {
-    const clienteId = 1;  // Substituir por um valor dinâmico
-    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${clienteId}`).subscribe(
+    const usuarioId = 1;  // Substituir por um valor dinâmico
+    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${usuarioId}`).subscribe(
       (data) => {
         console.log(data);
-        this.requests = data;  // Preenche a lista de solicitações com a resposta da API
+        this.requests = data;
       },
       (error) => {
         console.error('Erro ao buscar as solicitações:', error);
