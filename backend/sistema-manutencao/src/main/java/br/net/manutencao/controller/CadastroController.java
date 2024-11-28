@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import br.net.manutencao.model.Cliente;
 import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.model.Usuario;
-import br.net.manutencao.service.CadastroService;
+import br.net.manutencao.service.ClienteService;
 import br.net.manutencao.service.FuncionarioService;
 import jakarta.validation.Valid;
 
@@ -20,32 +20,12 @@ import java.time.LocalDate;
 public class CadastroController {
 
     @Autowired
-    private CadastroService cadastroService;
+    private ClienteService cadastroService;
 
     @Autowired
     private FuncionarioService funcionarioService;
     
-    @PostMapping("/cliente")
-    public ResponseEntity<?> autocadastrar(@Valid @RequestBody Cliente cliente) {
-        try {
-            Cliente clienteCadastrado = cadastroService.autocadastrar(cliente);
-            return ResponseEntity.status(201).body(clienteCadastrado);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(409).body(Map.of("message", e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(Map.of("message", "Erro no servidor. Tente novamente mais tarde."));
-        }
-    }
+   
 
-    @PostMapping("/funcionario")
-    public ResponseEntity<?> novoFuncionario(@Valid @RequestBody Funcionario funcionario) {
-        try {
-            Funcionario funcionarioCadastrado = funcionarioService.cadastrar(funcionario);
-            return ResponseEntity.status(201).body(funcionarioCadastrado);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(409).body(Map.of("message", e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(Map.of("message", "Erro no servidor. Tente novamente mais tarde."));
-        }
-    }
+    
 }

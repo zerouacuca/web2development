@@ -14,6 +14,9 @@ public class FuncionarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    //@Autowired
+    //private FuncionarioRepository funcionarioRepository;
+
     public Funcionario cadastrar(Funcionario funcionario) {
         if (usuarioRepository.existsByEmail(funcionario.getEmail())) {
             throw new IllegalArgumentException("Email já cadastrado!");

@@ -37,7 +37,7 @@ export class InserirFuncionarioComponent {
       };
   
       // Enviando a requisição para o servidor
-      this.http.post('http://localhost:8081/cadastro/funcionario', funcionarioData).subscribe(
+      this.http.post('http://localhost:8081/funcionario/cadastrar', funcionarioData).subscribe(
         (response) => {
           alert('Funcionário cadastrado com sucesso!');
           // Redirecionando para a lista de funcionários após sucesso
