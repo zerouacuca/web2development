@@ -50,7 +50,7 @@ public class UsuarioController {
         }
 
         // Gera um salt aleatório (caso esteja no CadastroService, use ele corretamente)
-        String salt = cadastroService.gerarSalt();
+        String salt = HashUtil.gerarSalt();
         
         // Chama o método do UsuarioService
         String senhaHash = HashUtil.hashSenhaComSalt(cliente.getSenha(), salt);

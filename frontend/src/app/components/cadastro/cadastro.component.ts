@@ -17,7 +17,7 @@ export class CadastroComponent {
   cpf: string = '';
   nome: string = '';
   email: string = '';
-  tel: string = '';
+  telefone: string = '';
   cep: string = '';
   rua: string = '';
   bairro: string = '';
@@ -49,7 +49,7 @@ export class CadastroComponent {
   }
 
   validarFormulario(): boolean {
-    if (!this.nome || !this.email || !this.cpf || !this.cep || !this.tel) {
+    if (!this.nome || !this.email || !this.cpf || !this.cep || !this.telefone) {
       alert('Por favor, preencha todos os campos obrigatórios!');
       return false;
     }
@@ -96,7 +96,7 @@ export class CadastroComponent {
       cpf: this.cpf,
       nome: this.nome,
       email: this.email,
-      tel: this.tel,
+      telefone: this.telefone,
       cep: this.cep,
       rua: this.rua,
       bairro: this.bairro,
@@ -114,8 +114,7 @@ export class CadastroComponent {
       (error) => {
         console.error('Erro ao cadastrar:', error);
         if (error.status === 409) {
-          alert('E-mail ou CPF já cadastrado. Redirecionando para a página de login.');
-          this.redirecionarParaLogin();
+          alert('E-mail ou CPF já cadastrado.');
         } else {
           alert('Erro ao cadastrar: ' + (error.error.message || 'Tente novamente mais tarde.'));
         }
