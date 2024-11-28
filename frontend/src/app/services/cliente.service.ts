@@ -8,7 +8,7 @@ import { ClienteDTO } from '../shared/models/cliente.model';
   providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = 'http://localhost:8080/usuarios/autocadastro'; 
+  private apiUrl = 'http://localhost:8080/usuarios/novocliente'; 
 
   constructor(private http: HttpClient) {}
 

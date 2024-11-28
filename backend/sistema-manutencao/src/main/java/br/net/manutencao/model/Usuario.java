@@ -1,6 +1,6 @@
 package br.net.manutencao.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Table(name = "td_usuario")
-@Inheritance(strategy = InheritanceType.JOINED) // Aqui é para criar Herança no banco
 public class Usuario {
 
     @Id
@@ -25,7 +24,6 @@ public class Usuario {
     @NotBlank(message = "O CPF não pode estar vazio.")
     private String cpf;
     
-
     @Column(name = "email_usu", nullable = false, unique = true)
     @NotBlank(message = "O email não pode estar vazio.")
     @Email(message = "O email deve ser válido.")
@@ -35,13 +33,12 @@ public class Usuario {
     @NotBlank(message = "O nome não pode estar vazio.")
     private String nome;
 
-    @Column(name = "dataNasc", nullable = false, unique = true)
-    @NotBlank(message = "A data de nascimento não pode estar vazia.")
-    private Date dataNasc;
-
     @Column(name = "senha_usu", nullable = false)
     @NotBlank(message = "A senha não pode estar vazia.")
     private String senha;
+
+    @Column(name = "dataNasc")
+    private LocalDate dataNasc;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "perfil_usu", nullable = false)

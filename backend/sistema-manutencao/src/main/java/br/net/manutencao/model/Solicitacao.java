@@ -3,7 +3,6 @@ package br.net.manutencao.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonManagedReference;  // Importação necessária
 
 @Entity
 @Data
@@ -17,10 +16,8 @@ public class Solicitacao {
     @Column(nullable = false)
     private String description;
 
-    // Relacionamento com Categoria
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
-    @JsonManagedReference  // Indica que a serialização da categoria deve ser controlada pela solicitacao
     private Categoria categoria;
 
     @Column(nullable = false)

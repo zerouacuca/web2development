@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "td_historico_estado")
+@Table(name = "td_historico_solicitacao")
 public class HistoricoSolicitacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
