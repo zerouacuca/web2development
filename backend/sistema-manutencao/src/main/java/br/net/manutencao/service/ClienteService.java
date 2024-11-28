@@ -51,13 +51,6 @@ public class ClienteService {
     
 
 
-    public String gerarSalt() {
-        byte[] salt = new byte[16];
-        SecureRandom secureRandom = new SecureRandom();
-        secureRandom.nextBytes(salt);
-        return Base64.getEncoder().encodeToString(salt); // Converte o salt para Base64
-    }
-
     // Envia o email com a senha gerada
     private void enviarEmailComSenha(String email, String senha) {
         SimpleMailMessage mensagem = new SimpleMailMessage();
