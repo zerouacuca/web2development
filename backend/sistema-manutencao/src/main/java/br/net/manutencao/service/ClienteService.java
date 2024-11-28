@@ -13,7 +13,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
-public class CadastroService {
+public class ClienteService {
 
     @Autowired
     private CadastroRepository cadastroRepository;

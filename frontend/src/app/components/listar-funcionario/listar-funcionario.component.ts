@@ -23,15 +23,7 @@ export class ListarFuncionarioComponent {
   listarTodos(): Funcionario[] {
     return this.funcionarioService.listarTodos();
   }
-  calcularIdade(nascimento: Date): string {
-    const hoje = new Date();
-    let idade = hoje.getFullYear() - nascimento.getFullYear();
-    const mesDif = hoje.getMonth() - nascimento.getMonth();
-    if (mesDif < 0 || (mesDif === 0 && hoje.getDate() < nascimento.getDate())) {
-      idade--;
-    }
-    return idade.toString();
-  }
+ 
   remover($event: any, funcionario: Funcionario): void {
     $event.preventDefault();
     if (confirm(`Deseja realmente remover o funcionário ${funcionario.nome}?`)) {

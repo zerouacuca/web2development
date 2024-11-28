@@ -1,7 +1,5 @@
 package br.net.manutencao.model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -119,7 +119,7 @@ export const routes: Routes = [
          component:RelatoriodataComponent,
          canActivate: [authGuard],
          data: {
-             role: ['ADMIN']
+             role: ['FUNCIONARIO']
          }
         },
     {
@@ -127,7 +127,7 @@ export const routes: Routes = [
          component:RelatorioCategoriaComponent,
          canActivate: [authGuard],
          data: {
-             role: ['ADMIN']
+             role: ['FUNCIONARIO']
 
         }},
     {

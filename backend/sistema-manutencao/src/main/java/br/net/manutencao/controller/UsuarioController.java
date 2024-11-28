@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import br.net.manutencao.model.Login;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.UsuarioRepository;
-import br.net.manutencao.service.CadastroService;
+import br.net.manutencao.service.ClienteService;
 import br.net.manutencao.service.UsuarioService;
 import br.net.manutencao.HashUtil;
 
@@ -24,7 +24,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
     
     @Autowired
-    private  CadastroService cadastroService;
+    private  ClienteService cadastroService;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
