@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import br.net.manutencao.HashUtil;
-import br.net.manutencao.model.Usuario;
+import br.net.manutencao.model.Cliente;
 import br.net.manutencao.repository.CadastroRepository;
 
 import java.security.SecureRandom;
@@ -24,37 +24,32 @@ public class CadastroService {
     // @Autowired
     // private PasswordEncoder passwordEncoder;
 
-    public Usuario autocadastrar(Usuario usuario) throws Exception {
+    public Cliente autocadastrar(Cliente cliente) throws Exception {
 
-        if (cadastroRepository.existsByEmail(usuario.getEmail())) {
+        if (cadastroRepository.existsByEmail(cliente.getEmail())) {
             throw new IllegalArgumentException("E-mail já cadastrado.");
         }
     
-        if (cadastroRepository.existsByCpf(usuario.getCpf())) {
+        if (cadastroRepository.existsByCpf(cliente.getCpf())) {
             throw new IllegalArgumentException("CPF já cadastrado.");
         }
     
         // Gera uma senha aleatória de 4 dígitos
-        String senha = gerarSenha();
+        String senha = HashUtil.gerarSenha();
         String salt = HashUtil.gerarSalt();
         String senhaHash = HashUtil.hashSenhaComSalt(senha, salt);
 
-        usuario.setSenha(senhaHash);
-        usuario.setSalt(salt);
+        cliente.setSenha(senhaHash);
+        cliente.setSalt(salt);
     
-        cadastroRepository.save(usuario);
+        cadastroRepository.save(cliente);
     
-        enviarEmailComSenha(usuario.getEmail(), senha);
+        enviarEmailComSenha(cliente.getEmail(), senha);
     
-        return usuario;
+        return cliente;
     }
     
 
-    private String gerarSenha() {
-        SecureRandom random = new SecureRandom();
-        int senha = random.nextInt(10000);  // 0 e 9999
-        return String.format("%04d", Math.abs(senha));  // Formata para ter 4 dígitos
-    }
 
     public String gerarSalt() {
         byte[] salt = new byte[16];

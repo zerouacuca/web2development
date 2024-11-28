@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "td_usuario")
 public class Usuario {
 
@@ -19,10 +20,6 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usu")
     private Long id;
-    
-    @Column(name = "cpf_usu", nullable = false, unique = true)
-    @NotBlank(message = "O CPF não pode estar vazio.")
-    private String cpf;
     
     @Column(name = "email_usu", nullable = false, unique = true)
     @NotBlank(message = "O email não pode estar vazio.")
@@ -37,19 +34,11 @@ public class Usuario {
     @NotBlank(message = "A senha não pode estar vazia.")
     private String senha;
 
-    @Column(name = "dataNasc")
-    private LocalDate dataNasc;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "perfil_usu", nullable = false)
     @NotNull(message = "O perfil é obrigatório.")
     private Perfil perfil;
 
-    @Column(name = "telefone_usu")
-    private String telefone;
-
-    @Column(name = "endereco_usu")
-    private String endereco;
     
     @Column(nullable = false)
     private String salt; 
