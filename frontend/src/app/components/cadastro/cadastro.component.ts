@@ -106,7 +106,7 @@ export class CadastroComponent {
       complemento: this.complemento
     };
 
-    this.http.post('http://localhost:8081/clientes/autocadastro', cadastroData).subscribe(
+    this.http.post('http://localhost:8081/cadastro/cliente', cadastroData).subscribe(
       () => {
         alert('Cadastro realizado com sucesso! Verifique seu email para receber a senha.');
         this.redirecionarParaLogin();

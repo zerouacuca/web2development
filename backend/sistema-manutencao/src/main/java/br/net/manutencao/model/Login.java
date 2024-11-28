@@ -11,7 +11,5 @@ public class Login {
     public Login(String login, String senha) {
         this.login = login;
         this.senha = senha;
-    }
-
-    
+    } 
 }

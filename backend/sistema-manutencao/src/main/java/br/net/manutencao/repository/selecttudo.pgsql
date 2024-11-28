@@ -1,1 +1,0 @@
-select * from td_usuario;

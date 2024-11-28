@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "td_historico_estado")
-public class HistoricoEstado {
+@Table(name = "td_historico_solicitacao")
+public class HistoricoSolicitacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +18,7 @@ public class HistoricoEstado {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Estado estado;
+    private EnumStatus estado;
 
     @Column(nullable = false)
     private LocalDateTime dataHora; 

@@ -8,18 +8,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.net.manutencao.model.Solicitacao;
 import br.net.manutencao.repository.SolicitacaoRepository;
-import br.net.manutencao.repository.HistoricoEstadoRepository;
+import br.net.manutencao.repository.HistoricoSolicitacaoRepository;
 
 @Service
 public class SolicitacaoService {
 
     private final SolicitacaoRepository solicitacaoRepository;
-    private final HistoricoEstadoRepository historicoEstadoRepository;
+    private final HistoricoSolicitacaoRepository historicoSolicitacaoRepository;
 
     public SolicitacaoService(SolicitacaoRepository solicitacaoRepository,
-            HistoricoEstadoRepository historicoEstadoRepository) {
+            HistoricoSolicitacaoRepository historicoSolicitacaoRepository) {
         this.solicitacaoRepository = solicitacaoRepository;
-        this.historicoEstadoRepository = historicoEstadoRepository;
+        this.historicoSolicitacaoRepository = historicoSolicitacaoRepository;
     }
 
     @Transactional(readOnly = true)

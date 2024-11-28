@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import br.net.manutencao.HashUtil;
-import br.net.manutencao.model.Cliente;
+import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.CadastroRepository;
 
 import java.security.SecureRandom;
@@ -24,19 +24,14 @@ public class CadastroService {
     // @Autowired
     // private PasswordEncoder passwordEncoder;
 
-    public Cliente autocadastrar(Cliente cliente) throws Exception {
+    public Usuario autocadastrar(Usuario usuario) throws Exception {
 
-        if (cadastroRepository.existsByEmail(cliente.getEmail())) {
+        if (cadastroRepository.existsByEmail(usuario.getEmail())) {
             throw new IllegalArgumentException("E-mail já cadastrado.");
         }
     
-        if (cadastroRepository.existsByCpf(cliente.getCpf())) {
+        if (cadastroRepository.existsByCpf(usuario.getCpf())) {
             throw new IllegalArgumentException("CPF já cadastrado.");
-        }
-    
-        // Preenche o login automaticamente com o e-mail
-        if (cliente.getLogin() == null || cliente.getLogin().isEmpty()) {
-            cliente.setLogin(cliente.getEmail());  // "usuario@dominio.com" -> "usuario"
         }
     
         // Gera uma senha aleatória de 4 dígitos
@@ -44,14 +39,14 @@ public class CadastroService {
         String salt = HashUtil.gerarSalt();
         String senhaHash = HashUtil.hashSenhaComSalt(senha, salt);
 
-        cliente.setSenha(senhaHash);
-        cliente.setSalt(salt);
+        usuario.setSenha(senhaHash);
+        usuario.setSalt(salt);
     
-        cadastroRepository.save(cliente);
+        cadastroRepository.save(usuario);
     
-        enviarEmailComSenha(cliente.getEmail(), senha);
+        enviarEmailComSenha(usuario.getEmail(), senha);
     
-        return cliente;
+        return usuario;
     }
     
 
