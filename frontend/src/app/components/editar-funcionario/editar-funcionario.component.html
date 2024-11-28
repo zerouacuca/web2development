@@ -1,20 +1,15 @@
 <h1>Editar Funcionário</h1>
 <div class="well">
+    <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="funcionario.email"
+            #email="ngModel" required>
+        <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+            <div [hidden]="!email.errors['required']">Digite o e-mail do funcionário.</div>
+        </div>
+    </div>
+    
     <form #formFuncionario="ngForm">
-        <!-- Dados Pessoais -->
-        <div class="form-group">
-            <label for="id">ID:</label>
-            <input type="number" class="form-control" id="id" name="id" [(ngModel)]="funcionario.id" #id="ngModel"
-                required readonly>
-        </div>
-        <div class="form-group">
-            <label for="cpf">CPF:</label>
-            <input type="text" class="form-control" id="cpf" name="cpf" [(ngModel)]="funcionario.cpf" #cpf="ngModel"
-                required>
-            <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
-                <div [hidden]="!cpf.errors['required']">Digite o CPF do funcionário.</div>
-            </div>
-        </div>
         <div class="form-group">
             <label for="nome">Nome:</label>
             <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="funcionario.nome" #nome="ngModel"
@@ -33,85 +28,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="email">E-mail:</label>
-            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="funcionario.email"
-                #email="ngModel" required>
-            <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
-                <div [hidden]="!email.errors['required']">Digite o e-mail do funcionário.</div>
+            <label for="senha">Senha:</label>
+            <input type="tel" class="form-control" id="senha" name="senha" [(ngModel)]="funcionario.senha"
+                #senha="ngModel" required>
+            <div *ngIf="senha.errors && (senha.dirty || senha.touched)" class="alert alert-danger">
+                <div [hidden]="!senha.errors['required']">Digite o senha do funcionário.</div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="telefone">Telefone:</label>
-            <input type="tel" class="form-control" id="telefone" name="telefone" [(ngModel)]="funcionario.telefone"
-                #telefone="ngModel" required>
-            <div *ngIf="telefone.errors && (telefone.dirty || telefone.touched)" class="alert alert-danger">
-                <div [hidden]="!telefone.errors['required']">Digite o telefone do funcionário.</div>
-            </div>
-        </div>
-
-        <!-- Endereço -->
-        <h3>Endereço</h3>
-        <div class="form-group">
-            <label for="cep">CEP:</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="cep" name="cep" [(ngModel)]="funcionario.cep" #cep="ngModel"
-                    required>
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-secondary">
-                        Buscar
-                    </button>
-                </span>
-            </div>
-            <div *ngIf="cep.errors && (cep.dirty || cep.touched)" class="alert alert-danger">
-                <div [hidden]="!cep.errors['required']">Digite o CEP do funcionário.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="estado">Estado:</label>
-            <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="funcionario.estado"
-                #estado="ngModel" required>
-            <div *ngIf="estado.errors && (estado.dirty || estado.touched)" class="alert alert-danger">
-                <div [hidden]="!estado.errors['required']">Digite o estado do funcionário.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="cidade">Cidade:</label>
-            <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="funcionario.cidade"
-                #cidade="ngModel" required>
-            <div *ngIf="cidade.errors && (cidade.dirty || cidade.touched)" class="alert alert-danger">
-                <div [hidden]="!cidade.errors['required']">Digite a cidade do funcionário.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="bairro">Bairro:</label>
-            <input type="text" class="form-control" id="bairro" name="bairro" [(ngModel)]="funcionario.bairro"
-                #bairro="ngModel" required>
-            <div *ngIf="bairro.errors && (bairro.dirty || bairro.touched)" class="alert alert-danger">
-                <div [hidden]="!bairro.errors['required']">Digite o bairro do funcionário.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="rua">Rua:</label>
-            <input type="text" class="form-control" id="rua" name="rua" [(ngModel)]="funcionario.rua" #rua="ngModel"
-                required>
-            <div *ngIf="rua.errors && (rua.dirty || rua.touched)" class="alert alert-danger">
-                <div [hidden]="!rua.errors['required']">Digite a rua do funcionário.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="numero">Número:</label>
-            <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="funcionario.numero"
-                #numero="ngModel" required>
-            <div *ngIf="numero.errors && (numero.dirty || numero.touched)" class="alert alert-danger">
-                <div [hidden]="!numero.errors['required']">Digite o número do funcionário.</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="complemento">Complemento:</label>
-            <input type="text" class="form-control" id="complemento" name="complemento"
-                [(ngModel)]="funcionario.complemento" #complemento="ngModel">
-        </div>
-
         <!-- Botões de Ação -->
         <div class="form-group">
             <button type="button" class="btn btn-primary" (click)="atualizar()"

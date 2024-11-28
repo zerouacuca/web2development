@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MostrarOrcamentoService } from '../../services/mostrarorcamento.service';
@@ -8,7 +8,7 @@ import { MostrarOrcamentoService } from '../../services/mostrarorcamento.service
 @Component({
   selector: 'app-orcamentocliente',
   standalone: true,
-  imports: [HeaderComponent, RouterLink, NgIf, CommonModule, FormsModule],
+  imports: [HeaderComponent, NgIf, CommonModule, FormsModule],
   templateUrl: './orcamentocliente.component.html',
   styleUrls: ['./orcamentocliente.component.css']
 })

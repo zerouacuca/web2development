@@ -3,23 +3,6 @@
 <div class="well">
   <form #formCategoria="ngForm">
     <div class="container">
-      <!-- Dados Categoria -->
-      <div class="form-group">
-        <label for="id">ID:</label>
-        <input
-          type="number"
-          class="form-control"
-          id="id"
-          name="id"
-          [(ngModel)]="categoria.id"
-          #id="ngModel"
-          required
-        />
-        <div [hidden]="!id.errors?.['required']" class="alert alert-danger">
-          Codigo é obrigatório.
-        </div>
-      </div>
-
       <div class="form-group">
         <label for="nome">Nome:</label>
         <input
