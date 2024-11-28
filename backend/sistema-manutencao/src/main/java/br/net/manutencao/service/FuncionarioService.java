@@ -1,5 +1,6 @@
 package br.net.manutencao.service;
 
+import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,33 +12,39 @@ import java.util.List;
 public class FuncionarioService {
 
     @Autowired
-    private UsuarioRepository funcionarioRepository;
+    private UsuarioRepository usuarioRepository;
 
-    public Usuario salvar(Usuario funcionario) {
-        if (funcionarioRepository.existsByCpf(funcionario.getCpf())) {
-            throw new IllegalArgumentException("CPF já cadastrado!");
+    public Funcionario cadastrar(Funcionario funcionario) {
+        if (usuarioRepository.existsByEmail(funcionario.getEmail())) {
+            throw new IllegalArgumentException("Email já cadastrado!");
         }
-        return funcionarioRepository.save(funcionario);
+        return usuarioRepository.save(funcionario);
     }
 
     public List<Usuario> listarTodos() {
-        return funcionarioRepository.findAll();
+        return usuarioRepository.findAll();
     }
 
-    public Usuario atualizar(Long id, Usuario funcionarioAtualizado) {
-        Usuario funcionario = funcionarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado"));
+    public Funcionario atualizar(Long id, Funcionario funcionarioAtualizado) {
+        Funcionario funcionario = (Funcionario) usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado para atualização"));
+
+        if (!funcionario.getEmail().equals(funcionarioAtualizado.getEmail()) &&
+                usuarioRepository.existsByEmail(funcionarioAtualizado.getEmail())) {
+            throw new IllegalArgumentException("Email já cadastrado!");
+        }
+
         funcionario.setNome(funcionarioAtualizado.getNome());
-        funcionario.setCpf(funcionarioAtualizado.getCpf());
+        funcionario.setEmail(funcionarioAtualizado.getEmail());
         funcionario.setDataNasc(funcionarioAtualizado.getDataNasc());
-        funcionario.setTelefone(funcionarioAtualizado.getTelefone());
-        return funcionarioRepository.save(funcionario);
-    }
 
+        return usuarioRepository.save(funcionario);
+    }
+    
     public void excluir(Long id) {
-        if (!funcionarioRepository.existsById(id)) {
+        if (!usuarioRepository.existsById(id)) {
             throw new IllegalArgumentException("Funcionário não encontrado");
         }
-        funcionarioRepository.deleteById(id);
+        usuarioRepository.deleteById(id);
     }
 }
