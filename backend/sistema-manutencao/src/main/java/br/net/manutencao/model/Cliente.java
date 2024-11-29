@@ -53,32 +53,31 @@ public class Cliente extends Usuario {
     public Cliente() {
         super();
     }
-    
 
     public Cliente(
-        String nome,
-        String email,
-        String senha,
-        String cpf,
-        String telefone,
-        String cep,
-        String rua,
-        String bairro,
-        String localidade,
-        String estado,
-        String numero,
-        String complemento,
-        String salt) {
-    super(nome, email, senha, salt, Perfil.CLIENTE);
-    this.cpf = cpf;
-    this.telefone = telefone;
-    this.cep = cep;
-    this.rua = rua;
-    this.bairro = bairro;
-    this.localidade = localidade;
-    this.estado = estado;
-    this.numero = numero;
-    this.complemento = complemento;
-}
+            String nome,
+            String email,
+            String senha,
+            String cpf,
+            String telefone,
+            String cep,
+            String rua,
+            String bairro,
+            String localidade,
+            String estado,
+            String numero,
+            String complemento,
+            String salt) {
+        super(nome, email, senha, salt, Perfil.CLIENTE);
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.cep = cep;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.localidade = localidade;
+        this.estado = estado;
+        this.numero = numero;
+        this.complemento = complemento;
+    }
 
 }
