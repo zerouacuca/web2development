@@ -30,6 +30,7 @@ public class ClienteController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(409).body(Map.of("message", e.getMessage()));
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(500).body(Map.of("message", "Erro no servidor. Tente novamente mais tarde."));
         }
     }
