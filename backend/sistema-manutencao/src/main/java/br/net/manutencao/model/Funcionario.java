@@ -29,12 +29,12 @@ public class Funcionario extends Usuario {
         super();
     }
 
-    public Funcionario(
+    /*public Funcionario(
             String nome,
             String email,
             String senha,
             String dataNasc) {
         super(nome, email, senha, Perfil.FUNCIONARIO);
         this.dataNasc = dataNasc;
-    }
+    }*/
 }
