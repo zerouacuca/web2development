@@ -37,10 +37,18 @@ public class Usuario {
     @NotNull(message = "O perfil é obrigatório.")
     private Perfil perfil;
 
+    public Usuario(String email, String nome, String senha, String salt, Perfil perfil) {
+        this.email = email;
+        this.nome = nome;
+        this.senha = senha;
+        this.salt = salt;
+        this.perfil = perfil;
+    }
+    
     
     @Column(nullable = false)
     private String salt; 
-
+    
     public enum Perfil {
         FUNCIONARIO("Funcionário"),
         CLIENTE("Cliente");
