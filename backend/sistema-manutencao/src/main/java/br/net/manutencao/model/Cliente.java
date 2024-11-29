@@ -2,6 +2,9 @@ package br.net.manutencao.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -12,6 +15,11 @@ import lombok.EqualsAndHashCode;
 @Table(name = "td_cliente")
 @EqualsAndHashCode(callSuper = true)
 public class Cliente extends Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
+    private Long id;
 
     @Column(name = "cpf_usu", nullable = false, unique = true)
     @NotBlank(message = "O CPF não pode estar vazio.")
