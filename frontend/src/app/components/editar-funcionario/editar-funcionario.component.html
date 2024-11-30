@@ -21,10 +21,10 @@
         </div>
         <div class="form-group">
             <label for="nascimento">Data de Nascimento:</label>
-            <input type="date" class="form-control" id="nascimento" name="nascimento"
-                [(ngModel)]="funcionario.nascimento" #nascimento="ngModel" required>
-            <div *ngIf="nascimento.errors && (nascimento.dirty || nascimento.touched)" class="alert alert-danger">
-                <div [hidden]="!nascimento.errors['required']">Digite a data de nascimento do funcionário.</div>
+            <input type="date" class="form-control" id="dataNasc" name="dataNasc"
+                [(ngModel)]="funcionario.dataNasc" #dataNasc="ngModel" required>
+            <div *ngIf="dataNasc.errors && (dataNasc.dirty || dataNasc.touched)" class="alert alert-danger">
+                <div [hidden]="!dataNasc.errors['required']">Digite a data de nascimento do funcionário.</div>
             </div>
         </div>
         <div class="form-group">

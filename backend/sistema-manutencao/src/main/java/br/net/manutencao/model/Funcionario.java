@@ -6,34 +6,36 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "td_funcionario")
 @EqualsAndHashCode(callSuper = true)
 public class Funcionario extends Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Caso queira gerar automaticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_funcionario")
     private Long id;
 
     @Column(name = "data_nasc", nullable = false)
-    private LocalDate DataNasc;
+    @NotBlank(message = "A data de nascimento não pode estar vazia.")
+    private String dataNasc;
 
-    public Funcionario(String nome, String email, String senha, LocalDate DataNasc, String salt) {
-        super();
-        this.setNome(nome);
-        this.setEmail(email);
-        this.setSenha(senha);
-        this.setSalt(salt);
-        this.setPerfil(Perfil.FUNCIONARIO);
-        this.DataNasc = DataNasc;
+    public Funcionario() {
+        super.setPerfil(Perfil.FUNCIONARIO);
+    }
+
+    public Funcionario(
+            String email,
+            String nome,
+            String senha,
+            String salt,
+            String dataNasc) {
+        super(nome, email, senha, salt, Perfil.FUNCIONARIO);
+        this.dataNasc = dataNasc;
     }
 }

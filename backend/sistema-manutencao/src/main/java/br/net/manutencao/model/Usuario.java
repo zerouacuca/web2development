@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "td_usuario")
-abstract class Usuario {
+
+public abstract class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +38,14 @@ abstract class Usuario {
     @NotNull(message = "O perfil é obrigatório.")
     private Perfil perfil;
 
+   
+    public Usuario(String nome, String email, String senha, Perfil perfil) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.perfil = perfil;
+    }
+
     public Usuario(String email, String nome, String senha, String salt, Perfil perfil) {
         this.email = email;
         this.nome = nome;
@@ -44,7 +53,6 @@ abstract class Usuario {
         this.salt = salt;
         this.perfil = perfil;
     }
-    
     
     @Column(nullable = false)
     private String salt; 

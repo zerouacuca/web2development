@@ -12,6 +12,22 @@ INSERT INTO td_categoria (nome) VALUES  -- Funciona
 ('Monitoramento de Sistemas')
 ON CONFLICT (nome) DO NOTHING;
 
+/*---------INSERIR FUNCIONARIOS PRIMEIRO------------*/
+-- Funcionário: login: maria@gmail.com, senha: 7513
+INSERT INTO td_usuario(email_usu, nome_usu, perfil_usu, salt, senha_usu)
+VALUES ('maria@email.com', 'Maria', 'FUNCIONARIO','KESsYPO6fKzNgBhMAVlH6w==', 'Z00PeqRod8CGT4bAp/hiP1sAqMWaFx3W0vzYb1mFdr8=');
+
+INSERT INTO td_funcionario(id_usu, data_nasc)
+VALUES (1, '1993-05-16');
+
+-- Funcionário: login: mario@gmail.com, senha: 7849
+INSERT INTO td_usuario(email_usu, nome_usu, perfil_usu, salt, senha_usu)
+VALUES ('mario@email.com', 'Mário', 'FUNCIONARIO', 'Q/zsqM6xOjzKBYkKq3Im7Q==', '6guzLB8JfMRRym97ks21xMnAxTO5M8Dvwic9ebRmOaQ=');
+
+INSERT INTO td_funcionario(id_usu, data_nasc)
+VALUES (2, '1990-05-15');
+/*--------------------------------------------------*/
+
 /* -- Inserir usuários na tabela 'usuario'
 -- Para os clientes
 INSERT INTO td_usuario (id_usu, email_usu, nome_usu, senha_usu, perfil_usu, salt)
@@ -22,19 +38,7 @@ VALUES
 (4, 'luana.martins@cliente.com', 'Luana Martins', 'senha_encriptada_4', 'cliente', 'salt_luana_martins'),
 (5, 'joana.souza@cliente.com', 'Joana Souza', 'senha_encriptada_5', 'cliente', 'salt_joana_souza');
 
--- Para os funcionários
-INSERT INTO td_usuario (id_usu, email_usu, nome_usu, senha_usu, perfil_usu, salt)
-VALUES
-(6, 'ana.souza@funcionario.com', 'Ana Souza', 'senha_encriptada_6', 'funcionario', 'salt_ana_souza'),
-(7, 'roberto.costa@funcionario.com', 'Roberto Costa', 'senha_encriptada_7', 'funcionario', 'salt_roberto_costa'),
-(8, 'fernando.silva@funcionario.com', 'Fernando Silva', 'senha_encriptada_8', 'funcionario', 'salt_fernando_silva');
 
-
--- Inserir funcionários
-INSERT INTO td_funcionario (data_nasc, id_usu) VALUES 
-('15/05/1985', 4),
-('25/08/1990', 5),
-('10/11/1988', 6);
 
 -- Inserir clientes
 INSERT INTO td_cliente (cpf_usu, telefone_usu, cep_usu, rua_usu, bairro_usu, localidade_usu, estado_usu, numero_usu, complemento_usu, id_usu) VALUES

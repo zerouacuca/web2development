@@ -10,7 +10,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
 @Data
 @Entity
 @Table(name = "td_cliente")
@@ -53,32 +52,30 @@ public class Cliente extends Usuario {
     public Cliente() {
         super.setPerfil(Perfil.CLIENTE);
     }
-    
 
     public Cliente(
-        String nome,
-        String email,
-        String senha,
-        String cpf,
-        String telefone,
-        String cep,
-        String rua,
-        String bairro,
-        String localidade,
-        String estado,
-        String numero,
-        String complemento,
-        String salt) {
-    super(nome, email, senha, salt, Perfil.CLIENTE);
-    this.cpf = cpf;
-    this.telefone = telefone;
-    this.cep = cep;
-    this.rua = rua;
-    this.bairro = bairro;
-    this.localidade = localidade;
-    this.estado = estado;
-    this.numero = numero;
-    this.complemento = complemento;
-}
-
+            String nome,
+            String email,
+            String senha,
+            String cpf,
+            String telefone,
+            String cep,
+            String rua,
+            String bairro,
+            String localidade,
+            String estado,
+            String numero,
+            String complemento,
+            String salt) {
+        super(nome, email, senha, salt, Perfil.CLIENTE);
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.cep = cep;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.localidade = localidade;
+        this.estado = estado;
+        this.numero = numero;
+        this.complemento = complemento;
+    }
 }
