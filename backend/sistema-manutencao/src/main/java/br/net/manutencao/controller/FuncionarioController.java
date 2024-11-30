@@ -27,7 +27,7 @@ public class FuncionarioController {
         try {
             List<FuncionarioListDTO> funcionarios = funcionarioService.getAllFuncionarios()
                     .stream()
-                    .map(func -> new FuncionarioListDTO(func.getEmail(), func.getNome(), func.getDataNasc()))
+                    .map(func -> new FuncionarioListDTO(func.getId(), func.getEmail(), func.getNome(), func.getDataNasc()))
                     .collect(Collectors.toList());
             return ResponseEntity.ok(funcionarios);
         } catch (Exception e) {
