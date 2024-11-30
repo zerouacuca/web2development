@@ -27,5 +27,3 @@ import java.util.Base64;
             return Base64.getEncoder().encodeToString(salt); // Retorna o salt como Base64
     }
 }
-
-

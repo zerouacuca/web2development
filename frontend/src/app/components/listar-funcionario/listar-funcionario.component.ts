@@ -1,34 +1,50 @@
-import { Component } from '@angular/core';
-import { FuncionarioService } from '../../services/funcionario.service'; //p448
+import { Component, OnInit } from '@angular/core';
+import { FuncionarioService } from '../../services/funcionario.service';
 import { Funcionario } from '../../shared/models/funcionario.model';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { HeaderfuncionarioComponent } from '../headerfuncionario/headerfuncionario.component';
 
 @Component({
   selector: 'app-listar-funcionario',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [CommonModule, HeaderfuncionarioComponent, RouterModule],
   templateUrl: './listar-funcionario.component.html',
   styleUrl: './listar-funcionario.component.css'
 })
-export class ListarFuncionarioComponent {
+export class ListarFuncionarioComponent implements OnInit {
 
   funcionarios: Funcionario[] = [];
 
   constructor(private funcionarioService: FuncionarioService) { }
 
   ngOnInit(): void {
-    this.funcionarios = this.listarTodos();
+    this.listarFuncionarios();
   }
-  listarTodos(): Funcionario[] {
-    return this.funcionarioService.listarTodos();
+
+  listarFuncionarios(): void {
+    this.funcionarioService.listarTodos().subscribe(
+      (data: Funcionario[]) => {
+        this.funcionarios = data;
+      },
+      (error) => {
+        console.error('Erro ao listar funcionários', error);
+      }
+    );
   }
- 
-  remover($event: any, funcionario: Funcionario): void {
-    $event.preventDefault();
-    if (confirm(`Deseja realmente remover o funcionário ${funcionario.nome}?`)) {
-      this.funcionarioService.remover(funcionario.id!);
-      this.funcionarios = this.funcionarios.filter(f => f.id !== funcionario.id);
-    }
+
+  // Método 'remover' para excluir o funcionário
+  remover(event: Event, funcionario: Funcionario): void {
+    event.preventDefault();  // Evita o comportamento padrão do link (navegar para outra página)
+
+    // Lógica para remover o funcionário
+    this.funcionarioService.remover(funcionario.id).subscribe(
+      () => {
+        this.funcionarios = this.funcionarios.filter(f => f.id !== funcionario.id);  // Remove o funcionário da lista
+      },
+      (error) => {
+        console.error('Erro ao remover funcionário', error);
+      }
+    );
   }
 }

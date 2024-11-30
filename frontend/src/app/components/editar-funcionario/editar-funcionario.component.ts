@@ -24,7 +24,11 @@ export class EditarFuncionarioComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
     const res = this.funcionarioService.buscarPorId(id);
     if (res !== undefined)
-      this.funcionario = res;
+      this.funcionarioService.buscarPorId(id).subscribe((res: Funcionario) => {
+        this.funcionario = res;
+      }, (error) => {
+        console.error('Erro ao buscar funcionário', error);
+      });      
     else
       throw new Error("Funcionario não encontrada: id = " + id);
   }

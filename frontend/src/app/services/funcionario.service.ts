@@ -1,41 +1,33 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Funcionario } from '../shared/models/funcionario.model';
-
-const LS_CHAVE = "funcionarios";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FuncionarioService {
 
-  constructor() { }
-  listarTodos(): Funcionario[] {
-    const funcionarios = localStorage[LS_CHAVE];
-    return funcionarios ? JSON.parse(funcionarios) : [];
+  private apiUrl = 'http://localhost:8081/funcionario/';
+
+  constructor(private http: HttpClient) { }
+
+  listarTodos(): Observable<Funcionario[]> {
+    return this.http.get<Funcionario[]>(`${this.apiUrl}/listar`);
   }
-  inserir(funcionario: Funcionario): void {
-    const funcionarios = this.listarTodos();
-    funcionario.id = new Date().getTime();
-    funcionarios.push(funcionario);
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
+
+  // Método para remover um funcionário
+  remover(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/remover/${id}`);
   }
-  buscarPorId(id: number): Funcionario | undefined {
-    const funcionarios = this.listarTodos();
-    return funcionarios.find(funcionario => funcionario.id === id);
+
+   // Método para buscar um funcionário pelo ID
+   buscarPorId(id: number): Observable<Funcionario> {
+    return this.http.get<Funcionario>(`${this.apiUrl}/buscar/${id}`);
   }
-  atualizar(funcionario: Funcionario): void {
-    const funcionarios = this.listarTodos();
-    funcionarios.forEach((obj, index, objs) => {
-      if (funcionario.id === obj.id) {
-        objs[index] = funcionario
-      }
-    });
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
-  }
-  remover(id: number): void {
-    let funcionarios = this.listarTodos();
-    funcionarios = funcionarios.filter(funcionario => funcionario.id !== id);
-    localStorage[LS_CHAVE] = JSON.stringify(funcionarios);
+
+  // Método para atualizar os dados de um funcionário
+  atualizar(funcionario: Funcionario): Observable<Funcionario> {
+    return this.http.put<Funcionario>(`${this.apiUrl}/atualizar`, funcionario);
   }
 }
-//pg.419
