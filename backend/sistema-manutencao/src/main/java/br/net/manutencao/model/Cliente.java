@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+
 
 @Data
 @Entity
@@ -51,7 +51,7 @@ public class Cliente extends Usuario {
     private String complemento;
 
     public Cliente() {
-        super();
+        super.setPerfil(Perfil.CLIENTE);
     }
     
 
