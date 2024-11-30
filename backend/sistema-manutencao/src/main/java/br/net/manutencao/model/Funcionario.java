@@ -26,15 +26,16 @@ public class Funcionario extends Usuario {
     private String dataNasc;
 
     public Funcionario() {
-        super();
+        super.setPerfil(Perfil.FUNCIONARIO);
     }
 
-    /*public Funcionario(
-            String nome,
+    public Funcionario(
             String email,
+            String nome,
             String senha,
+            String salt,
             String dataNasc) {
-        super(nome, email, senha, Perfil.FUNCIONARIO);
+        super(nome, email, senha, salt, Perfil.FUNCIONARIO);
         this.dataNasc = dataNasc;
-    }*/
+    }
 }
