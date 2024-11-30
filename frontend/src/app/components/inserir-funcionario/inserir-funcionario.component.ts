@@ -33,7 +33,7 @@ export class InserirFuncionarioComponent {
         nome: this.funcionario.nome,
         email: this.funcionario.email,
         senha: this.funcionario.senha,
-        nascimento: this.funcionario.nascimento
+        dataNasc: this.funcionario.dataNasc
       };
   
       // Enviando a requisição para o servidor

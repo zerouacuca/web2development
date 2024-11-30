@@ -10,9 +10,7 @@
                     class="btn btn-xs btn-success">
                     <i class="fa fa-plus" aria-hidden="true"></i> Novo
                 </a>
-            </th>
-            <th>
-                <a class="btn btn-danger me-1" [routerLink]="['/login']">
+                <a class="btn btn-danger me-1" [routerLink]="['/solicitabertas']">
                     <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Voltar
                 </a>
             </th>
@@ -22,7 +20,7 @@
         <tr *ngFor="let funcionario of funcionarios">
             <td> {{ funcionario.email }} </td>
             <td> {{ funcionario.nome }} </td>
-            <td> {{ funcionario.nascimento | date:'dd/MM/yyyy' }} </td>
+            <td> {{ funcionario.dataNasc | date:'dd/MM/yyyy' }} </td>
             <td class="text-center" style="width: 300px">
                 <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info"
                     [routerLink]="['/funcionarios/editar', funcionario.id]">
