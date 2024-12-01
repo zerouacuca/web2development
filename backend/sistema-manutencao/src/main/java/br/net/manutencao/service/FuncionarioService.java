@@ -5,6 +5,8 @@ import br.net.manutencao.DTO.FuncionarioCreateDTO;
 import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,15 +15,16 @@ import java.util.List;
 public class FuncionarioService {
 
     @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
     private FuncionarioRepository funcionarioRepository;
 
     // Método para criar um novo funcionário
     public void createFuncionario(FuncionarioCreateDTO funcionarioCreateDTO) {
         try {
-            // Gera o salt
+            // gera salt e senha com salt
             String salt = HashUtil.gerarSalt();
-
-            // Hasheia a senha com o salt
             String senhaHasheada = HashUtil.hashSenhaComSalt(funcionarioCreateDTO.getSenha(), salt);
 
             // Cria o objeto Funcionario com senha hasheada e salt
@@ -34,7 +37,7 @@ public class FuncionarioService {
 
             // Salva no repositório
             funcionarioRepository.save(funcionario);
-
+            enviarEmailComSenha(funcionario.getEmail(), senhaHasheada);
         } catch (Exception e) {
             // Trate adequadamente a exceção
             throw new RuntimeException("Erro ao criar funcionário: " + e.getMessage(), e);
@@ -82,5 +85,14 @@ public class FuncionarioService {
 
         // Exclui o funcionário pelo ID
         funcionarioRepository.deleteById(id);
+    }
+
+    // Envia o email com a senha gerada
+    private void enviarEmailComSenha(String email, String senha) {
+        SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setTo(email);
+        mensagem.setSubject("Senha de Acesso");
+        mensagem.setText("Bem-vindo ao sistema! Sua senha é: " + senha);
+        mailSender.send(mensagem);
     }
 }

@@ -7,7 +7,6 @@ import br.net.manutencao.DTO.FuncionarioCreateDTO;
 import br.net.manutencao.DTO.FuncionarioListDTO;
 import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.service.FuncionarioService;
-import jakarta.validation.Valid;
 
 import java.util.Map;
 import java.util.HashMap;

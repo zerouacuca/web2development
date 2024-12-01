@@ -3,12 +3,11 @@ import { FuncionarioService } from '../../services/funcionario.service';
 import { Funcionario } from '../../shared/models/funcionario.model';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HeaderfuncionarioComponent } from '../headerfuncionario/headerfuncionario.component';
 
 @Component({
   selector: 'app-listar-funcionario',
   standalone: true,
-  imports: [CommonModule, HeaderfuncionarioComponent, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './listar-funcionario.component.html',
   styleUrl: './listar-funcionario.component.css'
 })
