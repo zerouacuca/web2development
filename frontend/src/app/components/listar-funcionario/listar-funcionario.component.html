@@ -23,7 +23,7 @@
             <td> {{ funcionario.dataNasc | date:'dd/MM/yyyy' }} </td>
             <td class="text-center" style="width: 300px">
                 <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info"
-                    [routerLink]="['/funcionarios/editar', funcionario.id]">
+                    [routerLink]="['/funcionarios/editar', funcionario.id]" [state]="{ funcionario: funcionario }">
                     <i class="fa fa-edit" aria-hidden="true"></i> Editar
                 </a>
                 <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger"

@@ -17,7 +17,7 @@ import { InserirFuncionarioComponent } from './components/inserir-funcionario/in
 import { EditarFuncionarioComponent } from './components/editar-funcionario/editar-funcionario.component';
 import { ListarCategoriaComponent } from './components/listar-categoria/listar-categoria.component';
 import { InserirCategoriaComponent } from './components/inserir-categoria/inserir-categoria.component';
-import { RelatoriodataComponent} from './components/relatoriodata/relatoriodata.component';
+import { RelatoriodataComponent } from './components/relatoriodata/relatoriodata.component';
 import { RelatorioCategoriaComponent } from './components/relatoriocategoria/relatoriocategoria.component';
 // import { ExcluirCategoriaComponent } from './components/excluir-categoria/excluir-categoria.component';
 import { AtualizarCategoriaComponent } from './components/atualizar-categoria/atualizar-categoria.component';
@@ -26,161 +26,164 @@ import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    {'path': 'login', component:LoginComponent},
+    { 'path': 'login', component: LoginComponent },
     {
 
-        'path': 'pgcliente', 
-         component : PgClienteComponent,
+        'path': 'pgcliente',
+        component: PgClienteComponent,
         // o que precisa add permissoes de rotas
-         canActivate: [authGuard],
+        canActivate: [authGuard],
         data: {
             role: ['CLIENTE']
-        }},
-        // 
-    {'path': 'cadastro', component:CadastroComponent},
+        }
+    },
+    // 
+    { 'path': 'cadastro', component: CadastroComponent },
     {
         'path': 'pgfuncionario',
-         component:PgFuncionarioComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ["ADMIN", "FUNCIONARIO"]
-         
+        component: PgFuncionarioComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ["ADMIN", "FUNCIONARIO"]
+
         }
     },
     {
         'path': 'orcamentocliente',
-         component:OrcamentoclienteComponent,
-         data: {
+        component: OrcamentoclienteComponent,
+        data: {
             role: ['CLIENTE']
         }
-        
-        },
+
+    },
     {
         'path': 'solicitabertas',
-         component:SolicitabertafuncComponent,
-         data: {
+        component: SolicitabertafuncComponent,
+        data: {
             role: ['FUNCIONARIO']
         }
-        },
+    },
     {
         'path': 'aplicarmanutencao',
-         component:AplicarmanutencaoComponent,
-         data: {
+        component: AplicarmanutencaoComponent,
+        data: {
             role: ['FUNCIONARIO']
         }
-        },
+    },
     {
         'path': 'redirecionarmanutencao',
-         component:RedirecionarmanutencaoComponent,
-         data: {
+        component: RedirecionarmanutencaoComponent,
+        data: {
             role: ['FUNCIONARIO']
         }
     },
     {
         'path': 'efetuarorcamento',
-         component:EfetuarorcamentoComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO']
-         }},
-    {
-        'path': 'finalizarsolicitacao',
-         component:FinalizarsolicitComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO']
-         }},
-    {
-        'path': 'visualizarservicos', 
-        component:VisualizarservicosComponent,
+        component: EfetuarorcamentoComponent,
         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO', 'CLIENTE']
-         }
+        data: {
+            role: ['ADMIN', 'FUNCIONARIO']
+        }
     },
     {
-        'path': 'novasolicitacao', 
-        component:NovaSolicitacaoComponent,
+        'path': 'finalizarsolicitacao',
+        component: FinalizarsolicitComponent,
         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'CLIENTE']
-         }
+        data: {
+            role: ['ADMIN', 'FUNCIONARIO']
+        }
+    },
+    {
+        'path': 'visualizarservicos',
+        component: VisualizarservicosComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['ADMIN', 'FUNCIONARIO', 'CLIENTE']
+        }
+    },
+    {
+        'path': 'novasolicitacao',
+        component: NovaSolicitacaoComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['ADMIN', 'CLIENTE']
+        }
     },
     {
         'path': 'pagarservico',
-         component:PagarservicoComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['CLIENTE']
-         }
-        },
+        component: PagarservicoComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['CLIENTE']
+        }
+    },
     {
         'path': 'relatoriodata',
-         component:RelatoriodataComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['FUNCIONARIO']
-         }
-        },
+        component: RelatoriodataComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['FUNCIONARIO']
+        }
+    },
     {
         'path': 'relatorioCategoria',
-         component:RelatorioCategoriaComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['FUNCIONARIO']
+        component: RelatorioCategoriaComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['FUNCIONARIO']
 
-        }},
+        }
+    },
     {
-        'path': 'crud-funcionario', redirectTo: 'funcionarios/listar', pathMatch: 'full'},
+        'path': 'crud-funcionario', redirectTo: 'funcionarios/listar', pathMatch: 'full'
+    },
     {
         'path': 'funcionarios/listar',
-         component: ListarFuncionarioComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO']
-         }
-        },
+        component: ListarFuncionarioComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['ADMIN', 'FUNCIONARIO']
+        }
+    },
     {
         'path': 'funcionarios/novo',
-         component: InserirFuncionarioComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO']
-         }
-        },
+        component: InserirFuncionarioComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['ADMIN', 'FUNCIONARIO']
+        }
+    },
     {
-        
-        // VERIFICAR ESSA ROTA??? PODE USAR O VERBO EDITAR?
         'path': 'funcionarios/editar/:id',
-         component: EditarFuncionarioComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO']
-         }
-        },
+        component: EditarFuncionarioComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['FUNCIONARIO']
+        }
+    },
     {
         'path': 'categorias/listar',
-         component: ListarCategoriaComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO']
-         }
-        },
+        component: ListarCategoriaComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['ADMIN', 'FUNCIONARIO']
+        }
+    },
     {
         'path': 'categorias/novo',
-         component: InserirCategoriaComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO']
-         }
-        },
+        component: InserirCategoriaComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['ADMIN', 'FUNCIONARIO']
+        }
+    },
     // {'path': 'categorias/excluir', component: ExcluirCategoriaComponent},
     {
         'path': 'categorias/atualizar',
-         component: AtualizarCategoriaComponent,
-         canActivate: [authGuard],
-         data: {
-             role: ['ADMIN', 'FUNCIONARIO']
-         }
+        component: AtualizarCategoriaComponent,
+        canActivate: [authGuard],
+        data: {
+            role: ['ADMIN', 'FUNCIONARIO']
         }
+    }
 ];
