@@ -9,9 +9,6 @@ import br.net.manutencao.HashUtil;
 import br.net.manutencao.model.Cliente;
 import br.net.manutencao.repository.CadastroRepository;
 
-import java.security.SecureRandom;
-import java.util.Base64;
-
 @Service
 public class ClienteService {
 

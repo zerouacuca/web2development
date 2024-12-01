@@ -14,12 +14,10 @@ import br.net.manutencao.repository.HistoricoSolicitacaoRepository;
 public class SolicitacaoService {
 
     private final SolicitacaoRepository solicitacaoRepository;
-    private final HistoricoSolicitacaoRepository historicoSolicitacaoRepository;
 
     public SolicitacaoService(SolicitacaoRepository solicitacaoRepository,
             HistoricoSolicitacaoRepository historicoSolicitacaoRepository) {
         this.solicitacaoRepository = solicitacaoRepository;
-        this.historicoSolicitacaoRepository = historicoSolicitacaoRepository;
     }
 
     @Transactional(readOnly = true)

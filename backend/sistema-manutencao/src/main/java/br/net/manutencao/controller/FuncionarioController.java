@@ -7,9 +7,9 @@ import br.net.manutencao.DTO.FuncionarioCreateDTO;
 import br.net.manutencao.DTO.FuncionarioListDTO;
 import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.service.FuncionarioService;
-import jakarta.validation.Valid;
 
 import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +27,8 @@ public class FuncionarioController {
         try {
             List<FuncionarioListDTO> funcionarios = funcionarioService.getAllFuncionarios()
                     .stream()
-                    .map(func -> new FuncionarioListDTO(func.getEmail(), func.getNome(), func.getDataNasc()))
+                    .map(func -> new FuncionarioListDTO(func.getId(), func.getEmail(), func.getNome(),
+                            func.getDataNasc()))
                     .collect(Collectors.toList());
             return ResponseEntity.ok(funcionarios);
         } catch (Exception e) {
@@ -38,14 +39,22 @@ public class FuncionarioController {
 
     // criar um novo funcionário
     @PostMapping("/criar")
-    public ResponseEntity<String> createFuncionario(@RequestBody FuncionarioCreateDTO funcionarioCreateDTO) {
+    public ResponseEntity<Map<String, String>> createFuncionario(
+            @RequestBody FuncionarioCreateDTO funcionarioCreateDTO) {
+        System.out.println("Dados recebidos: " + funcionarioCreateDTO);
+        Map<String, String> response = new HashMap<>();
         try {
             funcionarioService.createFuncionario(funcionarioCreateDTO);
-            return ResponseEntity.ok("Funcionário criado com sucesso!");
+            response.put("message", "Funcionário criado com sucesso!");
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(409).body("Erro: " + e.getMessage());
+            e.printStackTrace();
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(409).body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro no servidor. Tente novamente mais tarde.");
+            e.printStackTrace();
+            response.put("error", "Erro no servidor. Tente novamente mais tarde.");
+            return ResponseEntity.status(500).body(response);
         }
     }
 
