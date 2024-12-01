@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FuncionarioCreateDTO {
 
-    private String email;
     private String nome;
+    private String email;
     private String dataNasc;
     private String senha;
 

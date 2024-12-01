@@ -48,9 +48,11 @@ public class FuncionarioController {
             response.put("message", "Funcionário criado com sucesso!");
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             response.put("error", e.getMessage());
             return ResponseEntity.status(409).body(response);
         } catch (Exception e) {
+            e.printStackTrace();
             response.put("error", "Erro no servidor. Tente novamente mais tarde.");
             return ResponseEntity.status(500).body(response);
         }

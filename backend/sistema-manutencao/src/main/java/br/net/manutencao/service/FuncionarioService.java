@@ -29,8 +29,8 @@ public class FuncionarioService {
 
             // Cria o objeto Funcionario com senha hasheada e salt
             Funcionario funcionario = new Funcionario(
-                    funcionarioCreateDTO.getEmail(),
                     funcionarioCreateDTO.getNome(),
+                    funcionarioCreateDTO.getEmail(),
                     senhaHasheada,
                     salt,
                     funcionarioCreateDTO.getDataNasc());
