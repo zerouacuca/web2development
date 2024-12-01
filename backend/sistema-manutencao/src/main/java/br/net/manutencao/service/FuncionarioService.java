@@ -50,7 +50,12 @@ public class FuncionarioService {
     }
 
     // Método para atualizar os dados de um funcionário
-    public Funcionario atualizar(Long id, FuncionarioCreateDTO funcionarioAtualizadoDTO) {
+    public Funcionario atualizar(Long id, FuncionarioCreateDTO funcionarioAtualizadoDTO) throws Exception {
+
+        // gera salt e senha com salt
+        String salt = HashUtil.gerarSalt();
+        String senhaHasheada = HashUtil.hashSenhaComSalt(funcionarioAtualizadoDTO.getSenha(), salt);
+
         // Busca o funcionário existente pelo ID
         Funcionario funcionario = funcionarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado para atualização"));
@@ -69,7 +74,7 @@ public class FuncionarioService {
 
         // Atualiza a senha, caso fornecida
         if (funcionarioAtualizadoDTO.getSenha() != null && !funcionarioAtualizadoDTO.getSenha().isBlank()) {
-            funcionario.setSenha(funcionarioAtualizadoDTO.getSenha());
+            funcionario.setSenha(senhaHasheada);
         }
 
         // Salva as alterações no banco

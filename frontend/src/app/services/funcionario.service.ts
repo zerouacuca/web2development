@@ -28,6 +28,6 @@ export class FuncionarioService {
 
   // Método para atualizar os dados de um funcionário
   atualizar(funcionario: Funcionario): Observable<Funcionario> {
-    return this.http.put<Funcionario>(`${this.apiUrl}/atualizar`, funcionario);
+    return this.http.put<Funcionario>(`${this.apiUrl}/alterar/${funcionario.id}`, funcionario);
   }
 }
