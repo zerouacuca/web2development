@@ -1,5 +1,6 @@
 package br.net.manutencao.service;
 
+import br.net.manutencao.HashUtil;
 import br.net.manutencao.DTO.FuncionarioCreateDTO;
 import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.repository.FuncionarioRepository;
@@ -16,13 +17,28 @@ public class FuncionarioService {
 
     // Método para criar um novo funcionário
     public void createFuncionario(FuncionarioCreateDTO funcionarioCreateDTO) {
-        Funcionario funcionario = new Funcionario(
-                funcionarioCreateDTO.getEmail(),
-                funcionarioCreateDTO.getNome(),
-                funcionarioCreateDTO.getSenha(),
-                null, // Salt pode ser gerado automaticamente
-                funcionarioCreateDTO.getDataNasc());
-        funcionarioRepository.save(funcionario);
+        try {
+            // Gera o salt
+            String salt = HashUtil.gerarSalt();
+
+            // Hasheia a senha com o salt
+            String senhaHasheada = HashUtil.hashSenhaComSalt(funcionarioCreateDTO.getSenha(), salt);
+
+            // Cria o objeto Funcionario com senha hasheada e salt
+            Funcionario funcionario = new Funcionario(
+                    funcionarioCreateDTO.getEmail(),
+                    funcionarioCreateDTO.getNome(),
+                    senhaHasheada,
+                    salt,
+                    funcionarioCreateDTO.getDataNasc());
+
+            // Salva no repositório
+            funcionarioRepository.save(funcionario);
+
+        } catch (Exception e) {
+            // Trate adequadamente a exceção
+            throw new RuntimeException("Erro ao criar funcionário: " + e.getMessage(), e);
+        }
     }
 
     // Método para listar todos os funcionários
@@ -35,23 +51,24 @@ public class FuncionarioService {
         // Busca o funcionário existente pelo ID
         Funcionario funcionario = funcionarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado para atualização"));
-    
-        // Verifica se o email foi alterado e se já existe outro funcionário com o mesmo email
+
+        // Verifica se o email foi alterado e se já existe outro funcionário com o mesmo
+        // email
         if (!funcionario.getEmail().equals(funcionarioAtualizadoDTO.getEmail()) &&
                 funcionarioRepository.existsByEmail(funcionarioAtualizadoDTO.getEmail())) {
             throw new IllegalArgumentException("Email já cadastrado!");
         }
-    
+
         // Atualiza os dados do funcionário
         funcionario.setNome(funcionarioAtualizadoDTO.getNome());
         funcionario.setEmail(funcionarioAtualizadoDTO.getEmail());
         funcionario.setDataNasc(funcionarioAtualizadoDTO.getDataNasc());
-    
+
         // Atualiza a senha, caso fornecida
         if (funcionarioAtualizadoDTO.getSenha() != null && !funcionarioAtualizadoDTO.getSenha().isBlank()) {
             funcionario.setSenha(funcionarioAtualizadoDTO.getSenha());
         }
-    
+
         // Salva as alterações no banco
         return funcionarioRepository.save(funcionario);
     }
@@ -62,7 +79,7 @@ public class FuncionarioService {
         if (!funcionarioRepository.existsById(id)) {
             throw new IllegalArgumentException("Funcionário não encontrado");
         }
-    
+
         // Exclui o funcionário pelo ID
         funcionarioRepository.deleteById(id);
     }
