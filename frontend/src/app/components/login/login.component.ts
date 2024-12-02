@@ -40,33 +40,41 @@ export class LoginComponent implements OnInit {
 
   logar(): void {
     this.loading = true;
+  
     if (this.formLogin.form.valid) {
-      this.loginService.login(this.login).subscribe((usu) => {
-        console.log("uso no logar:", JSON.stringify(usu?.perfil));
-        if (usu != null) {
-          this.loginService.usuarioLogado = usu;
-          this.loading = false;
-
-          // Verificar o perfil do usuário e redirecionar
-          switch (usu.perfil.toString()) {
-            case "CLIENTE":
-              this.router.navigate(['/pgcliente']);
-              break;
-            case "FUNCIONARIO":
-              this.router.navigate(['/solicitabertas']);
-              break;
-            default:
-              this.router.navigate(['/login']);
-              break;
+      this.loginService.login(this.login).subscribe({
+        next: (usu) => {
+          if (usu) {
+            this.loginService.usuarioLogado = usu;
+            this.redirecionarPorPerfil(usu.perfil);
+          } else {
+            this.message = "Usuário/senha inválido.";
           }
-        } else {
           this.loading = false;
-          this.message = "Usuário/senha inválido.";
-          console.log(usu);
-        }
+        },
+        error: (err) => {
+          console.error("Erro no login:", err);
+          this.message = "Ocorreu um erro inesperado.";
+          this.loading = false;
+        },
       });
+    } else {
+      this.loading = false;
+      this.message = "Preencha o formulário corretamente.";
     }
-    this.loading = false;
   }
-
+  
+  private redirecionarPorPerfil(perfil: string): void {
+    switch (perfil) {
+      case "CLIENTE":
+        this.router.navigate(['/pgcliente']);
+        break;
+      case "FUNCIONARIO":
+        this.router.navigate(['/solicitabertas']);
+        break;
+      default:
+        this.router.navigate(['/login']);
+        break;
+    }
+  }
 }
