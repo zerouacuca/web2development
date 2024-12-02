@@ -31,10 +31,10 @@ export class InserirCategoriaComponent {
     }
   }
 
-  listarTodos(): Categoria[]{
+/*   listarTodos(): Categoria[]{
     return this.categoriaService.listarTodos();
   }
-
+ */
   
 
 }

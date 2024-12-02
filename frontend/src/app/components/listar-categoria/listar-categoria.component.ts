@@ -1,41 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../shared/models/categoria.model';
 import { CommonModule } from '@angular/common';
-import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
+import { HeaderfuncionarioComponent } from '../headerfuncionario/headerfuncionario.component';
 import { RouterModule } from '@angular/router';
-
 
 @Component({
   selector: 'app-listar-categoria',
   standalone: true,
   imports: [CommonModule, HeaderfuncionarioComponent, RouterModule],
   templateUrl: './listar-categoria.component.html',
-  styleUrl: './listar-categoria.component.css'
+  styleUrls: ['./listar-categoria.component.css'],
 })
-export class ListarCategoriaComponent {
-  categorias : Categoria[] = [];
+export class ListarCategoriaComponent implements OnInit {
+  categorias: Categoria[] = [];
 
-  constructor(private categoriaService : CategoriaService){}
+  constructor(private categoriaService: CategoriaService) {}
 
-  listarTodos() : Categoria[]{
-    return this.categoriaService.listarTodos();
-    // return[
-    //   new Categoria(1, "Notebook"),
-    //   new Categoria(2, "teclado")
-    // ]
+  ngOnInit(): void {
+    this.categoriaService.listarTodos().subscribe({
+      next: (categorias) => {
+        this.categorias = categorias;  // Carregar as categorias recebidas
+      },
+      error: (err) => {
+        console.error('Erro ao carregar categorias:', err);
+      }
+    });
   }
 
-  ngOnInit() : void{
-    this.categorias = this.listarTodos();
+  listarCategorias(): void {
+    this.categoriaService.listarTodos().subscribe(
+      (data: Categoria[]) => {
+        this.categorias = data;
+      },
+      (error) => {
+        console.error('Erro ao listar funcionários', error);
+      }
+    );
   }
 
-  remover($event: any, categoria: Categoria): void {
-    $event.preventDefault();
-    if (confirm(`Deseja realmente remover a categoria? ${categoria.nome}?`)) {
-      this.categoriaService.remover(categoria.id!);
-      this.categorias = this.categorias.filter(f => f.id !== categoria.id);
+  remover(categoria: Categoria): void {
+    if (confirm(`Deseja realmente remover a categoria "${categoria.nome}"?`)) {
+      this.categoriaService.remover(categoria.id!).subscribe(
+        () => {
+          this.categorias = this.categorias.filter((c) => c.id !== categoria.id);
+          alert('Categoria removida com sucesso!');
+        },
+        (erro) => console.error('Erro ao remover categoria', erro)
+      );
     }
   }
-
 }

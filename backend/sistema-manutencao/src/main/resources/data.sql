@@ -26,6 +26,7 @@ VALUES ('mario@email.com', 'Mário', 'FUNCIONARIO', 'Q/zsqM6xOjzKBYkKq3Im7Q==', 
 
 INSERT INTO td_funcionario(id_usu, data_nasc)
 VALUES (2, '1990-05-15');
+
 /*--------------------------------------------------*/
 
 /* -- Inserir usuários na tabela 'usuario'
