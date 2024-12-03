@@ -16,6 +16,9 @@ public class Solicitacao {
     @Column(nullable = false)
     private String description;
 
+    @Column
+    private float preco;
+
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
