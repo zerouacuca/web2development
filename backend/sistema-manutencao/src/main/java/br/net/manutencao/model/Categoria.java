@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.util.List;
 
-import br.net.manutencao.model.Usuario.Perfil;
 
 @Entity
 @Data
