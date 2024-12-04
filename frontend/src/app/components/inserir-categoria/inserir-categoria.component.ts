@@ -24,17 +24,19 @@ export class InserirCategoriaComponent {
     private router: Router
   ){}
 
-  inserir() : void{
-    if(this.formCategoria.form.valid){
-      this.categoriaService.inserir(this.categoria);
-      this.router.navigate(["/categorias/listar"])
+  inserir(): void {
+    if (this.formCategoria.form.valid) {
+      this.categoriaService.inserir(this.categoria).subscribe({
+        next: (resposta) => {
+          this.router.navigate(['/categorias/listar']);
+        },
+        error: (err) => {
+          console.error('Erro ao inserir categoria:', err);
+          alert('Erro ao salvar a categoria.');
+        }
+      });
     }
   }
-
-/*   listarTodos(): Categoria[]{
-    return this.categoriaService.listarTodos();
-  }
- */
   
 
 }

@@ -10,4 +10,8 @@ import lombok.NoArgsConstructor;
 public class CategoriaListDTO {
     private Long id;
     private String nome;
+
+    public CategoriaListDTO(String nome) {
+        this.nome = nome;
+    }
 }

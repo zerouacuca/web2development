@@ -18,26 +18,25 @@ export class ListarCategoriaComponent implements OnInit {
   constructor(private categoriaService: CategoriaService) {}
 
   ngOnInit(): void {
-    this.categoriaService.listarTodos().subscribe({
-      next: (categorias) => {
-        this.categorias = categorias;  // Carregar as categorias recebidas
-      },
-      error: (err) => {
-        console.error('Erro ao carregar categorias:', err);
-      }
-    });
+    this.listarCategorias();
   }
 
   listarCategorias(): void {
-    this.categoriaService.listarTodos().subscribe(
-      (data: Categoria[]) => {
-        this.categorias = data;
-      },
-      (error) => {
-        console.error('Erro ao listar funcionários', error);
-      }
-    );
+    try {
+      this.categoriaService.listarTodos().subscribe(
+        (data: Categoria[]) => {
+          this.categorias = data;
+        },
+        (error) => {
+          console.error('Erro ao listar categorias', error);
+          alert('Erro ao carregar categorias. Tente novamente mais tarde.');
+        }
+      );
+    } catch (error) {
+      console.error('Erro ao listar categorias', error);
+    }
   }
+  
 
   remover(categoria: Categoria): void {
     if (confirm(`Deseja realmente remover a categoria "${categoria.nome}"?`)) {

@@ -15,14 +15,13 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-  public void createCategoria(CategoriaCreateDTO categoriaCreateDTO) {
+    public void createCategoria(CategoriaCreateDTO categoriaCreateDTO) {
         try {
-
             Categoria categoria = new Categoria(
-                categoriaCreateDTO.getNome());
+            categoriaCreateDTO.getNome());
             categoriaRepository.save(categoria);
         } catch (Exception e) {
-
+            e.printStackTrace(); 
             throw new RuntimeException("Erro ao criar categoria: " + e.getMessage(), e);
         }
     }

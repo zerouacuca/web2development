@@ -2,12 +2,14 @@ package br.net.manutencao.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "td_categoria")
 public class Categoria {
 
@@ -21,9 +23,8 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Solicitacao> solicitacoes;
 
-    public Categoria(
-            String nome
-    ) {
+
+    public Categoria(String nome) {
         this.nome = nome;
     }
 }
