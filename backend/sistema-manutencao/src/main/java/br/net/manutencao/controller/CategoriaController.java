@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/categorias")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CategoriaController {
     
     @Autowired
@@ -41,31 +41,25 @@ public class CategoriaController {
                     .collect(Collectors.toList());
             return ResponseEntity.ok(categorias);
         } catch (Exception e) {
+            e.printStackTrace();  // Adicione isso para imprimir a exceção no log
             return ResponseEntity.status(500)
                     .body(Map.of("message", "Erro ao listar categorias. Tente novamente mais tarde."));
         }
     }
-
+ 
     @PostMapping("/criar")
-    public ResponseEntity<Map<String, String>> createCategoria(
-            @RequestBody CategoriaCreateDTO categoriaCreateDTO) {
-        System.out.println("Dados recebidos: " + categoriaCreateDTO);
+    public ResponseEntity<Map<String, String>> createCategoria(@RequestBody CategoriaCreateDTO categoriaCreateDTO) {
         Map<String, String> response = new HashMap<>();
         try {
             categoriaService.createCategoria(categoriaCreateDTO);
             response.put("message", "Categoria criada com sucesso!");
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(409).body(response);
+            return ResponseEntity.status(201).body(response);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();  
             response.put("error", "Erro no servidor. Tente novamente mais tarde.");
             return ResponseEntity.status(500).body(response);
         }
     }
-
 
     @PutMapping("/alterar/{id}")
     public ResponseEntity<?> alterarCategoria(@PathVariable Long id,

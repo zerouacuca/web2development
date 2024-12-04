@@ -16,9 +16,9 @@ export class CategoriaService {
   }
 
   inserir(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(this.apiUrl, categoria);
+    return this.http.post<Categoria>(`${this.apiUrl}/criar`, categoria); 
   }
-
+  
   buscarPorId(id: number): Observable<Categoria> {
     return this.http.get<Categoria>(`${this.apiUrl}/buscar/${id}`);
   }
