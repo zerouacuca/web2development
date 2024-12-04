@@ -1,11 +1,16 @@
 package br.net.manutencao.controller;
 
+
+
 import br.net.manutencao.model.Solicitacao;
 import br.net.manutencao.service.SolicitacaoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/solicitacao")
@@ -31,6 +36,22 @@ public class SolicitacaoController {
         
         // Retorna 200 OK com as solicitações
         return ResponseEntity.ok(solicitacoes);
+    }
+
+    // relatorio
+    @GetMapping("/relatoriodata")
+    public ResponseEntity<?> listRelatorioData() {
+
+       
+        try {
+            List<Object[]> solicitacoes = solicitacaoService.listarSolicitacoesData();
+            System.out.println(solicitacoes);
+            return ResponseEntity.ok(solicitacoes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500)
+                    .body(Map.of("message", "Erro ao gerar relato. Tente novamente mais tarde."));
+        }
     }
 
     
