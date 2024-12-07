@@ -100,4 +100,8 @@ public class FuncionarioService {
         mensagem.setText("Bem-vindo ao sistema! Sua senha é: " + senha);
         mailSender.send(mensagem);
     }
+
+    public Funcionario getFuncionarioAleatorio() {
+        return funcionarioRepository.findRandomFuncionario();
+    }
 }

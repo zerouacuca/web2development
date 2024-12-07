@@ -26,6 +26,9 @@ public class Solicitacao {
     @Column(nullable = false)
     private LocalDateTime date;
 
+    @Column
+    private String defeito;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EnumStatus status;
