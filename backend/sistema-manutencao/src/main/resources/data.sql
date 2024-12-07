@@ -13,14 +13,14 @@ INSERT INTO td_categoria (nome) VALUES  -- Funciona
 ON CONFLICT (nome) DO NOTHING;
 
 /*---------INSERIR FUNCIONARIOS PRIMEIRO------------*/
--- Funcionário: login: maria@gmail.com, senha: 7513
+-- Funcionário: login: maria@email.com, senha: 7513
 INSERT INTO td_usuario(email_usu, nome_usu, perfil_usu, salt, senha_usu)
 VALUES ('maria@email.com', 'Maria', 'FUNCIONARIO','KESsYPO6fKzNgBhMAVlH6w==', 'Z00PeqRod8CGT4bAp/hiP1sAqMWaFx3W0vzYb1mFdr8=');
 
 INSERT INTO td_funcionario(id_usu, data_nasc)
 VALUES (1, '1993-05-16');
 
--- Funcionário: login: mario@gmail.com, senha: 7849
+-- Funcionário: login: mario@email.com, senha: 7849
 INSERT INTO td_usuario(email_usu, nome_usu, perfil_usu, salt, senha_usu)
 VALUES ('mario@email.com', 'Mário', 'FUNCIONARIO', 'Q/zsqM6xOjzKBYkKq3Im7Q==', '6guzLB8JfMRRym97ks21xMnAxTO5M8Dvwic9ebRmOaQ=');
 

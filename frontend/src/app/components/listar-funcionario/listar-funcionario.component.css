@@ -1,0 +1,41 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-height: 300px; /* Reduz a altura máxima da modal */
+    overflow-y: auto; /* Permite rolagem se necessário */
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal-header, .modal-footer {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 15px;
+}
+.modal-body input {
+    margin-right: 10px;
+}
+
+.modal-body button {
+    vertical-align: middle;
+}
