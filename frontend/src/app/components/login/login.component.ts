@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
         next: (usu) => {
           if (usu) {
             this.loginService.usuarioLogado = usu;
+            sessionStorage.setItem('id', usu.id.toString()); //armazena o id do usuário durante a sessão
             this.redirecionarPorPerfil(usu.perfil);
           } else {
             this.message = "Usuário/senha inválido.";

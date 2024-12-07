@@ -1,5 +1,7 @@
 package br.net.manutencao.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +33,7 @@ public abstract class Usuario {
 
     @Column(name = "senha_usu", nullable = false)
     @NotBlank(message = "A senha não pode estar vazia.")
+    @JsonIgnore
     private String senha;
 
     @Enumerated(EnumType.STRING)
@@ -55,6 +58,7 @@ public abstract class Usuario {
     }
     
     @Column(nullable = false)
+    @JsonIgnore
     private String salt; 
     
     public enum Perfil {
