@@ -29,32 +29,32 @@
     <thead>
       <tr>
         <th>Nome</th>
-        <th>Ações</th>
+        <th class= " text-center col-2">Ações</th>
       </tr>
     </thead>
     <tbody>
-
       <tr *ngFor="let categoria of categorias">
         <td>{{ categoria.nome }}</td>
         <td>
+          <div class="d-flex justify-content-center">
           <a
             href="#"
             title="Editar"
             alt="Editar"
-            class="btn btn-sm btn-info btn table"
+            class="btn btn-sm btn-info btn table me-2"
           >
-
             <i class="fa fa-edit" aria-hidden="true"></i> Editar
           </a>
           <a
             href="#"
             title="Remover"
             alt="Remover"
-            class="btn btn-sm btn-danger btn table"
+            class="btn btn-sm btn-danger btn table me-2"
             (click)="remover(categoria)"
           >
             <i class="fa fa-times" aria-hidden="true"></i> Remover
           </a>
+        </div>
         </td>
       </tr>
 

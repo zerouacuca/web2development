@@ -5,11 +5,12 @@ import { FuncionarioService } from '../../services/funcionario.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { HeaderfuncionarioComponent } from '../headerfuncionario/headerfuncionario.component';
 
 @Component({
   selector: 'app-inserir-funcionario',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, HeaderfuncionarioComponent],
   templateUrl: './inserir-funcionario.component.html',
   styleUrl: './inserir-funcionario.component.css'
 })
