@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let request of requests">
+            <tr *ngFor="let request of filteredRequests">
                 <td>{{ request.date | date: 'dd MMM yyyy, hh:mm a' }}</td>
                 <td>{{ request.cliente.nome }}</td>
                 <td>{{ request.description.substring(0, 30) }}</td>
@@ -31,7 +31,4 @@
         </tbody>
     </table>
 </div>
-
-
-<!-- Fim Tabela -->
 

@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { Router } from '@angular/router';
 import { NgFor, CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-// Interface para Cliente
 interface Cliente {
   id: number;
   nome: string;
@@ -15,13 +15,12 @@ interface Cliente {
   cpf: string;
 }
 
-// Interface para Solicitação
 interface Request {
-  id: number;
-  description: string;
   date: string;
+  description: string;
   status: string;
-  cliente: Cliente;  // Adiciona a propriedade 'cliente'
+  id_employee: string;
+  cliente: Cliente;
 }
 
 @Component({
@@ -31,37 +30,34 @@ interface Request {
   templateUrl: './solicitabertafunc.component.html',
   styleUrls: ['./solicitabertafunc.component.css']
 })
-export class SolicitabertafuncComponent {
 
+export class SolicitabertafuncComponent implements OnInit {
   requests: Request[] = [];
-  filteredRequests: Request[] = [];
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) { }
 
-  // Método para listar solicitações
+  filteredRequests: Request[] = [...this.requests];
+  startDate: string | undefined;
+  endDate: string | undefined;
+
   listarSolicitacoes(): void {
-    const usuarioId = 1;  // Substituir por um valor dinâmico
-    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listarabertas/${usuarioId}`).subscribe(
+    const usuarioId = sessionStorage.getItem("id");  // Substituir por um valor dinâmico
+    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${usuarioId}`).subscribe(
       (data) => {
         console.log(data);
         this.requests = data;
-        this.filterRequestsByStatus();  // Chama o filtro após carregar os dados
+        // Filtra as solicitações com status 'ABERTA'
+        this.filteredRequests = this.requests.filter(request => request.status === 'ABERTA');
       },
       (error) => {
         console.error('Erro ao buscar as solicitações:', error);
       }
     );
-  }
-
-  // Método para filtrar solicitações com status 'ABERTA'
-  filterRequestsByStatus(): void {
-    this.filteredRequests = this.requests.filter(request => request.status === 'ABERTA');
-  }
+  }  
 
   ngOnInit() {
-    this.listarSolicitacoes();  // Chama o método para listar solicitações
-    
-    // Verifica se há status atualizado no localStorage
+    this.listarSolicitacoes();
+
     const statusAtualizado = localStorage.getItem("statusSolicitacao");
     if (statusAtualizado) {
       this.requests[1].status = statusAtualizado;
@@ -69,20 +65,132 @@ export class SolicitabertafuncComponent {
     }
   }
 
+  efetuarAcao(request: Request) {
+    switch (request.status) {
+      case "REJEITADA":
+        request.status = "ABERTA";
+        break;
+      case "ABERTA":
+        this.router.navigate(["efetuarorcamento"]);
+        break;
+      case "ARRUMADA":
+        break;
+      case "APROVADA":
+        this.router.navigate(["aplicarmanutencao"]);
+        break;
+      case "PAGA":
+        this.router.navigate(["finalizarsolicitacao"]);
+        break;
+      default:
+        break;
+    }
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'ORÇADA': return 'orcada';
+      case 'REJEITADA': return 'rejeitada';
+      case 'ABERTA': return 'aberta';
+      case 'ARRUMADA': return 'arrumada';
+      case 'APROVADA': return 'aprovada';
+      case 'PAGA': return 'paga';
+      case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
+      default: return '';
+    }
+  }
+
+  getActionButtonText(status: string): string {
+    switch (status) {
+      case 'ORÇADA': return 'Em espera de aprovação';
+      case 'REJEITADA': return 'Resgatar Serviço';
+      case 'ABERTA': return 'Efetuar Orçamento';
+      case 'ARRUMADA': return 'Efetuar Manutenção?';
+      case 'APROVADA': return 'Efetuar Manutenção';
+      case 'PAGA': return 'Finalizar Solicitação';
+      case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
+      default: return 'Ação Indefinida';
+    }
+  }
+
+  getActionButtonClass(status: string): string {
+    switch (status) {
+      case 'ORÇADA':
+        return 'orcada';
+      case 'REJEITADA':
+        return 'rejeitar';
+      case 'ABERTA':
+        return 'aberta';
+      case 'ARRUMADA':
+        return 'arrumada';
+      case 'APROVADA':
+        return 'aprovada';
+      case 'PAGA':
+        return 'paga';
+      case 'AGUARDANDO PAGAMENTO':
+        return 'aguardandoPagamento';
+      default:
+        return '';
+    }
+  }
+
+  onFilterChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    this.filterRequests(value);
+  }
+
+  onStartDateChange(event: Event) {
+    const date = (event.target as HTMLInputElement).value;
+    this.filterRequestsByDate(date, 'start');
+  }
+
+  onEndDateChange(event: Event) {
+    const date = (event.target as HTMLInputElement).value;
+    this.filterRequestsByDate(date, 'end');
+  }
+
+  filterRequests(filter: string) {
+    const today = new Date().toISOString().split('T')[0];
+    if (filter === 'today') {
+      this.filteredRequests = this.requests.filter(request => request.date.split(' ')[0] === today);
+    } else if (filter === 'all') {
+      this.filteredRequests = [...this.requests];
+    } else {
+      this.filteredRequests = this.requests;
+    }
+  }
+
+  filterRequestsByDate(date: string, type: 'start' | 'end') {
+    if (type === 'start') {
+      this.startDate = date;
+    } else {
+      this.endDate = date;
+    }
+
+    const start = this.startDate ? new Date(this.startDate) : new Date(0);
+    const end = this.endDate ? new Date(this.endDate) : new Date();
+
+    this.filteredRequests = this.requests.filter(request => {
+      const requestDate = new Date(request.date);
+      return requestDate >= start && requestDate <= end;
+    });
+  }
+
+
+
   // Método para efetuar orçamento
-  efetuarOrcamento(request: Request) {
-    request.status = 'APROVADA';
+  efetuarOrcamento(solicitacao: Request) {
+    solicitacao.status = 'APROVADA';
     this.router.navigate(['efetuarorcamento']);
   }
 
   // Método para obter as propriedades do botão com base no status da solicitação
-  getButtonProperties(request: Request) {
-    switch (request.status) {
+  getButtonProperties(solicitacao: Request) {
+    switch (solicitacao.status) {
       case 'ABERTA':
         return {
           text: 'Efetuar Orçamento',
           class: 'aprovar',
-          action: () => this.efetuarOrcamento(request)
+          action: () => this.efetuarOrcamento(solicitacao)
         };
       case 'ARRUMADA':
         return {
@@ -94,26 +202,14 @@ export class SolicitabertafuncComponent {
         return {
           text: 'Rejeitada',
           class: 'rejeitada',
-          action: () => {} 
+          action: () => { }
         };
       default:
         return {
           text: 'Ação Desconhecida',
           class: '',
-          action: () => {}
+          action: () => { }
         };
-    }
-  }
-
-  // Método para filtrar solicitações por data
-  filterRequests(filter: string) {
-    const today = new Date().toISOString().split('T')[0];
-    if (filter === 'today') {
-      this.filteredRequests = this.requests.filter(request => request.date.split(' ')[0] === today);
-    } else if (filter === 'all') {
-      this.filteredRequests = [...this.requests];
-    } else {
-      this.filteredRequests = this.requests;
     }
   }
 }

@@ -36,7 +36,7 @@ export class PgClienteComponent implements OnInit {
 
  
   listarSolicitacoes(): void {
-    const usuarioId = 1;  // Substituir por um valor dinâmico
+    const usuarioId = sessionStorage.getItem("id");
     this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${usuarioId}`).subscribe(
       (data) => {
         console.log(data);

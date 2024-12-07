@@ -10,15 +10,12 @@ import java.util.List;
 
 public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> {
 
-    List<Solicitacao> findByClienteId(Long clienteId);
+    public List<Solicitacao> findByClienteId(Long clienteId);
+    public List<Solicitacao> findByFuncionarioId(Long funcionarioId);
 
     @Query("SELECT FUNCTION('DATE', s.date), SUM(s.preco) " +
        "FROM Solicitacao s " +
        "GROUP BY FUNCTION('DATE', s.date) " +
        "ORDER BY FUNCTION('DATE', s.date)")
     List<Object[]> findTotalPorData();
-
-
-    
-
 }
