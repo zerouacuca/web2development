@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
-import { Router } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { NgFor, CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Solicitacao } from '../../shared/models/solicitacao.model';
 
 interface Cliente {
     id: number;
@@ -15,37 +16,29 @@ interface Cliente {
     cpf: string;
   }
 
-interface Request {
-    date: string;
-    description: string;
-    status: string;
-    id_employee: string;
-    cliente: Cliente;
-}
-
 @Component({
     selector: 'app-pg-funcionario',
     standalone: true,
-    imports: [HeaderfuncionarioComponent, NgFor, CommonModule],
+    imports: [HeaderfuncionarioComponent, NgFor, CommonModule, RouterModule ],
     templateUrl: './pg-funcionario.component.html',
     styleUrls: ['./pg-funcionario.component.css']
 })
 export class PgFuncionarioComponent implements OnInit {
-    requests: Request[] = [];
+    solicitacoes: Solicitacao[] = [];
 
     constructor(private router: Router, private http: HttpClient) { }
 
-    filteredRequests: Request[] = [...this.requests];
+    filteredRequests: Solicitacao[] = [...this.solicitacoes];
     startDate: string | undefined;
     endDate: string | undefined;   
 
     listarSolicitacoes(): void {
         const usuarioId = sessionStorage.getItem("id");
-        this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${usuarioId}`).subscribe(
+        this.http.get<Solicitacao[]>(`http://localhost:8081/solicitacao/listar/${usuarioId}`).subscribe(
             (data) => {
                 console.log(data);
-                this.requests = data;
-                this.filteredRequests = [...this.requests];  // Atualiza filteredRequests
+                this.solicitacoes = data;
+                this.filteredRequests = [...this.solicitacoes];  // Atualiza filteredRequests
             },
             (error) => {
                 console.error('Erro ao buscar as solicitações:', error);
@@ -58,18 +51,18 @@ export class PgFuncionarioComponent implements OnInit {
         
         const statusAtualizado = localStorage.getItem("statusSolicitacao");
         if (statusAtualizado) {
-            this.requests[1].status = statusAtualizado;
+            this.solicitacoes[1].status = statusAtualizado;
             localStorage.removeItem("statusSolicitacao");
         }
     }
 
-    efetuarAcao(request: Request) {
-        switch (request.status) {
+    efetuarAcao(solicitacao: Solicitacao) {
+        switch (solicitacao.status) {
             case "REJEITADA":
-                request.status = "ABERTA";
+                solicitacao.status = "ABERTA";
                 break;
             case "ABERTA":
-                this.router.navigate(["efetuarorcamento"]);
+                this.router.navigate(["efetuarorcamento", solicitacao.id]);
                 break;
             case "ARRUMADA":
                 break;
@@ -129,47 +122,5 @@ export class PgFuncionarioComponent implements OnInit {
             default:
                 return '';
         }
-    }
-
-    onFilterChange(event: Event) {
-        const value = (event.target as HTMLSelectElement).value;
-        this.filterRequests(value);
-    }
-
-    onStartDateChange(event: Event) {
-        const date = (event.target as HTMLInputElement).value;
-        this.filterRequestsByDate(date, 'start');
-    }
-
-    onEndDateChange(event: Event) {
-        const date = (event.target as HTMLInputElement).value;
-        this.filterRequestsByDate(date, 'end');
-    }
-
-    filterRequests(filter: string) {
-        const today = new Date().toISOString().split('T')[0];
-        if (filter === 'today') {
-            this.filteredRequests = this.requests.filter(request => request.date.split(' ')[0] === today);
-        } else if (filter === 'all') {
-            this.filteredRequests = [...this.requests];
-        } else {
-            this.filteredRequests = this.requests;
-        }
-    }
-
-    filterRequestsByDate(date: string, type: 'start' | 'end') {
-        if (type === 'start') {
-            this.startDate = date;
-        } else {
-            this.endDate = date;
-        }
-
-        const start = this.startDate ? new Date(this.startDate) : new Date(0);
-        const end = this.endDate ? new Date(this.endDate) : new Date();
-
-        this.filteredRequests = this.requests.filter(request => {
-            const requestDate = new Date(request.date);
-            return requestDate >= start && requestDate <= end;
-        });
     }
 }
