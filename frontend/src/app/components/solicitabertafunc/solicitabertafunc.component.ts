@@ -2,19 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { Router } from '@angular/router';
 import { NgFor, CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Solicitacao } from '../../shared/models/solicitacao.model';
-
-interface Cliente {
-  id: number;
-  nome: string;
-  login: string;
-  email: string;
-  telefone: string | null;
-  endereco: string | null;
-  cpf: string;
-}
+import { SolicitacaoService } from '../../services/solicitacao.service';
 
 @Component({
   selector: 'app-solicitabertafunc',
@@ -25,39 +14,37 @@ interface Cliente {
 })
 
 export class SolicitabertafuncComponent implements OnInit {
+
   requests: Solicitacao[] = [];
-
-  constructor(private router: Router, private http: HttpClient) { }
-
-  filteredRequests: Solicitacao[] = [...this.requests];
+  filteredRequests: Solicitacao[] = [];
   startDate: string | undefined;
   endDate: string | undefined;
 
-  listarSolicitacoes(): void {
-    const usuarioId = sessionStorage.getItem("id");  // Substituir por um valor dinâmico
-    this.http.get<Solicitacao[]>(`http://localhost:8081/solicitacao/listar/${usuarioId}`).subscribe(
-      (data) => {
-        console.log(data);
-        this.requests = data;
-        // Filtra as solicitações com status 'ABERTA'
-        this.filteredRequests = this.requests.filter(solicitacao => solicitacao.status === 'ABERTA');
-      },
-      (error) => {
-        console.error('Erro ao buscar as solicitações:', error);
-      }
-    );
-  }  
+  constructor(
+    private router: Router, 
+    private solicitacaoService: SolicitacaoService
+  ) {}
 
   ngOnInit() {
-    this.listarSolicitacoes();
+    this.solicitacaoService.listarSolicitacoesAbertas().subscribe({
+      next: (solicitacoes: Solicitacao[]) => {
+        this.requests = solicitacoes;
+        this.filteredRequests = [...this.requests]; // Inicializa o filtro com os dados carregados
+      },
+      error: (err) => {
+        console.error('Erro ao carregar solicitações abertas:', err);
+      }
+    });
 
     const statusAtualizado = localStorage.getItem("statusSolicitacao");
     if (statusAtualizado) {
-      this.requests[1].status = statusAtualizado;
+      const index = this.requests.findIndex(req => req.status === statusAtualizado);
+      if (index !== -1) {
+        this.requests[index].status = statusAtualizado;
+      }
       localStorage.removeItem("statusSolicitacao");
     }
   }
-
 
   getStatusClass(status: string): string {
     switch (status) {
@@ -85,33 +72,10 @@ export class SolicitabertafuncComponent implements OnInit {
     }
   }
 
-  getActionButtonClass(status: string): string {
-    switch (status) {
-      case 'ORÇADA':
-        return 'orcada';
-      case 'REJEITADA':
-        return 'rejeitar';
-      case 'ABERTA':
-        return 'aberta';
-      case 'ARRUMADA':
-        return 'arrumada';
-      case 'APROVADA':
-        return 'aprovada';
-      case 'PAGA':
-        return 'paga';
-      case 'AGUARDANDO PAGAMENTO':
-        return 'aguardandoPagamento';
-      default:
-        return '';
-    }
-  }
-
-  // Método para efetuar orçamento
   efetuarOrcamento(solicitacao: Solicitacao) {
     this.router.navigate(['efetuarorcamento', solicitacao.id]);
   }
 
-  // Método para obter as propriedades do botão com base no status da solicitação
   getButtonProperties(solicitacao: Solicitacao) {
     switch (solicitacao.status) {
       case 'ABERTA':
