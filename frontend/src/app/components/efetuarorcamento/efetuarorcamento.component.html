@@ -1,17 +1,16 @@
 <app-headerfuncionario></app-headerfuncionario>
-<div class="container">
+<div class="container" *ngIf="solicitacao">
     <header>
-        
         <h2>Efetuar Orçamento</h2>
     </header>
     <div class="solicitacao-detalhes">
-        <p><strong>Categoria:</strong> Computadores</p>
-        <p><strong>Descrição do Defeito:</strong> Tela azul ao inicializar</p>
-        <p><strong>Data da Solicitação:</strong> 20/09/2024</p>
+        <p><strong>Categoria:</strong> {{ solicitacao.categoria.nome }}</p>
+        <p><strong>Descrição do Defeito:</strong> {{ solicitacao.defeito }}</p>
+        <p><strong>Data da Solicitação:</strong> {{ solicitacao.date | date: 'dd/MM/yyyy' }}</p>
         <strong>Orçar valor:</strong>
-        <form id="valor-orcado" action="/submit" method="post">
-            <label for="numero">R$</label>
-            <input type="number" id="numero" name="numero" required min="0">
+        <form id="valor-orcado">
+            <label>R$ </label>
+            <input type="number" id="numero" name="numero" [(ngModel)]="valorOrcado" required />
         </form>
     </div>
     <div class="popup">
@@ -21,4 +20,7 @@
             </button>
         </div>
     </div>
+</div>
+<div *ngIf="!solicitacao" class="loading">
+    <p>Carregando dados da solicitação...</p>
 </div>

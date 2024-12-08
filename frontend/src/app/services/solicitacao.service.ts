@@ -42,4 +42,14 @@ export class SolicitacaoService {
   createSolicitacao(solicitacao: SolicitacaoCreateDTO): Observable<any> {
     return this.http.post(`${this.apiUrl}/criar`, solicitacao);
   }
+
+  buscarSolicitacaoPorId(id: number): Observable<Solicitacao> {
+    return this.http.get<Solicitacao>(`${this.apiUrl}/${id}`);
+  }
+
+  confirmarOrcamento(id: string, valorOrcado: number): Observable<any> {
+    const url = `${this.apiUrl}/orcar/${id}?valorOrcado=${valorOrcado}`;
+    const body = { valorOrcado };
+    return this.http.put(url, body);
+  }
 }
