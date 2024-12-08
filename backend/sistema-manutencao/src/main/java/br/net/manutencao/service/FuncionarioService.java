@@ -4,6 +4,7 @@ import br.net.manutencao.HashUtil;
 import br.net.manutencao.DTO.FuncionarioCreateDTO;
 import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.repository.FuncionarioRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -101,7 +102,5 @@ public class FuncionarioService {
         mailSender.send(mensagem);
     }
 
-    public Funcionario getFuncionarioAleatorio() {
-        return funcionarioRepository.findRandomFuncionario();
-    }
+
 }

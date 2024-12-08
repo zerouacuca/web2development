@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.net.manutencao.DTO.SolicitacaoCreateDTO;
+import br.net.manutencao.model.Categoria;
 import br.net.manutencao.model.Cliente;
 import br.net.manutencao.model.EnumStatus;
+import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.model.Solicitacao;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.SolicitacaoRepository;
+import br.net.manutencao.repository.CategoriaRepository;
 import br.net.manutencao.repository.ClienteRepository;
+import br.net.manutencao.repository.FuncionarioRepository;
 import br.net.manutencao.repository.HistoricoSolicitacaoRepository;
 import br.net.manutencao.repository.UsuarioRepository;
 
@@ -23,7 +27,13 @@ import br.net.manutencao.repository.UsuarioRepository;
 public class SolicitacaoService {
 
     @Autowired
+    FuncionarioRepository funcionarioRepository;
+
+    @Autowired
     ClienteRepository clienteRepository;
+
+    @Autowired
+    CategoriaRepository categoriaRepository;
 
     @Autowired
     FuncionarioService funcionarioService;
@@ -72,18 +82,35 @@ public class SolicitacaoService {
     public void createSolicitacao(SolicitacaoCreateDTO solicitacaoDTO) {
         Solicitacao novaSolicitacao = new Solicitacao();
         novaSolicitacao.setDescription(solicitacaoDTO.getDescription());
-        novaSolicitacao.setCategoria(solicitacaoDTO.getCategoria());
         novaSolicitacao.setDefeito(solicitacaoDTO.getDefeito());
         novaSolicitacao.setPreco(-1);
         novaSolicitacao.setDate(LocalDateTime.now());
         novaSolicitacao.setStatus(EnumStatus.ABERTA);
+
+        Optional<Categoria> categoriaOpt = categoriaRepository.findById(solicitacaoDTO.getCategoria().getId());
+        if (categoriaOpt.isPresent()) {
+            novaSolicitacao.setCategoria(categoriaOpt.get());
+        } else {
+            throw new RuntimeException("Categoria não encontrada.");
+        }
+
         Optional<Cliente> clienteOpt = clienteRepository.findById(solicitacaoDTO.getIdCliente());
         if (clienteOpt.isPresent()) {
-            novaSolicitacao.setCliente(clienteOpt.get());
+            Cliente cliente = clienteOpt.get();
+            System.out.println("Cliente encontrado: " + cliente.getEmail()); // Verifique o e-mail aqui
+            novaSolicitacao.setCliente(cliente);
         } else {
             throw new RuntimeException("Cliente não encontrado com o ID fornecido.");
         }
-        novaSolicitacao.setFuncionario(funcionarioService.getFuncionarioAleatorio());
-        solicitacaoRepository.save(novaSolicitacao);
-    }
+        
+        Optional<Funcionario> funcionarioOpt = funcionarioRepository.findById(1L);
+        if (funcionarioOpt.isPresent()) {
+            Funcionario funcionario = funcionarioOpt.get();
+            System.out.println("Funcionário encontrado: " + funcionario.getNome()); 
+            novaSolicitacao.setFuncionario(funcionario);
+        } else {
+            throw new RuntimeException("Funcionário não encontrado com o ID fornecido.");
+        }
+    solicitacaoRepository.save(novaSolicitacao);
+    } 
 }

@@ -22,7 +22,7 @@ export class NovaSolicitacaoComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private categoriaService: CategoriaService,
-    private solicitacaoService: SolicitacaoService, // Injetando o serviço
+    private solicitacaoService: SolicitacaoService,
     private http: HttpClient
   ) {
     this.solicitacaoForm = this.fb.group({
@@ -45,20 +45,33 @@ export class NovaSolicitacaoComponent implements OnInit {
 
   onSubmit(): void {
     if (this.solicitacaoForm.valid) {
-      const formValue: SolicitacaoCreateDTO = this.solicitacaoForm.value;
-      console.log(formValue);
-
+      const formValue = this.solicitacaoForm.value;
+  
+      // Transformar o ID da categoria selecionada em um objeto Categoria
+      const categoriaSelecionada: Categoria = {
+        id: formValue.categoria, 
+        nome: '', 
+      };
+  
+      const solicitacaoDTO: SolicitacaoCreateDTO = {
+        ...formValue,
+        categoria: categoriaSelecionada 
+      };
+  
+      console.log(solicitacaoDTO);
+  
       // Chama o método do serviço para enviar os dados
-      this.solicitacaoService.createSolicitacao(formValue).subscribe(
+      this.solicitacaoService.createSolicitacao(solicitacaoDTO).subscribe(
         response => {
           console.log('Solicitação criada com sucesso', response);
-          // Aqui você pode adicionar ações como navegação ou mensagem de sucesso
+          // Ações como navegação ou mensagem de sucesso
         },
         error => {
           console.error('Erro ao criar solicitação', error);
-          // Aqui você pode tratar o erro de forma adequada
+          // Tratamento de erro
         }
       );
     }
   }
+  
 }
