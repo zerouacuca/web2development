@@ -1,5 +1,6 @@
 package br.net.manutencao.controller;
 
+import br.net.manutencao.DTO.SolicitacaoCreateDTO;
 import br.net.manutencao.model.Solicitacao;
 import br.net.manutencao.service.SolicitacaoService;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +30,29 @@ public class SolicitacaoController {
         // Retorna 200 OK com as solicitações
         return ResponseEntity.ok(solicitacoes);
     }
+
+
+    @PostMapping("/criar")
+    public ResponseEntity<?> createSolicitacao(@RequestBody SolicitacaoCreateDTO novaSolicitacao) {
+        
+        System.out.println("Dados recebidos: " + novaSolicitacao);
+        Map<String, String> response = new HashMap<>();
+        try {
+            solicitacaoService.createSolicitacao(novaSolicitacao);
+            response.put("message", "Solicitação criada com sucesso!");
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(409).body(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("error", "Erro no servidor. Tente novamente mais tarde.");
+            return ResponseEntity.status(500).body(response);
+        }
+    }
+
+
 
     // relatorio
     @GetMapping("/relatoriodata")
