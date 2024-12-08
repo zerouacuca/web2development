@@ -14,6 +14,7 @@ import br.net.manutencao.model.Categoria;
 import br.net.manutencao.model.Cliente;
 import br.net.manutencao.model.EnumStatus;
 import br.net.manutencao.model.Funcionario;
+import br.net.manutencao.model.HistoricoSolicitacao;
 import br.net.manutencao.model.Solicitacao;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.SolicitacaoRepository;
@@ -22,6 +23,7 @@ import br.net.manutencao.repository.ClienteRepository;
 import br.net.manutencao.repository.FuncionarioRepository;
 import br.net.manutencao.repository.HistoricoSolicitacaoRepository;
 import br.net.manutencao.repository.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class SolicitacaoService {
@@ -42,14 +44,10 @@ public class SolicitacaoService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private SolicitacaoRepository solicitacaoRepository2;
+    private SolicitacaoRepository solicitacaoRepository;
 
-    private final SolicitacaoRepository solicitacaoRepository;
-
-    public SolicitacaoService(SolicitacaoRepository solicitacaoRepository,
-            HistoricoSolicitacaoRepository historicoSolicitacaoRepository) {
-        this.solicitacaoRepository = solicitacaoRepository;
-    }
+    @Autowired
+    private HistoricoSolicitacaoRepository historicoRepository;
 
     @Transactional(readOnly = true)
     public List<Solicitacao> listarSolicitacoesPorUsuario(Long id) {
@@ -74,8 +72,13 @@ public class SolicitacaoService {
 
     // Método listar todos as solicitacoes
     public List<Object[]> listarSolicitacoesData() {
-        return solicitacaoRepository2.findTotalPorData();
+        return solicitacaoRepository.findTotalPorData();
 
+    }
+
+    public Solicitacao getSolicitacaoById(Long id) {
+        return solicitacaoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Solicitação não encontrada com o ID: " + id));
     }
 
     @Transactional
@@ -102,15 +105,38 @@ public class SolicitacaoService {
         } else {
             throw new RuntimeException("Cliente não encontrado com o ID fornecido.");
         }
-        
+
         Optional<Funcionario> funcionarioOpt = funcionarioRepository.findById(1L);
         if (funcionarioOpt.isPresent()) {
             Funcionario funcionario = funcionarioOpt.get();
-            System.out.println("Funcionário encontrado: " + funcionario.getNome()); 
+            System.out.println("Funcionário encontrado: " + funcionario.getNome());
             novaSolicitacao.setFuncionario(funcionario);
         } else {
             throw new RuntimeException("Funcionário não encontrado com o ID fornecido.");
         }
-    solicitacaoRepository.save(novaSolicitacao);
-    } 
+        solicitacaoRepository.save(novaSolicitacao);
+    }
+
+    @Transactional
+    public Solicitacao orcarSolicitacao(Long id, Float valorOrcado) throws Exception {
+        // Encontrar a solicitação com base no ID
+        Solicitacao solicitacao = solicitacaoRepository.findById(id)
+                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+
+        // Criar o histórico da solicitação com os valores atuais
+        HistoricoSolicitacao historico = new HistoricoSolicitacao();
+        historico.setSolicitacao(solicitacao);
+        historico.setEstado(solicitacao.getStatus()); // Armazena o status anterior
+        historico.setDataHora(solicitacao.getDate()); //Armazena o timestamp anterior
+        
+        historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
+
+        // Atualizar o valor orçado e o status
+        solicitacao.setPreco(valorOrcado.floatValue()); // Atualiza o preço
+        solicitacao.setStatus(EnumStatus.ORCADA); // Atualiza o status
+        solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
+
+        // Salvar as alterações na solicitação
+        return solicitacaoRepository.save(solicitacao);
+    }
 }

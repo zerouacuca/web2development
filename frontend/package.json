@@ -23,7 +23,7 @@
     "bootstrap": "^5.3.3",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",
-    "ngx-mask": "^18.0.3",
+    "ngx-mask": "^18.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "web2dev": "file:",

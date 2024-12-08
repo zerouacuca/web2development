@@ -3,6 +3,7 @@ package br.net.manutencao.controller;
 import br.net.manutencao.DTO.SolicitacaoCreateDTO;
 import br.net.manutencao.model.Solicitacao;
 import br.net.manutencao.service.SolicitacaoService;
+import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,22 @@ public class SolicitacaoController {
         return ResponseEntity.ok(solicitacoes);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getSolicitacao(@PathVariable Long id) {
+        try {
+            Solicitacao solicitacao = solicitacaoService.getSolicitacaoById(id);
+            return ResponseEntity.ok(solicitacao);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body("Solicitação não encontrada.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Erro no servidor. Tente novamente mais tarde.");
+        }
+    }
 
     @PostMapping("/criar")
     public ResponseEntity<?> createSolicitacao(@RequestBody SolicitacaoCreateDTO novaSolicitacao) {
-        
+
         System.out.println("Dados recebidos: " + novaSolicitacao);
         Map<String, String> response = new HashMap<>();
         try {
@@ -52,8 +65,6 @@ public class SolicitacaoController {
         }
     }
 
-
-
     // relatorio
     @GetMapping("/relatoriodata")
     public ResponseEntity<?> listRelatorioData() {
@@ -66,6 +77,17 @@ public class SolicitacaoController {
             e.printStackTrace();
             return ResponseEntity.status(500)
                     .body(Map.of("message", "Erro ao gerar relatorio. Tente novamente mais tarde."));
+        }
+    }
+
+    @PutMapping("/orcar/{id}")
+    public String orcarSolicitacao(@PathVariable Long id, @RequestParam Float valorOrcado) {
+        try {
+            // Atualiza a solicitação com o valor orçado
+            Solicitacao solicitacao = solicitacaoService.orcarSolicitacao(id, valorOrcado);
+            return "Solicitação orçada com sucesso! Novo valor: " + solicitacao.getPreco() + " e Status: " + solicitacao.getStatus();
+        } catch (Exception e) {
+            return "Erro ao orçar solicitação: " + e.getMessage();
         }
     }
 }

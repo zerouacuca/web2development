@@ -78,7 +78,7 @@ export const routes: Routes = [
         }
     },
     {
-        'path': 'efetuarorcamento',
+        'path': 'efetuarorcamento/:id',
         component: EfetuarorcamentoComponent,
         canActivate: [authGuard],
         data: {

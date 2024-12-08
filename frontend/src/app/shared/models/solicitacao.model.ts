@@ -6,6 +6,7 @@ export interface Solicitacao {
       nome: string;
     };
     date: Date;
+    defeito: string;
     status: string;
     cliente: {
         nome: string;
