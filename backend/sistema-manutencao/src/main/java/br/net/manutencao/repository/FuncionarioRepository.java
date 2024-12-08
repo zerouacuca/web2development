@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
     boolean existsByEmail(String email);
+    boolean existsById(Long id);
 
-    @Query(value = "SELECT * FROM td_funcionario ORDER BY RAND() LIMIT 1", nativeQuery = true)
+
+    @Query(value = "SELECT * FROM td_funcionario ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
     Funcionario findRandomFuncionario();
 }

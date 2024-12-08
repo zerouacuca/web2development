@@ -82,7 +82,7 @@ export const routes: Routes = [
         component: EfetuarorcamentoComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'FUNCIONARIO']
+            role: [ 'FUNCIONARIO']
         }
     },
     {
@@ -90,7 +90,7 @@ export const routes: Routes = [
         component: FinalizarsolicitComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'FUNCIONARIO']
+            role: [ 'FUNCIONARIO']
         }
     },
     {
@@ -98,7 +98,7 @@ export const routes: Routes = [
         component: VisualizarservicosComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'FUNCIONARIO', 'CLIENTE']
+            role: [ 'FUNCIONARIO', 'CLIENTE']
         }
     },
     {
@@ -106,7 +106,7 @@ export const routes: Routes = [
         component: NovaSolicitacaoComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'CLIENTE']
+            role: ['CLIENTE']
         }
     },
     {
@@ -142,7 +142,7 @@ export const routes: Routes = [
         component: ListarFuncionarioComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'FUNCIONARIO']
+            role: [ 'FUNCIONARIO']
         }
     },
     {
@@ -150,7 +150,7 @@ export const routes: Routes = [
         component: InserirFuncionarioComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'FUNCIONARIO']
+            role: [ 'FUNCIONARIO']
         }
     },
     {
@@ -166,7 +166,7 @@ export const routes: Routes = [
         component: ListarCategoriaComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'FUNCIONARIO']
+            role: [ 'FUNCIONARIO']
         }
     },
     {
@@ -174,7 +174,7 @@ export const routes: Routes = [
         component: InserirCategoriaComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'FUNCIONARIO']
+            role: [ 'FUNCIONARIO']
         }
     },
     // {'path': 'categorias/excluir', component: ExcluirCategoriaComponent},
@@ -183,7 +183,7 @@ export const routes: Routes = [
         component: AtualizarCategoriaComponent,
         canActivate: [authGuard],
         data: {
-            role: ['ADMIN', 'FUNCIONARIO']
+            role: [ 'FUNCIONARIO']
         }
     }
 ];
