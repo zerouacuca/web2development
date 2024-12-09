@@ -133,7 +133,7 @@ public class SolicitacaoService {
 
         // Atualizar o valor orçado e o status
         solicitacao.setPreco(valorOrcado.floatValue()); // Atualiza o preço
-        solicitacao.setStatus(EnumStatus.ORCADA); // Atualiza o status
+        solicitacao.setStatus(EnumStatus.ORÇADA); // Atualiza o status
         solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
 
         // Salvar as alterações na solicitação

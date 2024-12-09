@@ -185,5 +185,14 @@ export const routes: Routes = [
         data: {
             role: [ 'FUNCIONARIO']
         }
-    }
+    },
+
+    {
+        'path': 'orcamentocliente/:id',
+        component: OrcamentoclienteComponent,
+        canActivate: [authGuard],
+        data: {
+            role: [ 'CLIENTE']
+        }
+    },
 ];
