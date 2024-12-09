@@ -4,7 +4,7 @@ INSERT INTO td_categoria (nome) VALUES
 ('Desktop'),
 ('Impressora'),
 ('Mouse'),
-('Teclado')
+('Teclado');
 
 /*---------INSERIR FUNCIONARIOS PRIMEIRO------------*/
 -- Funcionário: login: maria@email.com, senha: 7513
@@ -48,20 +48,20 @@ INSERT INTO td_solicitacao (date, description, preco, status, categoria_id, clie
 -- Solicitações associadas a diferentes categorias, clientes e funcionários
 ('2024-11-01 10:00:00', 'Reparo no teclado', 150.0, 'ABERTA', 5, 3, 1),
 ('2024-11-01 11:30:00', 'Troca de mouse', 80.0, 'REDIRECIONADA', 4, 4, 2),
-('2024-11-02 09:00:00', 'Manutenção em notebook', 300.0, 'ORCADA', 1, 5, 1),
+('2024-11-02 09:00:00', 'Manutenção em notebook', 300.0, 'ORÇADA', 1, 5, 1),
 ('2024-11-02 15:00:00', 'Reparo em impressora', 250.0, 'APROVADA', 3, 6, 2),
 ('2024-11-03 08:00:00', 'Montagem de desktop', 600.0, 'FINALIZADA', 2, 3, 1),
 ('2024-11-03 10:30:00', 'Substituição de peça em notebook', 400.0, 'PAGA', 1, 4, 1),
 ('2024-11-04 14:00:00', 'Configuração de impressora', 120.0, 'REJEITADA', 3, 5, 2),
 ('2024-11-05 13:00:00', 'Atualização de sistema', 100.0, 'ARRUMADA', 1, 6, 2),
 ('2024-11-05 16:00:00', 'Reparo no mouse', 50.0, 'ABERTA', 4, 3, 1),
-('2024-11-06 09:00:00', 'Troca de fonte no desktop', 220.0, 'ORCADA', 2, 4, 1),
+('2024-11-06 09:00:00', 'Troca de fonte no desktop', 220.0, 'ORÇADA', 2, 4, 1),
 ('2024-11-06 14:30:00', 'Limpeza de notebook', 90.0, 'APROVADA', 1, 5, 1),
 ('2024-11-07 08:00:00', 'Instalação de teclado gamer', 200.0, 'REDIRECIONADA', 5, 6, 2),
 ('2024-11-07 11:00:00', 'Configuração de rede', 180.0, 'FINALIZADA', 3, 3, 1),
 ('2024-11-08 09:30:00', 'Atualização de driver em impressora', 70.0, 'PAGA', 3, 4, 2),
 ('2024-11-08 14:30:00', 'Troca de teclado', 170.0, 'ABERTA', 5, 5, 2),
-('2024-11-09 08:30:00', 'Upgrade de memória em notebook', 450.0, 'ORCADA', 1, 6, 1),
+('2024-11-09 08:30:00', 'Upgrade de memória em notebook', 450.0, 'ORÇADA', 1, 6, 1),
 ('2024-11-09 12:00:00', 'Reparo de fonte no desktop', 250.0, 'APROVADA', 2, 3, 2),
 ('2024-11-10 09:00:00', 'Substituição de HD em notebook', 500.0, 'REJEITADA', 1, 4, 1),
 ('2024-11-10 14:30:00', 'Configuração de teclado sem fio', 130.0, 'ARRUMADA', 5, 5, 1),
@@ -70,7 +70,7 @@ INSERT INTO td_solicitacao (date, description, preco, status, categoria_id, clie
 -- Histórico de alterações para as solicitações
 INSERT INTO td_historico_solicitacao (data_hora, estado, solicitacao_id) VALUES
 -- Históricos para a solicitação 1
-('2024-11-01 10:30:00', 'ORCADA', 1),
+('2024-11-01 10:30:00', 'ORÇADA', 1),
 ('2024-11-02 09:00:00', 'APROVADA', 1),
 ('2024-11-02 14:00:00', 'FINALIZADA', 1),
 
@@ -96,7 +96,7 @@ INSERT INTO td_historico_solicitacao (data_hora, estado, solicitacao_id) VALUES
 ('2024-11-08 16:30:00', 'FINALIZADA', 14),
 ('2024-11-09 11:00:00', 'APROVADA', 15),
 ('2024-11-09 15:30:00', 'FINALIZADA', 16),
-('2024-11-10 10:30:00', 'ORCADA', 17),
+('2024-11-10 10:30:00', 'ORÇADA', 17),
 ('2024-11-10 15:30:00', 'FINALIZADA', 18),
 ('2024-11-11 12:30:00', 'APROVADA', 19),
 ('2024-11-11 16:30:00', 'FINALIZADA', 20);
