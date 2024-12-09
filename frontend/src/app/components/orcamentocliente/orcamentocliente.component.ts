@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MostrarOrcamentoService } from '../../services/mostrarorcamento.service';
+import { HttpClient } from '@angular/common/http';
+import { Solicitacao } from '../../shared/models/solicitacao.model';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-orcamentocliente',
   standalone: true,
-  imports: [HeaderComponent, NgIf, CommonModule, FormsModule],
+  imports: [HeaderComponent, NgIf, CommonModule, FormsModule, RouterModule, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './orcamentocliente.component.html',
   styleUrls: ['./orcamentocliente.component.css']
 })
 export class OrcamentoclienteComponent implements OnInit {
 
-  valorOrcado: string = 'R$ 0,00';
-  estadoSolicitacao: string = 'ORÇADA';
-  descricaoEquipamento: string = 'Não informado';
-  categoria: string = 'Não informado';
-  descricaoDefeito: string = 'Não informado';
-  dataSolicitacao: string = 'Não informado';
+  
+  solicitacaoId : number = 0;
+  solicitacao : Solicitacao | null = null;
   popupVisible = false;
   popupMessage = '';
   modalVisible = false;
@@ -28,30 +28,29 @@ export class OrcamentoclienteComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private orcamentoService: MostrarOrcamentoService
-  ) {}
+    private orcamentoService: MostrarOrcamentoService,
+    private http: HttpClient,
+  ) {
+    this.route.params.subscribe(params =>{
+      this.solicitacaoId  = params['id'];
+    })
+  }
 
-  ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.orcamentoService.getOrcamento(id).subscribe(
-        data => {
-          this.valorOrcado = data.valorOrcado ? `R$ ${data.valorOrcado}` : 'R$ 0,00';
-          this.estadoSolicitacao = data.estado ? data.estado : 'ORÇADA';
-          this.descricaoEquipamento = data.descricaoEquipamento || 'Não informado';
-          this.categoria = data.categoria || 'Não informado';
-          this.descricaoDefeito = data.descricaoDefeito || 'Não informado';
-          this.dataSolicitacao = data.dataSolicitacao || 'Não informado';
-        },
-        error => {
-          console.error('Erro ao buscar orçamento:', error);
-        }
-      );
-    }
+  ngOnInit(): void {
+    // Busca os dados da solicitação pelo ID
+    this.orcamentoService.buscarSolicitacaoPorId(this.solicitacaoId).subscribe({
+      next: (data: Solicitacao) => {
+        this.solicitacao = data; // Armazena a solicitação retornada
+      },
+      error: (err) => {
+        console.error('Erro ao carregar solicitação:', err);
+        alert('Erro ao carregar os dados da solicitação!');
+      }
+    });
   }
 
   aprovarOrcamento() {
-    this.popupMessage = `Serviço Aprovado no Valor ${this.valorOrcado}`;
+    this.popupMessage = `Serviço Aprovado no Valor ${this.solicitacao?.preco}`;
     localStorage.setItem('statusSolicitacao', 'APROVADA');
     this.showPopup();
   }

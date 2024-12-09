@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let request of requests; let i = index">
+            <tr *ngFor="let request of filteredRequests; let i = index">
                 <td>{{ request.date | date: 'dd MMM. yyyy'}}</td>
                 <td>{{ request.description.substring(0, 30) }}</td>
                 <td class="text-center" [ngClass]="getStatusClass(request.status)">{{ request.status }}</td>
