@@ -16,9 +16,8 @@ export class ListarFuncionarioComponent implements OnInit {
 
   funcionarios: Funcionario[] = [];
   funcionarioSelecionado: Funcionario | null = null;
-  exibirSenha: boolean = false;
 
-  constructor(private funcionarioService: FuncionarioService) {}
+  constructor(private funcionarioService: FuncionarioService) { }
 
   ngOnInit(): void {
     this.listarFuncionarios();
@@ -35,28 +34,40 @@ export class ListarFuncionarioComponent implements OnInit {
     );
   }
 
-  abrirModal(funcionario: Funcionario): void {
-    this.funcionarioSelecionado = funcionario;
-  }
-
-  fecharModal(): void {
-    this.funcionarioSelecionado = null;
-  }
-
-  alternarExibicaoSenha(): void {
-    this.exibirSenha = !this.exibirSenha;
-  }
-
+  // Método 'remover' para excluir o funcionário
   remover(event: Event, funcionario: Funcionario): void {
-    event.preventDefault();
+    event.preventDefault();  // Evita o comportamento padrão do link (navegar para outra página)
 
+    // Lógica para remover o funcionário
     this.funcionarioService.remover(funcionario.id).subscribe(
       () => {
-        this.funcionarios = this.funcionarios.filter(f => f.id !== funcionario.id);
+        this.funcionarios = this.funcionarios.filter(f => f.id !== funcionario.id);  // Remove o funcionário da lista
       },
       (error) => {
         console.error('Erro ao remover funcionário', error);
       }
     );
+  }
+
+  // Método para abrir a modal e exibir os dados do funcionário
+  abrirModal(funcionario: Funcionario): void {
+    this.funcionarioSelecionado = funcionario;
+    const modal = document.getElementById('funcionarioModal');
+    if (modal) {
+      modal.classList.add('show');
+      modal.style.display = 'block';
+      modal.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  // Método para fechar a modal
+  fecharModal(): void {
+    this.funcionarioSelecionado = null;
+    const modal = document.getElementById('funcionarioModal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    }
   }
 }
