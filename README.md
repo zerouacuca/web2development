@@ -83,3 +83,4 @@ spring.mail.password=pcsz evzq jekf lhxy
 **Pronto!** Agora você pode acessar a aplicação no navegador e utilizar as funcionalidades disponíveis.
 
 ## Documentação
+[Manutenção de Equipamentos - 2024-2](docs/Manutenção%20de%20Equipamentos%20-%202024-2.pdf)
