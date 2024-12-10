@@ -1,10 +1,7 @@
 package br.net.manutencao.service;
 
-<<<<<<< HEAD
-=======
 import java.time.LocalDateTime;
 import java.util.ArrayList;
->>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
 import java.util.List;
 import java.util.Optional;
 
@@ -12,44 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-<<<<<<< HEAD
-import br.net.manutencao.model.Funcionario;
-import br.net.manutencao.model.Cliente;
-=======
 import br.net.manutencao.DTO.SolicitacaoCreateDTO;
 import br.net.manutencao.model.Categoria;
 import br.net.manutencao.model.Cliente;
 import br.net.manutencao.model.EnumStatus;
 import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.model.HistoricoSolicitacao;
->>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
 import br.net.manutencao.model.Solicitacao;
 import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.SolicitacaoRepository;
-<<<<<<< HEAD
-import br.net.manutencao.repository.UsuarioRepository;
-=======
 import br.net.manutencao.repository.CategoriaRepository;
 import br.net.manutencao.repository.ClienteRepository;
 import br.net.manutencao.repository.FuncionarioRepository;
 import br.net.manutencao.repository.HistoricoSolicitacaoRepository;
 import br.net.manutencao.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
->>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
 
 @Service
 public class SolicitacaoService {
 
-<<<<<<< HEAD
-    private final SolicitacaoRepository solicitacaoRepository;
-    private final UsuarioRepository usuarioRepository;
-
-    @Autowired
-    public SolicitacaoService(SolicitacaoRepository solicitacaoRepository, UsuarioRepository usuarioRepository) {
-        this.solicitacaoRepository = solicitacaoRepository;
-        this.usuarioRepository = usuarioRepository;
-    }
-=======
     @Autowired
     FuncionarioRepository funcionarioRepository;
 
@@ -70,30 +48,8 @@ public class SolicitacaoService {
 
     @Autowired
     private HistoricoSolicitacaoRepository historicoRepository;
->>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
 
-    // Método para listar solicitações por id_usu (Cliente ou Funcionário)
     @Transactional(readOnly = true)
-<<<<<<< HEAD
-    public List<Solicitacao> listarSolicitacoesPorUsuario(Long id_usu) {
-        // Verifica se o usuário existe
-        var usuarioOpt = usuarioRepository.findById(id_usu);
-        
-        if (!usuarioOpt.isPresent()) {
-            throw new IllegalArgumentException("ID de usuário inválido: " + id_usu);
-        }
-
-        var usuario = usuarioOpt.get();
-
-        // Verifica o tipo de usuário (CLIENTE ou FUNCIONARIO)
-        if (usuario instanceof Cliente) {
-            return solicitacaoRepository.findByClienteId(id_usu); // Buscar solicitações do cliente
-        } else if (usuario instanceof Funcionario) {
-            return solicitacaoRepository.findByFuncionarioId(id_usu); // Buscar solicitações do funcionário
-        } else {
-            throw new IllegalArgumentException("Tipo de usuário desconhecido para o ID: " + id_usu);
-        }
-=======
     public List<Solicitacao> listarSolicitacoesPorUsuario(Long id) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
         List<Solicitacao> solicitacoes = new ArrayList<>();
@@ -112,14 +68,11 @@ public class SolicitacaoService {
             }
         });
         return solicitacoes; // Retorna a lista de solicitações
->>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
     }
 
-    // Método listar todas as solicitações por data
+    // Método listar todos as solicitacoes
     public List<Object[]> listarSolicitacoesData() {
         return solicitacaoRepository.findTotalPorData();
-<<<<<<< HEAD
-=======
 
     }
 
@@ -185,6 +138,5 @@ public class SolicitacaoService {
 
         // Salvar as alterações na solicitação
         return solicitacaoRepository.save(solicitacao);
->>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
     }
 }
