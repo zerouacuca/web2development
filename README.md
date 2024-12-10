@@ -85,5 +85,8 @@ spring.mail.password=pcsz evzq jekf lhxy
 ## Documentação
 [Manutenção de Equipamentos - 2024-2](docs/Manutenção%20de%20Equipamentos%20-%202024-2.pdf)
 
-Exemplo - Diagrama de classes - Backend - Crud Funcionário
-![Exemplo - Diagrama de classes - Backend - CRUD Funcionario](docs/backend_doc_exemplo.png)
+Exemplo - Diagrama de classes - Backend - CRUD Funcionário
+![Exemplo - Diagrama de classes - Backend - CRUD Funcionario](docs/dc_back_exemplo.png)
+
+Exemplo - Diagrama de classes - Frontend - CRUD Funcionário
+![Exemplo - Diagrama de classes - Backend - CRUD Funcionario](docs/dc_front_exemplo.png)
