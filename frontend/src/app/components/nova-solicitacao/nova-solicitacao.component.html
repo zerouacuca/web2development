@@ -1,29 +1,20 @@
-<app-header></app-header>
-<div class="pgnovasolicit">
-    <div class="container">
-        
-        <h2>Nova Solicitação de Manutenção</h2>
-        <form id="solicitacaoForm">
-            <label for="descricaoEquipamento">Descrição do Equipamento</label>
-            <input type="text" id="descricaoEquipamento" name="descricaoEquipamento" required>
-
-            <label for="categoriaEquipamento">Categoria do Equipamento</label>
-            <input 
-                type="text" 
-                id="categoriaEquipamento" 
-                name="categoriaEquipamento"
-                class="form-control"
-                [ngbTypeahead]="search"
-                (focus)="focus$.next($any($event).target.value)"
-	            (click)="click$.next($any($event).target.value)"
-	            #instance="ngbTypeahead"
-                required
-            />
-
-            <label for="descricaoDefeito">Descrição do Defeito</label>
-            <textarea id="descricaoDefeito" name="descricaoDefeito" required></textarea>
-
-            <button (click)="realizarSolicitacao()">Enviar Solicitação</button>
-        </form>
+<form [formGroup]="solicitacaoForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="description">Descrição</label>
+      <input id="description" formControlName="description" type="text" />
     </div>
-</div>
+    
+    <div>
+      <label for="categoria">Categoria</label>
+      <select id="categoria" formControlName="categoria">
+        <option *ngFor="let cat of categorias$ | async" [value]="cat.id">{{ cat.nome }}</option>
+      </select>
+    </div>
+  
+    <div>
+      <label for="defeito">Defeito</label>
+      <input id="defeito" formControlName="defeito" type="text" />
+    </div>
+    
+    <button type="submit" [disabled]="!solicitacaoForm.valid">Enviar</button>
+  </form>

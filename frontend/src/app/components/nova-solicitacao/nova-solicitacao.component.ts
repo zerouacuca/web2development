@@ -1,68 +1,77 @@
-import { HeaderComponent } from "../header/header.component";
-import { Component, ViewChild } from '@angular/core';
-import { NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { SolicitacaoManutencaoService, Solicitacao } from '../../services/solicitacaomanutencao.service';
-
-
-const states = [
-	'Computador',
-	'Celular',
-	'Tablet',
-	'Fone de ouvido',
-	'Mouse',
-  'Teclado',
-];
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Categoria } from '../../shared/models/categoria.model';
+import { CategoriaService } from '../../services/categoria.service';
+import { SolicitacaoCreateDTO } from '../../shared/models/SolicitacaoCreateDTO';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { SolicitacaoService } from '../../services/solicitacao.service'; // Importando o serviço
 
 @Component({
   selector: 'app-nova-solicitacao',
-  standalone: true,
-  imports: [NgbTypeaheadModule, FormsModule, HeaderComponent],
   templateUrl: './nova-solicitacao.component.html',
-  styleUrls: ['./nova-solicitacao.component.css']
+  styleUrls: ['./nova-solicitacao.component.css'],
+  imports: [ReactiveFormsModule, CommonModule],
+  standalone: true
 })
-export class NovaSolicitacaoComponent {
-  model: any;
+export class NovaSolicitacaoComponent implements OnInit {
+  solicitacaoForm: FormGroup;
+  categorias$: Observable<Categoria[]> | undefined;
 
-  @ViewChild('instance', { static: true })
-  instance: NgbTypeahead = new NgbTypeahead;
-
-  focus$ = new Subject<string>();
-  click$ = new Subject<string>();
-
-  solicitacao: Solicitacao = {
-    descricaoEquipamento: '',
-    categoriaEquipamento: '',
-    descricaoDefeito: '',
-};
-
-  constructor(private solicitacaoService: SolicitacaoManutencaoService, private router: Router) {}
-
-  realizarSolicitacao(): void {
-    this.solicitacaoService.enviarSolicitacao(this.solicitacao).subscribe({
-        next: () => {
-            alert('Solicitação realizada com sucesso!');
-            this.router.navigate(['pgcliente']);
-        },
-        error: (err) => {
-            alert('Erro ao enviar solicitação. Por favor, tente novamente.');
-            console.error('Erro ao enviar solicitação:', err);
-        },
+  constructor(
+    private fb: FormBuilder, 
+    private categoriaService: CategoriaService,
+    private solicitacaoService: SolicitacaoService,
+    private http: HttpClient
+  ) {
+    this.solicitacaoForm = this.fb.group({
+      description: ['', Validators.required],
+      categoria: ['', Validators.required],
+      defeito: ['', Validators.required],
+      idCliente: ['', Validators.required]
     });
   }
 
-search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
-  const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-  const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-  const inputFocus$ = this.focus$;
+  ngOnInit(): void {
+    this.categorias$ = this.categoriaService.listarTodos(); // Carregar as categorias
+    const idCliente = sessionStorage.getItem("id");
+    if (idCliente) {
+      this.solicitacaoForm.patchValue({
+        idCliente: idCliente // Preenche o campo idCliente com o valor do sessionStorage
+      });
+    }
+  }
 
-  return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map((term) =>
-          (term === '' ? states : states.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
-      ),
-  );
-};
+  onSubmit(): void {
+    if (this.solicitacaoForm.valid) {
+      const formValue = this.solicitacaoForm.value;
+  
+      // Transformar o ID da categoria selecionada em um objeto Categoria
+      const categoriaSelecionada: Categoria = {
+        id: formValue.categoria, 
+        nome: '', 
+      };
+  
+      const solicitacaoDTO: SolicitacaoCreateDTO = {
+        ...formValue,
+        categoria: categoriaSelecionada 
+      };
+  
+      console.log(solicitacaoDTO);
+  
+      // Chama o método do serviço para enviar os dados
+      this.solicitacaoService.createSolicitacao(solicitacaoDTO).subscribe(
+        response => {
+          console.log('Solicitação criada com sucesso', response);
+          // Ações como navegação ou mensagem de sucesso
+        },
+        error => {
+          console.error('Erro ao criar solicitação', error);
+          // Tratamento de erro
+        }
+      );
+    }
+  }
+  
 }

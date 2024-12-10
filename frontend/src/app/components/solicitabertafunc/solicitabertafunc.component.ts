@@ -1,28 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { Router } from '@angular/router';
 import { NgFor, CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-
-// Interface para Cliente
-interface Cliente {
-  id: number;
-  nome: string;
-  login: string;
-  email: string;
-  telefone: string | null;
-  endereco: string | null;
-  cpf: string;
-}
-
-// Interface para Solicitação
-interface Request {
-  id: number;
-  description: string;
-  date: string;
-  status: string;
-  cliente: Cliente;  // Adiciona a propriedade 'cliente'
-}
+import { Solicitacao } from '../../shared/models/solicitacao.model';
+import { SolicitacaoService } from '../../services/solicitacao.service';
 
 @Component({
   selector: 'app-solicitabertafunc',
@@ -31,58 +12,77 @@ interface Request {
   templateUrl: './solicitabertafunc.component.html',
   styleUrls: ['./solicitabertafunc.component.css']
 })
-export class SolicitabertafuncComponent {
 
-  requests: Request[] = [];
-  filteredRequests: Request[] = [];
+export class SolicitabertafuncComponent implements OnInit {
 
-  constructor(private router: Router, private http: HttpClient) {}
+  requests: Solicitacao[] = [];
+  filteredRequests: Solicitacao[] = [];
+  startDate: string | undefined;
+  endDate: string | undefined;
 
-  // Método para listar solicitações
-  listarSolicitacoes(): void {
-    const usuarioId = 1;  // Substituir por um valor dinâmico
-    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listarabertas/${usuarioId}`).subscribe(
-      (data) => {
-        console.log(data);
-        this.requests = data;
-        this.filterRequestsByStatus();  // Chama o filtro após carregar os dados
-      },
-      (error) => {
-        console.error('Erro ao buscar as solicitações:', error);
-      }
-    );
-  }
-
-  // Método para filtrar solicitações com status 'ABERTA'
-  filterRequestsByStatus(): void {
-    this.filteredRequests = this.requests.filter(request => request.status === 'ABERTA');
-  }
+  constructor(
+    private router: Router, 
+    private solicitacaoService: SolicitacaoService
+  ) {}
 
   ngOnInit() {
-    this.listarSolicitacoes();  // Chama o método para listar solicitações
-    
-    // Verifica se há status atualizado no localStorage
+    this.solicitacaoService.listarSolicitacoesAbertas().subscribe({
+      next: (solicitacoes: Solicitacao[]) => {
+        this.requests = solicitacoes;
+        this.filteredRequests = [...this.requests]; // Inicializa o filtro com os dados carregados
+      },
+      error: (err) => {
+        console.error('Erro ao carregar solicitações abertas:', err);
+      }
+    });
+
     const statusAtualizado = localStorage.getItem("statusSolicitacao");
     if (statusAtualizado) {
-      this.requests[1].status = statusAtualizado;
+      const index = this.requests.findIndex(req => req.status === statusAtualizado);
+      if (index !== -1) {
+        this.requests[index].status = statusAtualizado;
+      }
       localStorage.removeItem("statusSolicitacao");
     }
   }
 
-  // Método para efetuar orçamento
-  efetuarOrcamento(request: Request) {
-    request.status = 'APROVADA';
-    this.router.navigate(['efetuarorcamento']);
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'ORÇADA': return 'orcada';
+      case 'REJEITADA': return 'rejeitada';
+      case 'ABERTA': return 'aberta';
+      case 'ARRUMADA': return 'arrumada';
+      case 'APROVADA': return 'aprovada';
+      case 'PAGA': return 'paga';
+      case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
+      default: return '';
+    }
   }
 
-  // Método para obter as propriedades do botão com base no status da solicitação
-  getButtonProperties(request: Request) {
-    switch (request.status) {
+  getActionButtonText(status: string): string {
+    switch (status) {
+      case 'ORÇADA': return 'Em espera de aprovação';
+      case 'REJEITADA': return 'Resgatar Serviço';
+      case 'ABERTA': return 'Efetuar Orçamento';
+      case 'ARRUMADA': return 'Efetuar Manutenção?';
+      case 'APROVADA': return 'Efetuar Manutenção';
+      case 'PAGA': return 'Finalizar Solicitação';
+      case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
+      default: return 'Ação Indefinida';
+    }
+  }
+
+  efetuarOrcamento(solicitacao: Solicitacao) {
+    this.router.navigate(['efetuarorcamento', solicitacao.id]);
+  }
+
+  getButtonProperties(solicitacao: Solicitacao) {
+    switch (solicitacao.status) {
       case 'ABERTA':
         return {
           text: 'Efetuar Orçamento',
           class: 'aprovar',
-          action: () => this.efetuarOrcamento(request)
+          action: () => this.efetuarOrcamento(solicitacao)
         };
       case 'ARRUMADA':
         return {
@@ -94,26 +94,14 @@ export class SolicitabertafuncComponent {
         return {
           text: 'Rejeitada',
           class: 'rejeitada',
-          action: () => {} 
+          action: () => { }
         };
       default:
         return {
           text: 'Ação Desconhecida',
           class: '',
-          action: () => {}
+          action: () => { }
         };
-    }
-  }
-
-  // Método para filtrar solicitações por data
-  filterRequests(filter: string) {
-    const today = new Date().toISOString().split('T')[0];
-    if (filter === 'today') {
-      this.filteredRequests = this.requests.filter(request => request.date.split(' ')[0] === today);
-    } else if (filter === 'all') {
-      this.filteredRequests = [...this.requests];
-    } else {
-      this.filteredRequests = this.requests;
     }
   }
 }

@@ -1,20 +1,46 @@
 package br.net.manutencao.service;
 
+<<<<<<< HEAD
+=======
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+>>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
 import br.net.manutencao.model.Funcionario;
 import br.net.manutencao.model.Cliente;
+=======
+import br.net.manutencao.DTO.SolicitacaoCreateDTO;
+import br.net.manutencao.model.Categoria;
+import br.net.manutencao.model.Cliente;
+import br.net.manutencao.model.EnumStatus;
+import br.net.manutencao.model.Funcionario;
+import br.net.manutencao.model.HistoricoSolicitacao;
+>>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
 import br.net.manutencao.model.Solicitacao;
+import br.net.manutencao.model.Usuario;
 import br.net.manutencao.repository.SolicitacaoRepository;
+<<<<<<< HEAD
 import br.net.manutencao.repository.UsuarioRepository;
+=======
+import br.net.manutencao.repository.CategoriaRepository;
+import br.net.manutencao.repository.ClienteRepository;
+import br.net.manutencao.repository.FuncionarioRepository;
+import br.net.manutencao.repository.HistoricoSolicitacaoRepository;
+import br.net.manutencao.repository.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
+>>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
 
 @Service
 public class SolicitacaoService {
 
+<<<<<<< HEAD
     private final SolicitacaoRepository solicitacaoRepository;
     private final UsuarioRepository usuarioRepository;
 
@@ -23,9 +49,32 @@ public class SolicitacaoService {
         this.solicitacaoRepository = solicitacaoRepository;
         this.usuarioRepository = usuarioRepository;
     }
+=======
+    @Autowired
+    FuncionarioRepository funcionarioRepository;
+
+    @Autowired
+    ClienteRepository clienteRepository;
+
+    @Autowired
+    CategoriaRepository categoriaRepository;
+
+    @Autowired
+    FuncionarioService funcionarioService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private SolicitacaoRepository solicitacaoRepository;
+
+    @Autowired
+    private HistoricoSolicitacaoRepository historicoRepository;
+>>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
 
     // Método para listar solicitações por id_usu (Cliente ou Funcionário)
     @Transactional(readOnly = true)
+<<<<<<< HEAD
     public List<Solicitacao> listarSolicitacoesPorUsuario(Long id_usu) {
         // Verifica se o usuário existe
         var usuarioOpt = usuarioRepository.findById(id_usu);
@@ -44,10 +93,98 @@ public class SolicitacaoService {
         } else {
             throw new IllegalArgumentException("Tipo de usuário desconhecido para o ID: " + id_usu);
         }
+=======
+    public List<Solicitacao> listarSolicitacoesPorUsuario(Long id) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+        List<Solicitacao> solicitacoes = new ArrayList<>();
+
+        optionalUsuario.ifPresent(usuario -> {
+            String perfilNome = usuario.getPerfil().name(); // Obtém o nome do enum como String
+
+            // Se o perfil for CLIENTE, busca as solicitações com cliente_id igual a id
+            if (perfilNome.equals("CLIENTE")) {
+                solicitacoes.addAll(solicitacaoRepository.findByClienteId(id));
+            }
+            // Se o perfil for FUNCIONARIO, busca as solicitações com funcionario_id igual a
+            // id
+            else if (perfilNome.equals("FUNCIONARIO")) {
+                solicitacoes.addAll(solicitacaoRepository.findByFuncionarioId(id));
+            }
+        });
+        return solicitacoes; // Retorna a lista de solicitações
+>>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
     }
 
     // Método listar todas as solicitações por data
     public List<Object[]> listarSolicitacoesData() {
         return solicitacaoRepository.findTotalPorData();
+<<<<<<< HEAD
+=======
+
+    }
+
+    public Solicitacao getSolicitacaoById(Long id) {
+        return solicitacaoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Solicitação não encontrada com o ID: " + id));
+    }
+
+    @Transactional
+    public void createSolicitacao(SolicitacaoCreateDTO solicitacaoDTO) {
+        Solicitacao novaSolicitacao = new Solicitacao();
+        novaSolicitacao.setDescription(solicitacaoDTO.getDescription());
+        novaSolicitacao.setDefeito(solicitacaoDTO.getDefeito());
+        novaSolicitacao.setPreco(-1);
+        novaSolicitacao.setDate(LocalDateTime.now());
+        novaSolicitacao.setStatus(EnumStatus.ABERTA);
+
+        Optional<Categoria> categoriaOpt = categoriaRepository.findById(solicitacaoDTO.getCategoria().getId());
+        if (categoriaOpt.isPresent()) {
+            novaSolicitacao.setCategoria(categoriaOpt.get());
+        } else {
+            throw new RuntimeException("Categoria não encontrada.");
+        }
+
+        Optional<Cliente> clienteOpt = clienteRepository.findById(solicitacaoDTO.getIdCliente());
+        if (clienteOpt.isPresent()) {
+            Cliente cliente = clienteOpt.get();
+            System.out.println("Cliente encontrado: " + cliente.getEmail()); // Verifique o e-mail aqui
+            novaSolicitacao.setCliente(cliente);
+        } else {
+            throw new RuntimeException("Cliente não encontrado com o ID fornecido.");
+        }
+
+        Optional<Funcionario> funcionarioOpt = funcionarioRepository.findById(1L);
+        if (funcionarioOpt.isPresent()) {
+            Funcionario funcionario = funcionarioOpt.get();
+            System.out.println("Funcionário encontrado: " + funcionario.getNome());
+            novaSolicitacao.setFuncionario(funcionario);
+        } else {
+            throw new RuntimeException("Funcionário não encontrado com o ID fornecido.");
+        }
+        solicitacaoRepository.save(novaSolicitacao);
+    }
+
+    @Transactional
+    public Solicitacao orcarSolicitacao(Long id, Float valorOrcado) throws Exception {
+        // Encontrar a solicitação com base no ID
+        Solicitacao solicitacao = solicitacaoRepository.findById(id)
+                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+
+        // Criar o histórico da solicitação com os valores atuais
+        HistoricoSolicitacao historico = new HistoricoSolicitacao();
+        historico.setSolicitacao(solicitacao);
+        historico.setEstado(solicitacao.getStatus()); // Armazena o status anterior
+        historico.setDataHora(solicitacao.getDate()); //Armazena o timestamp anterior
+        
+        historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
+
+        // Atualizar o valor orçado e o status
+        solicitacao.setPreco(valorOrcado.floatValue()); // Atualiza o preço
+        solicitacao.setStatus(EnumStatus.ORÇADA); // Atualiza o status
+        solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
+
+        // Salvar as alterações na solicitação
+        return solicitacaoRepository.save(solicitacao);
+>>>>>>> 32690a5c4260ff12e6d95320277d60d2f348f068
     }
 }

@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "./components/header/header.component";
-import { PgClienteComponent } from "./components/pg-cliente/pg-cliente.component";
-import { LoginComponent } from "./components/login/login.component";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, PgClienteComponent, LoginComponent, HttpClientModule],
+  imports: [RouterOutlet, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -20,5 +17,4 @@ export class AppComponent {
     this.http.get('http://localhost:8080/api/usuarios').subscribe(data => {
       console.log(data);
     });
-
 }}
