@@ -6,8 +6,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 500px;
-    max-height: 300px; /* Reduz a altura máxima da modal */
-    overflow-y: auto; /* Permite rolagem se necessário */
+    max-height: 300px;
+    overflow-y: auto; 
     background-color: white;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     border-radius: 8px;

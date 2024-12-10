@@ -34,7 +34,7 @@ export class ListarFuncionarioComponent implements OnInit {
     );
   }
 
-  // Método para abrir a modal com os detalhes do funcionário
+  
   abrirModal(funcionario: Funcionario): void {
     this.funcionarioSelecionado = funcionario;
     const modal = document.getElementById('funcionarioModal');
@@ -45,7 +45,7 @@ export class ListarFuncionarioComponent implements OnInit {
     }
   }
 
-  // Método para fechar a modal
+  
   fecharModal(): void {
     this.funcionarioSelecionado = null;
     const modal = document.getElementById('funcionarioModal');
@@ -61,11 +61,11 @@ export class ListarFuncionarioComponent implements OnInit {
   }
 
   remover(event: Event, funcionario: Funcionario): void {
-    event.preventDefault();  // Evita o comportamento padrão do link (navegar para outra página)
+    event.preventDefault();  
 
     this.funcionarioService.remover(funcionario.id).subscribe(
       () => {
-        this.funcionarios = this.funcionarios.filter(f => f.id !== funcionario.id);  // Remove o funcionário da lista
+        this.funcionarios = this.funcionarios.filter(f => f.id !== funcionario.id); 
       },
       (error) => {
         console.error('Erro ao remover funcionário', error);
