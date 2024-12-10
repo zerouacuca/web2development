@@ -61,7 +61,7 @@ export class PgFuncionarioComponent implements OnInit {
         this.router.navigate(["aplicarmanutencao"]);
         break;
       case "PAGA":
-        this.router.navigate(["finalizarsolicitacao"]);
+        this.router.navigate(["finalizarsolicitacao", solicitacao.id]);
         break;
       default:
         break;
