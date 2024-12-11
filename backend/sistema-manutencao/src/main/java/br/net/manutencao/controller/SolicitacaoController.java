@@ -182,7 +182,7 @@ public class SolicitacaoController {
     }
     }
 
-    @PostMapping("/{id}/manutencao")
+    @PutMapping("/{id}/manutencao")
 public ResponseEntity<?> efetuarManutencao(
         @PathVariable Long id,
         @RequestBody ManutencaoDTO manutencaoDTO,
