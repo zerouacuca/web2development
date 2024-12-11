@@ -76,6 +76,7 @@ export class PgClienteComponent implements OnInit {
         this.router.navigate(["efetuarorcamento", solicitacao.id]);
         break;
       case "ARRUMADA":
+        this.router.navigate(["pagarservico", solicitacao.id])
         break;
       case "APROVADA":
         this.router.navigate(["aplicarmanutencao"]);
