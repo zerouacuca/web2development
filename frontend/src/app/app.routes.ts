@@ -93,6 +93,15 @@ export const routes: Routes = [
             role: [ 'FUNCIONARIO']
         }
     },
+
+    {
+        'path': 'finalizarsolicitacao/:id',
+        component: FinalizarsolicitComponent,
+        canActivate: [authGuard],
+        data: {
+            role: [ 'FUNCIONARIO']
+        }
+    },
     {
         'path': 'visualizarservicos',
         component: VisualizarservicosComponent,
@@ -126,7 +135,7 @@ export const routes: Routes = [
         }
     },
     {
-        'path': 'relatorioCategoria',
+        'path': 'relatorioCategoria/:id',
         component: RelatorioCategoriaComponent,
         canActivate: [authGuard],
         data: {

@@ -8,6 +8,7 @@ import { Solicitacao } from '../shared/models/solicitacao.model';
   providedIn: 'root'
 })
 export class SolicitacaoService {
+  
 
   private apiUrl = 'http://localhost:8081/solicitacao';
 
@@ -50,6 +51,12 @@ export class SolicitacaoService {
   confirmarOrcamento(id: string, valorOrcado: number): Observable<any> {
     const url = `${this.apiUrl}/orcar/${id}?valorOrcado=${valorOrcado}`;
     const body = { valorOrcado };
+    return this.http.put(url, body);
+  }
+
+  finalizarSolicitacao(id: string) : Observable<any>{
+    const url = `${this.apiUrl}/finalizarsolicitacao/${id}`;
+    const body = {};
     return this.http.put(url, body);
   }
 }

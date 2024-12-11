@@ -6,6 +6,7 @@ import br.net.manutencao.service.SolicitacaoService;
 import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,6 @@ public class SolicitacaoController {
             return ResponseEntity.status(500).body("Erro no servidor. Tente novamente mais tarde.");
         }
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getSolicitacao(@PathVariable Long id) {
@@ -99,9 +99,26 @@ public class SolicitacaoController {
         try {
             // Atualiza a solicitação com o valor orçado
             Solicitacao solicitacao = solicitacaoService.orcarSolicitacao(id, valorOrcado);
-            return "Solicitação orçada com sucesso! Novo valor: " + solicitacao.getPreco() + " e Status: " + solicitacao.getStatus();
+            return "Solicitação orçada com sucesso! Novo valor: " + solicitacao.getPreco() + " e Status: "
+                    + solicitacao.getStatus();
         } catch (Exception e) {
             return "Erro ao orçar solicitação: " + e.getMessage();
+        }
+    }
+
+    @PutMapping("/finalizarsolicitacao/{id}")
+    public ResponseEntity<?> finalizarSolicitacao(@PathVariable Long id) {
+        try {
+            // Atualiza a solicitação com o valor orçado
+            Solicitacao solicitacao = solicitacaoService.finalizarSolicitacao(id);
+            return ResponseEntity.ok(solicitacao.getStatus());
+        } catch (Exception e) {
+
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Erro ao finalizar solicitação");
+            errorResponse.put("details", e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 }

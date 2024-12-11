@@ -1,17 +1,38 @@
 <header>
-    <div class="navbar navbar-expand-lg bg-body-tertiary p-4" >
+    <div class="navbar navbar-expand-lg bg-body-tertiary p-4 justify-content-between">
         <h1 class="navbar-brand">Razer Manutenções</h1>
-        <nav class="navbar-nav ms-auto p-4">
-            <a class="nav-link me-2" [routerLink]="['/categorias/listar']">Cadastrar Categoria</a>
-            <a class="nav-link me-2" [routerLink]="['/pgfuncionario']">Todas Solicitações</a>
-            <a class="nav-link me-3" [routerLink]="['/solicitabertas']">Solicitações Abertas</a>
-            <a class="nav-link me-4" [routerLink]="['/relatoriodata']">Relatório de Receitas por Data</a>
-            <a class="nav-link me-5" [routerLink]="['/relatorioCategoria']">Relatório por Categoria</a>
-            <a class="nav-link me-5" [routerLink]="['/funcionarios/listar']">CRUD Funcionarios</a>
-            <a class="btn btn-danger me-1" [routerLink]="['/login']">
-                <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Sair
-            </a>
-        </nav>
+        <!-- Centralizar os Dropdowns -->
+        <div class="d-flex justify-content-center flex-grow-1">
+            <!-- Dropdown Ver Solicitações -->
+            <div ngbDropdown class="nav-item dropdown mx-3">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle>Solicitações</a>
+                <div ngbDropdownMenu>
+                    <a class="dropdown-item" [routerLink]="['/pgfuncionario']">Todas as Solicitações</a>
+                    <a class="dropdown-item" [routerLink]="['/solicitabertas']">Solicitações Abertas</a>
+                </div>
+            </div>
+
+            <!-- Dropdown Relatórios -->
+            <div ngbDropdown class="nav-item dropdown mx-3">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle>Relatórios</a>
+                <div ngbDropdownMenu>
+                    <a class="dropdown-item" [routerLink]="['/relatoriodata']">Relatório de Receitas por Data</a>
+                    <a class="dropdown-item" [routerLink]="['/relatorioCategoria']">Relatório por Categoria</a>
+                </div>
+            </div>
+
+            <!-- Dropdown CRUD -->
+            <div ngbDropdown class="nav-item dropdown mx-3">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle>Cadastros</a>
+                <div ngbDropdownMenu>
+                    <a class="dropdown-item" [routerLink]="['/funcionarios/listar']">Cadastro de Funcionários</a>
+                    <a class="dropdown-item" [routerLink]="['/categorias/listar']">Cadastrar Categoria</a>
+                </div>
+            </div>
+        </div>
+        <!-- Botão Sair -->
+        <a class="btn btn-danger sair-btn" [routerLink]="['/login']">
+            <i class="fas fa-sign-out-alt me-2"></i> Sair
+        </a>
     </div>
 </header>
-
