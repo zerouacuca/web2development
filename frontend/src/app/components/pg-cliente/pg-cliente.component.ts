@@ -2,17 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { NgFor, CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';  // Importe o HttpClient
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Solicitacao } from '../../shared/models/solicitacao.model';
 import { SolicitacaoService } from '../../services/solicitacao.service';
-
-// interface Request {
-//   date: string;
-//   description: string;
-//   status: string;
-//   id_employee?: string;
-// }
 
 @Component({
   selector: 'app-pg-cliente',
@@ -22,51 +14,57 @@ import { SolicitacaoService } from '../../services/solicitacao.service';
   styleUrls: ['./pg-cliente.component.css'],
 })
 export class PgClienteComponent implements OnInit {
-  requests: Request[] = [];  // A lista de solicitações será preenchida pela API
-
   solicitacoes: Solicitacao[] = [];
   filteredRequests: Solicitacao[] = [];
-  
+  solicitacaoSelecionada: Solicitacao | null = null;
+  historicoPassos: any[] = [];
+
   constructor(
     private router: Router,
     private http: HttpClient,
-    private solicitacaoService : SolicitacaoService) { }
+    private solicitacaoService: SolicitacaoService
+  ) {}
 
-    ngOnInit() {
-      // Inscreve-se no Observable para carregar as solicitações
-      this.solicitacaoService.listarSolicitacoes().subscribe(
-        (data: Solicitacao[]) => {
-          this.solicitacoes = data;
-          this.filteredRequests = [...data]; // Sincroniza lista filtrada
-        },
-        (error) => {
-          console.error('Erro ao carregar as solicitações:', error);
-        }
-      );
-  
-      // Atualiza status de uma solicitação específica (se aplicável)
-      const statusAtualizado = localStorage.getItem("statusSolicitacao");
-      if (statusAtualizado) {
-        const index = this.solicitacoes.findIndex(solicitacao => solicitacao.id === 1);
-        if (index !== -1) {
-          this.solicitacoes[index].status = statusAtualizado;
-          localStorage.removeItem("statusSolicitacao");
-        }
-      }
-    }
-
- 
-  listarSolicitacoes(): void {
-    const usuarioId = sessionStorage.getItem("id");
-    this.http.get<Request[]>(`http://localhost:8081/solicitacao/listar/${usuarioId}`).subscribe(
-      (data) => {
-        console.log(data);
-        this.requests = data;
+  ngOnInit() {
+    this.solicitacaoService.listarSolicitacoes().subscribe(
+      (data: Solicitacao[]) => {
+        this.solicitacoes = data;
+        this.filteredRequests = [...data];
       },
       (error) => {
-        console.error('Erro ao buscar as solicitações:', error);
+        console.error('Erro ao carregar as solicitações:', error);
       }
     );
+  }
+
+  abrirModal(solicitacao: Solicitacao): void {
+    this.solicitacaoSelecionada = solicitacao;
+  
+    // Exemplo de histórico dinâmico (substitua com os dados reais, se disponíveis)
+    this.historicoPassos = [
+      { dataHora: '2024-09-14 10:00', funcionario: solicitacao.funcionario.nome, estado: 'CRIADA' },
+      { dataHora: '2024-09-15 14:30', funcionario: solicitacao.funcionario.nome, estado: 'ORÇADA' }
+    ];
+  
+    const modal = document.getElementById('solicitacaoModal');
+    if (modal) {
+      modal.classList.add('show');
+      modal.style.display = 'block';
+      modal.setAttribute('aria-hidden', 'false');
+    }
+  }
+  
+  
+
+  fecharModal(): void {
+    this.solicitacaoSelecionada = null;
+    this.historicoPassos = [];
+    const modal = document.getElementById('solicitacaoModal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    }
   }
 
   efetuarAcao(solicitacao: Solicitacao) {
@@ -86,26 +84,11 @@ export class PgClienteComponent implements OnInit {
         this.router.navigate(["finalizarsolicitacao"]);
         break;
       case "ORÇADA":
-        this.router.navigate(["orcamentocliente", solicitacao.id])
+        this.router.navigate(["orcamentocliente", solicitacao.id]);
         break;
       default:
         break;
     }
-  }
-  // aprovarServico() {
-  //   this.router.navigate(['orcamentocliente', solicitacao.id]);
-  // }
-
-  // resgatarServico(index: number) {
-  //   this.requests[index].status = 'APROVADA';
-  // }
-// 
-  pagarServico() {
-    this.router.navigate(['pagarservico']);
-  }
-
-  visualizarServico() {
-    this.router.navigate(['visualizarservicos']);
   }
 
   getStatusClass(status: string): string {
@@ -145,5 +128,4 @@ export class PgClienteComponent implements OnInit {
       default: return 'visualizarServico';
     }
   }
-
 }
