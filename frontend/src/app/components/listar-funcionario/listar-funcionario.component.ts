@@ -10,11 +10,12 @@ import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionar
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderfuncionarioComponent],
   templateUrl: './listar-funcionario.component.html',
-  styleUrl: './listar-funcionario.component.css'
+  styleUrls: ['./listar-funcionario.component.css']
 })
 export class ListarFuncionarioComponent implements OnInit {
 
   funcionarios: Funcionario[] = [];
+  funcionarioSelecionado: Funcionario | null = null;
 
   constructor(private funcionarioService: FuncionarioService) { }
 
@@ -46,5 +47,27 @@ export class ListarFuncionarioComponent implements OnInit {
         console.error('Erro ao remover funcionário', error);
       }
     );
+  }
+
+  // Método para abrir a modal e exibir os dados do funcionário
+  abrirModal(funcionario: Funcionario): void {
+    this.funcionarioSelecionado = funcionario;
+    const modal = document.getElementById('funcionarioModal');
+    if (modal) {
+      modal.classList.add('show');
+      modal.style.display = 'block';
+      modal.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  // Método para fechar a modal
+  fecharModal(): void {
+    this.funcionarioSelecionado = null;
+    const modal = document.getElementById('funcionarioModal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    }
   }
 }

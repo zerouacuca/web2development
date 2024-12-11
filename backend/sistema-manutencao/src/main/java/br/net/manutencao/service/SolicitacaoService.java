@@ -140,6 +140,7 @@ public class SolicitacaoService {
         return solicitacaoRepository.save(solicitacao);
     }
 
+
     @Transactional
     public Solicitacao finalizarSolicitacao(Long id)  throws Exception {
          // Encontrar a solicitação com base no ID
