@@ -135,7 +135,7 @@ export const routes: Routes = [
         }
     },
     {
-        'path': 'relatorioCategoria/:id',
+        'path': 'relatorioCategoria',
         component: RelatorioCategoriaComponent,
         canActivate: [authGuard],
         data: {

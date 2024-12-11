@@ -1,5 +1,4 @@
 .relatoriocategoria {
-    font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     display: flex;
     justify-content: center;
@@ -61,11 +60,6 @@ td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-th {
-    background-color: #6200ea;
-    color: white;
 }
 
 .imprimir-button {
