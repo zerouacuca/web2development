@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.net.manutencao.DTO.ManutencaoDTO;
 import br.net.manutencao.DTO.SolicitacaoCreateDTO;
 import br.net.manutencao.model.Categoria;
 import br.net.manutencao.model.Cliente;
@@ -165,4 +166,29 @@ public class SolicitacaoService {
         // Salvar as alterações na solicitação
         return solicitacaoRepository.save(solicitacao);
     }
+
+    @Transactional
+public Solicitacao efetuarManutencao(Long id, ManutencaoDTO manutencaoDTO, Usuario funcionario) {
+    Solicitacao solicitacao = solicitacaoRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Solicitação não encontrada com o ID: " + id));
+
+    // Criar histórico da solicitação
+    HistoricoSolicitacao historico = new HistoricoSolicitacao();
+    historico.setSolicitacao(solicitacao);
+    historico.setEstado(solicitacao.getStatus());
+    historico.setDataHora(solicitacao.getDate());
+    historico.setFuncionario(solicitacao.getFuncionario()); // Registra o funcionário responsável
+    historicoRepository.save(historico);
+
+    // Atualizar os dados da solicitação
+    solicitacao.setDescricaoManutencao(manutencaoDTO.getDescricaoManutencao());
+    solicitacao.setOrientacoesCliente(manutencaoDTO.getOrientacoesCliente());
+    solicitacao.setStatus(EnumStatus.ARRUMADA);
+    solicitacao.setDataManutencao(LocalDateTime.now());
+
+    return solicitacaoRepository.save(solicitacao);
 }
+
+}
+
+
