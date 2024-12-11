@@ -100,6 +100,7 @@ export class PgClienteComponent implements OnInit {
       case 'ARRUMADA': return 'arrumada';
       case 'APROVADA': return 'aprovada';
       case 'PAGA': return 'paga';
+      case 'FINALIZADA': return 'finalizada';
       case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
       default: return '';
     }
@@ -111,9 +112,9 @@ export class PgClienteComponent implements OnInit {
       case 'REJEITADA': return 'Resgatar Serviço';
       case 'ABERTA': return 'Efetuar Orçamento';
       case 'ARRUMADA': return 'Pagar Serviço';
-      case 'APROVADA': return 'Em manutenção';
-      case 'PAGA': return 'Finalizar Solicitação';
-      case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
+      case 'APROVADA': return '';
+      case 'PAGA': return '';
+      case 'AGUARDANDO PAGAMENTO': return 'Aguardando Pagamento';
       default: return 'Visualizar serviço';
     }
   }
@@ -125,6 +126,7 @@ export class PgClienteComponent implements OnInit {
       case 'ABERTA': return 'aberta';
       case 'ARRUMADA': return 'arrumada';
       case 'PAGA': return 'paga';
+      case 'FINALIZADA': return '';
       case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
       default: return 'visualizarServico';
     }

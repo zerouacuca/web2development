@@ -95,6 +95,11 @@ button.visualizar {
 
 }
 
+.aberta {
+  color: #797676;
+  /* Cinza */
+}
+
 .rejeitada {
   color: #ff0000;
   /* Vermelho */
