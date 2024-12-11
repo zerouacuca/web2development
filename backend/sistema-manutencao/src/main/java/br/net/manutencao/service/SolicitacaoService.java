@@ -152,13 +152,12 @@ public class SolicitacaoService {
           // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
-        historico.setEstado(EnumStatus.FINALIZADA); // Altera status para finalizada
-        historico.setDataHora(LocalDateTime.now()); //Atualiza o timestamp
+        historico.setEstado(solicitacao.getStatus()); // Altera status para finalizada
+        historico.setDataHora(solicitacao.getDate()); //Atualiza o timestamp
         
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o  status
-        
         solicitacao.setStatus(EnumStatus.FINALIZADA); // Atualiza o status
         solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
 
@@ -176,17 +175,39 @@ public class SolicitacaoService {
           // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
-        historico.setEstado(EnumStatus.APROVADA); // Altera status para aprovada
-        historico.setDataHora(LocalDateTime.now()); //Atualiza o timestamp
+        historico.setEstado(solicitacao.getStatus()); // Altera status para aprovada
+        historico.setDataHora(solicitacao.getDate()); //Atualiza o timestamp
         
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o  status
-        
         solicitacao.setStatus(EnumStatus.APROVADA); // Atualiza o status
         solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
 
         // Salvar as alterações na solicitação
         return solicitacaoRepository.save(solicitacao);
+    }
+    
+    @Transactional
+    public Solicitacao rejeitarSolicitacao(Long id, String justificativa) throws Exception {
+        Solicitacao solicitacao = solicitacaoRepository.findById(id)
+         .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+
+        // Criar o histórico da solicitação com os valores atuais
+        HistoricoSolicitacao historico = new HistoricoSolicitacao();
+        historico.setSolicitacao(solicitacao);
+        historico.setEstado(solicitacao.getStatus()); 
+        historico.setDataHora(solicitacao.getDate()); //Atualiza o timestamp
+        
+        historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
+
+        // Atualizar o  status
+        solicitacao.setStatus(EnumStatus.REJEITADA); // Atualiza o status
+        solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
+        solicitacao.setJustificativa(justificativa);
+
+        // Salvar as alterações na solicitação
+        return solicitacaoRepository.save(solicitacao);
+        
     }
 }
