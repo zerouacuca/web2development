@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { SolicitacaoService } from '../../services/solicitacao.service';
+import { jsPDF } from 'jspdf';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { NgFor, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { jsPDF } from 'jspdf';
 
 @Component({
     selector: 'app-relatoriocategoria',
@@ -12,20 +13,26 @@ import { jsPDF } from 'jspdf';
     styleUrls: ['./relatoriocategoria.component.css']
 })
 export class RelatorioCategoriaComponent implements OnInit {
-    requests = [
-        { categoria: 'Computador', receita: 150.50 },
-        { categoria: 'Notebook', receita: 220.75 },
-        { categoria: 'Celular', receita: 100.00 },
-        { categoria: 'Tablet', receita: 200.00 },
-        { categoria: 'Periféricos', receita: 80.00 },
-        { categoria: 'Celular', receita: 70.00 }
-    ];
-
+    requests: { categoria: string; receita: number }[] = [];
     filteredRequests: { categoria: string; receita: number }[] = [];
     selectedCategory: string = 'all';
+    categories: string[] = [];
+
+    constructor(private solicitacaoService: SolicitacaoService) { }
 
     ngOnInit() {
-        this.filtrarPorCategoria();
+        this.solicitacaoService.listarFinalizadasPorCategoria().subscribe(data => {
+            this.requests = data.map(item => ({
+                categoria: item[0],  
+                receita: item[1]     
+            }));
+
+            this.categories = Array.from(new Set(this.requests.map(request => request.categoria)));
+
+            this.categories.unshift('all');
+            
+            this.filtrarPorCategoria();
+        });
     }
 
     filtrarPorCategoria() {
@@ -39,7 +46,6 @@ export class RelatorioCategoriaComponent implements OnInit {
 
     gerarPDF() {
         const doc = new jsPDF();
-
         doc.setFontSize(22);
         doc.text("Relatório de Receitas por Categoria", 105, 20, { align: 'center' });
 

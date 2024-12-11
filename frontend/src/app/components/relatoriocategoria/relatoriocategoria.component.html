@@ -4,12 +4,7 @@
     <div class="filter-container">
       <label for="category">Categoria:</label>
       <select id="category" [(ngModel)]="selectedCategory" (change)="filtrarPorCategoria()">
-        <option value="all">Todas</option>
-        <option value="Computador">Computador</option>
-        <option value="Notebook">Notebook</option>
-        <option value="Celular">Celular</option>
-        <option value="Tablet">Tablet</option>
-        <option value="Periféricos">Periféricos</option>
+        <option *ngFor="let category of categories" [value]="category">{{ category === 'all' ? 'Todas' : category }}</option>
       </select>
       
       <button class="imprimir-button" (click)="gerarPDF()">

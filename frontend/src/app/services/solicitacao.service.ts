@@ -60,16 +60,27 @@ export class SolicitacaoService {
     return this.http.put(url, body);
   }
 
+
   // solicitacao.service.ts
   listarFuncionarios(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/funcionarios`);
   }
   
 
-
-
   redirecionarManutencao(redirecionamento: any): Observable<any> {
     const url = `${this.apiUrl}/solicitacoes/redirecionar`; // Endpoint para redirecionamento
     return this.http.post<any>(url, redirecionamento);
   }
+
+  // Método para listar solicitações finalizadas agrupadas por data
+  listarFinalizadasPorData(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listarfinalizadaspordata`);
+  }
+
+  // Método para listar solicitações finalizadas agrupadas por categoria
+  listarFinalizadasPorCategoria(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listarfinalizadasporcategoria`);
+  }
+
+
 }
