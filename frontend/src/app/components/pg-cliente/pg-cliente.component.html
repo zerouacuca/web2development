@@ -21,7 +21,7 @@
               Detalhes
             </button>
             <button class="btn btn-sm btn table" [ngClass]="getActionButtonClass(request.status)"
-              (click)="efetuarAcao(request)">
+              (click)="efetuarAcao(request)"   *ngIf="request.status !== 'ABERTA'">
               {{ getActionButtonText(request.status) }}
             </button>
           </div>
