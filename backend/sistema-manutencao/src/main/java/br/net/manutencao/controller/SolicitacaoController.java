@@ -33,19 +33,6 @@ public class SolicitacaoController {
         return ResponseEntity.ok(solicitacoes);
     }
 
-    @GetMapping("orcamentocliente/{id}")
-    public ResponseEntity<?> getSolicitacaoOrcada(@PathVariable Long id) {
-        try {
-            Solicitacao solicitacao = solicitacaoService.getSolicitacaoById(id);
-            return ResponseEntity.ok(solicitacao);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(404).body("Solicitação não encontrada.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Erro no servidor. Tente novamente mais tarde.");
-        }
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getSolicitacao(@PathVariable Long id) {
         try {
@@ -107,7 +94,7 @@ public class SolicitacaoController {
         }
     }
 
-    @PutMapping("/orcamentocliente/{id}")
+    @PutMapping("/aprovar/{id}")
     public ResponseEntity<?> aprovarSolicitacao(@PathVariable Long id) {
         try {
             // Atualiza a solicitação com o valor orçado
