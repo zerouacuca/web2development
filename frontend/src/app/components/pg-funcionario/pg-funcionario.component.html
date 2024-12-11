@@ -20,14 +20,38 @@
         <td>{{ request.description }}</td>
         <td [ngClass]="getStatusClass(request.status)">{{ request.status }}</td>
         <td>
+          <!-- Botão de Ação Principal -->
           <button class="btn btn-sm btn table" [ngClass]="getActionButtonClass(request.status)"
             (click)="efetuarAcao(request)">
             {{ getActionButtonText(request.status) }}
           </button>
+          <!-- Botão para abrir o modal de Detalhes -->
+          <button class="btn btn-sm btn-info ms-2" (click)="abrirModal(request)">Detalhes</button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<!-- Fim Tabela -->
+<!-- Modal -->
+<div class="modal" tabindex="-1" [ngClass]="{ 'show': isModalOpen }" [ngStyle]="{ display: isModalOpen ? 'block' : 'none' }">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalhes da Solicitação</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="fecharModal()"></button>
+            </div>
+            <div class="modal-body" *ngIf="selectedRequest">
+                <p><strong>Data/Hora:</strong> {{ selectedRequest.date | date: 'dd MMM yyyy, hh:mm a' }}</p>
+                <p><strong>Cliente:</strong> {{ selectedRequest.cliente.nome }}</p>
+                <p><strong>Descrição:</strong> {{ selectedRequest.description }}</p>
+                <p><strong>Categoria:</strong> {{ selectedRequest.categoria.nome }}</p>
+                <p><strong>Defeito:</strong> {{ selectedRequest.defeito }}</p>
+                <p><strong>Status:</strong> {{ selectedRequest.status }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="fecharModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

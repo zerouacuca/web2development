@@ -17,8 +17,8 @@ export class SolicitabertafuncComponent implements OnInit {
 
   requests: Solicitacao[] = [];
   filteredRequests: Solicitacao[] = [];
-  startDate: string | undefined;
-  endDate: string | undefined;
+  isModalOpen: boolean = false; // Controla a exibição do modal
+  selectedRequest: Solicitacao | null = null; // Solicitação selecionada para exibição no modal
 
   constructor(
     private router: Router, 
@@ -46,6 +46,20 @@ export class SolicitabertafuncComponent implements OnInit {
     }
   }
 
+  abrirModal(request: Solicitacao): void {
+    this.selectedRequest = request;
+    this.isModalOpen = true;
+  }
+
+  fecharModal(): void {
+    this.isModalOpen = false;
+    this.selectedRequest = null;
+  }
+
+  efetuarOrcamento(solicitacao: Solicitacao): void {
+    this.router.navigate(['efetuarorcamento', solicitacao.id]);
+  }
+
   getStatusClass(status: string): string {
     switch (status) {
       case 'ORÇADA': return 'orcada';
@@ -70,10 +84,6 @@ export class SolicitabertafuncComponent implements OnInit {
       case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
       default: return 'Ação Indefinida';
     }
-  }
-
-  efetuarOrcamento(solicitacao: Solicitacao) {
-    this.router.navigate(['efetuarorcamento', solicitacao.id]);
   }
 
   getButtonProperties(solicitacao: Solicitacao) {
