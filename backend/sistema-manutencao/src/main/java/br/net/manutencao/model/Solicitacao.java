@@ -41,4 +41,7 @@ public class Solicitacao {
     @JoinColumn(name = "funcionario_id", nullable = false)
     private Usuario funcionario;
 
+    @Column(name = "justificativa")
+    private String justificativa;
+
 }
