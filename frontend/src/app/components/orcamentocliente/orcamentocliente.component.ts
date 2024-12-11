@@ -17,9 +17,9 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 })
 export class OrcamentoclienteComponent implements OnInit {
 
-  
-  solicitacaoId : number = 0;
-  solicitacao : Solicitacao | null = null;
+
+  solicitacaoId: number = 0;
+  solicitacao: Solicitacao | null = null;
   popupVisible = false;
   popupMessage = '';
   modalVisible = false;
@@ -31,8 +31,8 @@ export class OrcamentoclienteComponent implements OnInit {
     private orcamentoService: MostrarOrcamentoService,
     private http: HttpClient,
   ) {
-    this.route.params.subscribe(params =>{
-      this.solicitacaoId  = params['id'];
+    this.route.params.subscribe(params => {
+      this.solicitacaoId = params['id'];
     })
   }
 
@@ -49,9 +49,19 @@ export class OrcamentoclienteComponent implements OnInit {
     });
   }
 
-  aprovarOrcamento() {
-    this.popupMessage = `Serviço Aprovado no Valor ${this.solicitacao?.preco}`;
-    localStorage.setItem('statusSolicitacao', 'APROVADA');
+  aprovarOrcamento(): void {
+    this.orcamentoService.aprovarOrcamento(this.solicitacaoId).subscribe({
+      next: (data: Solicitacao) => {
+        this.solicitacao = data; // Armazena a solicitação retornada
+      },
+      error: (err) => {
+        console.error('Erro ao carregar solicitação:', err);
+        alert('Erro ao carregar os dados da solicitação!');
+      }
+    });
+
+    // localStorage.setItem('statusSolicitacao', 'APROVADA');
+    this.popupMessage = `Serviço Aprovado no Valor R$ ${this.solicitacao?.preco}`;
     this.showPopup();
   }
 
@@ -60,16 +70,28 @@ export class OrcamentoclienteComponent implements OnInit {
   }
 
   confirmarRejeicao() {
-    this.popupMessage = `Serviço Rejeitado: ${this.justificativa}`;
-    localStorage.setItem('statusSolicitacao', 'REJEITADA');
-    this.closeModal();
-    this.showPopup();
+    const id = this.solicitacaoId;
+    const justificativaPayload = { justificativa: this.justificativa };
+
+    this.http.put(`http://localhost:8081/solicitacao/rejeitar/${id}?justificativa=${this.justificativa}`, null).subscribe({
+      next: (response: any) => {
+        this.popupMessage = `Serviço Rejeitado: ${this.justificativa}`;
+        localStorage.setItem('statusSolicitacao', 'REJEITADA');
+        this.closeModal();
+        this.showPopup();
+      },
+      error: (err) => {
+        console.error('Erro ao rejeitar solicitação', err);
+        this.popupMessage = 'Erro ao rejeitar solicitação';
+        this.showPopup();
+      },
+    });
   }
 
   showPopup() {
     this.popupVisible = true;
   }
-  
+
   closeModal() {
     this.modalVisible = false;
   }

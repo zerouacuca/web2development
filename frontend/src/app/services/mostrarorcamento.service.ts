@@ -7,7 +7,8 @@ import { Solicitacao } from '../shared/models/solicitacao.model';
   providedIn: 'root'
 })
 export class MostrarOrcamentoService {
-  private baseUrl = 'http://localhost:8081/solicitacao/orcamentocliente';
+
+  private baseUrl = 'http://localhost:8081/solicitacao';
 
   constructor(private http: HttpClient) {}
 
@@ -17,5 +18,10 @@ export class MostrarOrcamentoService {
 
   buscarSolicitacaoPorId(id: number): Observable<Solicitacao> {
     return this.http.get<Solicitacao>(`${this.baseUrl}/${id}`);
+  }
+
+  aprovarOrcamento(id: number): Observable<any> {
+    const url = `${this.baseUrl}/aprovar/${id}`;
+    return this.http.put(url,id );
   }
 }

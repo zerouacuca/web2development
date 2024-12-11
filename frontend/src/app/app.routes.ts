@@ -135,7 +135,7 @@ export const routes: Routes = [
         }
     },
     {
-        'path': 'relatorioCategoria/:id',
+        'path': 'relatorioCategoria',
         component: RelatorioCategoriaComponent,
         canActivate: [authGuard],
         data: {
@@ -188,7 +188,7 @@ export const routes: Routes = [
     },
     // {'path': 'categorias/excluir', component: ExcluirCategoriaComponent},
     {
-        'path': 'categorias/atualizar',
+        'path': 'categorias/editar/:id',
         component: AtualizarCategoriaComponent,
         canActivate: [authGuard],
         data: {

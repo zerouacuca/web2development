@@ -41,6 +41,7 @@ public class Solicitacao {
     @JoinColumn(name = "funcionario_id", nullable = false)
     private Usuario funcionario;
 
+
     @Column(name = "descricao_manutencao")
     private String descricaoManutencao;
 
@@ -49,6 +50,9 @@ public class Solicitacao {
 
     @Column(name = "data_manutencao")
     private LocalDateTime dataManutencao;
+
+    @Column(name = "justificativa")
+    private String justificativa;
 
 
 }

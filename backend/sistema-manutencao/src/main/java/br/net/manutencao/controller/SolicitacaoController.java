@@ -39,19 +39,6 @@ public class SolicitacaoController {
         return ResponseEntity.ok(solicitacoes);
     }
 
-    @GetMapping("orcamentocliente/{id}")
-    public ResponseEntity<?> getSolicitacaoOrcada(@PathVariable Long id) {
-        try {
-            Solicitacao solicitacao = solicitacaoService.getSolicitacaoById(id);
-            return ResponseEntity.ok(solicitacao);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(404).body("Solicitação não encontrada.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Erro no servidor. Tente novamente mais tarde.");
-        }
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getSolicitacao(@PathVariable Long id) {
         try {
@@ -107,6 +94,36 @@ public class SolicitacaoController {
 
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Erro ao finalizar solicitação");
+            errorResponse.put("details", e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    @PutMapping("/aprovar/{id}")
+    public ResponseEntity<?> aprovarSolicitacao(@PathVariable Long id) {
+        try {
+            Solicitacao solicitacao = solicitacaoService.aprovarSolicitacao(id);
+            return ResponseEntity.ok(solicitacao.getStatus());
+        } catch (Exception e) {
+
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Erro ao aprovar solicitação");
+            errorResponse.put("details", e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    @PutMapping("/rejeitar/{id}")
+    public ResponseEntity<?> aprovarSolicitacao(@PathVariable Long id, @RequestParam String justificativa) {
+        try {
+            Solicitacao solicitacao = solicitacaoService.rejeitarSolicitacao(id, justificativa);
+            return ResponseEntity.ok(solicitacao.getStatus());
+        } catch (Exception e) {
+
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Erro ao rejeitar solicitação");
             errorResponse.put("details", e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
