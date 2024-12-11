@@ -1,38 +1,53 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Categoria } from '../../shared/models/categoria.model';
 import { CategoriaService } from '../../services/categoria.service';
-import { Route, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 
 @Component({
   selector: 'app-atualizar-categoria',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, HeaderfuncionarioComponent],
   templateUrl: './atualizar-categoria.component.html',
   styleUrl: './atualizar-categoria.component.css'
 })
-export class AtualizarCategoriaComponent {
+export class AtualizarCategoriaComponent implements OnInit {
   @ViewChild('formCategoria') formCategoria! : NgForm;
-  categoria : Categoria = new Categoria();
+  categoria: any = { nome: '' };  // Estrutura para armazenar a categoria a ser editada
 
   constructor(
-    private categoriaService : CategoriaService,
+    private categoriaService: CategoriaService,
+    private route: ActivatedRoute,
     private router: Router
-  ){}
+  ) { }
 
-  atualizar(): void {
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');  // Obter o id da URL
+    if (id) {
+      this.categoriaService.buscarPorId(Number(id)).subscribe(categoria => {
+        this.categoria = categoria;  // Carregar os dados da categoria
+      });
+    }
+  }
+  
+  atualizarCategoria() {
+    console.log('Categoria a ser atualizada:', this.categoria);
     if (this.categoria.id) {
-      // Passar o id e o objeto categoria para o serviço
-      this.categoriaService.atualizar(this.categoria.id, this.categoria).subscribe(
-        response => {
-          console.log('Categoria atualizada com sucesso:', response);
-          // Aqui você pode redirecionar o usuário ou mostrar uma mensagem de sucesso
+      this.categoriaService.atualizarPorNome(this.categoria).subscribe(
+        (response) => {
+          alert('Categoria atualizada com sucesso!');
+          this.router.navigate(['/categorias/listar']);
         },
-        error => {
-          console.error('Erro ao atualizar categoria:', error);
+        (error) => {
+          console.error('Erro ao atualizar categoria', error);
+          alert('Erro ao atualizar a categoria. Tente novamente mais tarde.');
         }
       );
     }
   }
+  
+  
 }
+

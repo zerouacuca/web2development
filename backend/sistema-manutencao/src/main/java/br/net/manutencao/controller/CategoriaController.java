@@ -46,7 +46,13 @@ public class CategoriaController {
                     .body(Map.of("message", "Erro ao listar categorias. Tente novamente mais tarde."));
         }
     }
- 
+    
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Categoria> buscarCategoria(@PathVariable Long id) {
+        Categoria categoria = categoriaService.buscarPorId(id);
+        return ResponseEntity.ok(categoria);
+    }
+
     @PostMapping("/criar")
     public ResponseEntity<Map<String, String>> createCategoria(@RequestBody CategoriaCreateDTO categoriaCreateDTO) {
         Map<String, String> response = new HashMap<>();
@@ -61,29 +67,26 @@ public class CategoriaController {
         }
     }
 
-    @PutMapping("/alterar/{id}")
-    public ResponseEntity<?> alterarCategoria(@PathVariable Long id,
-            @RequestBody CategoriaCreateDTO categoriaCreateDTO) {
-        try {
-            Categoria categoriaAtualizado = categoriaService.atualizar(id, categoriaCreateDTO);
-            return ResponseEntity.ok(categoriaAtualizado);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(404).body(Map.of("message", e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(Map.of("message", "Erro no servidor. Tente novamente mais tarde."));
-        }
-    }
+    @PutMapping("/alterar-nome")
+    public ResponseEntity<Categoria> alterarNome(@RequestBody Categoria categoria) {
+        Categoria categoriaAtualizada = categoriaService.atualizarPorNome(categoria);
+        return ResponseEntity.ok(categoriaAtualizada);
+}
+
+
+
+
 
     @DeleteMapping("/excluir/{id}")
-    public ResponseEntity<?> excluirFuncionario(@PathVariable Long id) {
+    public ResponseEntity<?> excluirCategoria(@PathVariable Long id) {
         try {
             categoriaService.excluir(id);
-            return ResponseEntity.ok(Map.of("message", "Categoria excluído com sucesso."));
+            return ResponseEntity.ok(Map.of("message", "Categoria excluída com sucesso."));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(Map.of("message", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("message", "Erro no servidor. Tente novamente mais tarde."));
         }
     }
-}
+}    
 
