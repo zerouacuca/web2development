@@ -70,10 +70,10 @@ export class OrcamentoclienteComponent implements OnInit {
   }
 
   confirmarRejeicao() {
-    const id = this.solicitacaoId; // ID da solicitação que está sendo rejeitada
+    const id = this.solicitacaoId;
     const justificativaPayload = { justificativa: this.justificativa };
 
-    this.http.put(`/api/rejeitar/${id}`, justificativaPayload).subscribe({
+    this.http.put(`http://localhost:8081/solicitacao/rejeitar/${id}?justificativa=${this.justificativa}`, null).subscribe({
       next: (response: any) => {
         this.popupMessage = `Serviço Rejeitado: ${this.justificativa}`;
         localStorage.setItem('statusSolicitacao', 'REJEITADA');
