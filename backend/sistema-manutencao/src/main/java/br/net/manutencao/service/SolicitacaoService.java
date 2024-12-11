@@ -77,7 +77,7 @@ public class SolicitacaoService {
 
     public List<Object[]> listarSolicitacoesFinalizadasPorCategoria() {
         return solicitacaoRepository.findSolicitacoesFinalizadasPorCategoria();
-    }    
+    }
 
     public Solicitacao getSolicitacaoById(Long id) {
         return solicitacaoRepository.findById(id)
@@ -130,8 +130,8 @@ public class SolicitacaoService {
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
         historico.setEstado(solicitacao.getStatus()); // Armazena o status anterior
-        historico.setDataHora(solicitacao.getDate()); //Armazena o timestamp anterior
-        
+        historico.setDataHora(solicitacao.getDate()); // Armazena o timestamp anterior
+
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o valor orçado e o status
@@ -143,22 +143,21 @@ public class SolicitacaoService {
         return solicitacaoRepository.save(solicitacao);
     }
 
-
     @Transactional
-    public Solicitacao finalizarSolicitacao(Long id)  throws Exception {
-         // Encontrar a solicitação com base no ID
-         Solicitacao solicitacao = solicitacaoRepository.findById(id)
-         .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+    public Solicitacao finalizarSolicitacao(Long id) throws Exception {
+        // Encontrar a solicitação com base no ID
+        Solicitacao solicitacao = solicitacaoRepository.findById(id)
+                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
 
-          // Criar o histórico da solicitação com os valores atuais
+        // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
         historico.setEstado(solicitacao.getStatus()); // Altera status para finalizada
-        historico.setDataHora(solicitacao.getDate()); //Atualiza o timestamp
-        
+        historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
+
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
-        // Atualizar o  status
+        // Atualizar o status
         solicitacao.setStatus(EnumStatus.FINALIZADA); // Atualiza o status
         solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
 
@@ -166,54 +165,51 @@ public class SolicitacaoService {
         return solicitacaoRepository.save(solicitacao);
     }
 
+    @Transactional
+    public Solicitacao efetuarManutencao(Long id, ManutencaoDTO manutencaoDTO, Usuario funcionario) {
+        Solicitacao solicitacao = solicitacaoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Solicitação não encontrada com o ID: " + id));
+
+        // Criar histórico da solicitação
+        HistoricoSolicitacao historico = new HistoricoSolicitacao();
+        historico.setSolicitacao(solicitacao);
+        historico.setEstado(solicitacao.getStatus());
+        historico.setDataHora(solicitacao.getDate());
+        historico.setFuncionario(solicitacao.getFuncionario()); // Registra o funcionário responsável
+        historicoRepository.save(historico);
+
+        // Atualizar os dados da solicitação
+        solicitacao.setDescricaoManutencao(manutencaoDTO.getDescricaoManutencao());
+        solicitacao.setOrientacoesCliente(manutencaoDTO.getOrientacoesCliente());
+        solicitacao.setStatus(EnumStatus.ARRUMADA);
+        solicitacao.setDataManutencao(LocalDateTime.now());
+
+        return solicitacaoRepository.save(solicitacao);
+    }
 
     @Transactional
-public Solicitacao efetuarManutencao(Long id, ManutencaoDTO manutencaoDTO, Usuario funcionario) {
-    Solicitacao solicitacao = solicitacaoRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Solicitação não encontrada com o ID: " + id));
+    public Solicitacao aprovarSolicitacao(Long id) throws Exception {
+        // Encontrar a solicitação com base no ID
+        Solicitacao solicitacao = solicitacaoRepository.findById(id)
+                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
 
-    // Criar histórico da solicitação
-    HistoricoSolicitacao historico = new HistoricoSolicitacao();
-    historico.setSolicitacao(solicitacao);
-    historico.setEstado(solicitacao.getStatus());
-    historico.setDataHora(solicitacao.getDate());
-    historico.setFuncionario(solicitacao.getFuncionario()); // Registra o funcionário responsável
-    historicoRepository.save(historico);
-
-    // Atualizar os dados da solicitação
-    solicitacao.setDescricaoManutencao(manutencaoDTO.getDescricaoManutencao());
-    solicitacao.setOrientacoesCliente(manutencaoDTO.getOrientacoesCliente());
-    solicitacao.setStatus(EnumStatus.ARRUMADA);
-    solicitacao.setDataManutencao(LocalDateTime.now());
-
-    return solicitacaoRepository.save(solicitacao);
-}
-
-
-    @Transactional
-    public Solicitacao aprovarSolicitacao(Long id)  throws Exception {
-         // Encontrar a solicitação com base no ID
-         Solicitacao solicitacao = solicitacaoRepository.findById(id)
-         .orElseThrow(() -> new Exception("Solicitação não encontrada"));
-
-          // Criar o histórico da solicitação com os valores atuais
+        // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
         historico.setEstado(solicitacao.getStatus()); // Altera status para aprovada
-        historico.setDataHora(solicitacao.getDate()); //Atualiza o timestamp
-        
+        historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
+
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
-        // Atualizar o  status
+        // Atualizar o status
         solicitacao.setStatus(EnumStatus.APROVADA); // Atualiza o status
         solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
 
         // Salvar as alterações na solicitação
         return solicitacaoRepository.save(solicitacao);
     }
-  
-  
-   @Transactional
+
+    @Transactional
     public Solicitacao pagarSolicitacao(Long id) throws Exception {
         // Encontrar a solicitação com base no ID
         Solicitacao solicitacao = solicitacaoRepository.findById(id)
@@ -223,7 +219,7 @@ public Solicitacao efetuarManutencao(Long id, ManutencaoDTO manutencaoDTO, Usuar
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
         historico.setEstado(solicitacao.getStatus()); // Armazena o status anterior
-        historico.setDataHora(solicitacao.getDate()); //Armazena o timestamp anterior
+        historico.setDataHora(solicitacao.getDate()); // Armazena o timestamp anterior
 
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
@@ -235,29 +231,74 @@ public Solicitacao efetuarManutencao(Long id, ManutencaoDTO manutencaoDTO, Usuar
         // Salvar as alterações na solicitação
         return solicitacaoRepository.save(solicitacao);
     }
-  
-@Transactional
+
+    @Transactional
     public Solicitacao rejeitarSolicitacao(Long id, String justificativa) throws Exception {
         Solicitacao solicitacao = solicitacaoRepository.findById(id)
-         .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
 
         // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
-        historico.setEstado(solicitacao.getStatus()); 
-        historico.setDataHora(solicitacao.getDate()); //Atualiza o timestamp
-        
+        historico.setEstado(solicitacao.getStatus());
+        historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
+
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
-        // Atualizar o  status
+        // Atualizar o status
         solicitacao.setStatus(EnumStatus.REJEITADA); // Atualiza o status
         solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
         solicitacao.setJustificativa(justificativa);
 
         // Salvar as alterações na solicitação
         return solicitacaoRepository.save(solicitacao);
+
+    }
+
+    @Transactional
+    public Solicitacao redirecionarSolicitacao(Long id_solicitacao, Long id_funcionario) throws Exception {
+        Solicitacao solicitacao = solicitacaoRepository.findById(id_solicitacao)
+                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+
+        Funcionario funcionario = funcionarioRepository.findById(id_funcionario)
+                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
         
+        // Criar o histórico da solicitação com os valores atuais
+        HistoricoSolicitacao historico = new HistoricoSolicitacao();
+        historico.setSolicitacao(solicitacao);
+        historico.setEstado(solicitacao.getStatus());
+        historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
+        historico.setFuncionario(solicitacao.getFuncionario());
+
+        historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
+
+        // Atualizar o status
+        solicitacao.setStatus(EnumStatus.REDIRECIONADA); // Atualiza o status
+        solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
+        solicitacao.setFuncionario(funcionario);
+
+        // Salvar as alterações na solicitação
+        return solicitacaoRepository.save(solicitacao);
+    }
+
+    @Transactional
+    public Solicitacao resgatarSolicitacao(Long id_solicitacao) throws Exception {
+        Solicitacao solicitacao = solicitacaoRepository.findById(id_solicitacao)
+                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+
+        // Criar o histórico da solicitação com os valores atuais
+        HistoricoSolicitacao historico = new HistoricoSolicitacao();
+        historico.setSolicitacao(solicitacao);
+        historico.setEstado(solicitacao.getStatus());
+        historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
+
+        historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
+
+        // Atualizar o status
+        solicitacao.setStatus(EnumStatus.REJEITADA); // Atualiza o status
+        solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
+
+        // Salvar as alterações na solicitação
+        return solicitacaoRepository.save(solicitacao);
     }
 }
-
-
