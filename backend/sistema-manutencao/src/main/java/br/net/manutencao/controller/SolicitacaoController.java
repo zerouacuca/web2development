@@ -116,7 +116,7 @@ public class SolicitacaoController {
     }
 
     @PutMapping("/rejeitar/{id}")
-    public ResponseEntity<?> aprovarSolicitacao(@PathVariable Long id, @RequestParam String justificativa) {
+    public ResponseEntity<?> rejeitarSolicitacao(@PathVariable Long id, @RequestParam String justificativa) {
         try {
             Solicitacao solicitacao = solicitacaoService.rejeitarSolicitacao(id, justificativa);
             return ResponseEntity.ok(solicitacao.getStatus());
@@ -164,7 +164,7 @@ public class SolicitacaoController {
     }
     }
 
-    @PostMapping("/{id}/manutencao")
+    @PutMapping("/{id}/manutencao")
 public ResponseEntity<?> efetuarManutencao(
         @PathVariable Long id,
         @RequestBody ManutencaoDTO manutencaoDTO,
