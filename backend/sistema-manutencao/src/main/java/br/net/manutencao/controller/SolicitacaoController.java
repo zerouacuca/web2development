@@ -79,21 +79,6 @@ public class SolicitacaoController {
         }
     }
 
-    // relatorio
-    @GetMapping("/relatoriodata")
-    public ResponseEntity<?> listRelatorioData() {
-
-        try {
-            List<Object[]> solicitacoes = solicitacaoService.listarSolicitacoesData();
-            System.out.println(solicitacoes);
-            return ResponseEntity.ok(solicitacoes);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500)
-                    .body(Map.of("message", "Erro ao gerar relatorio. Tente novamente mais tarde."));
-        }
-    }
-
     @PutMapping("/orcar/{id}")
     public String orcarSolicitacao(@PathVariable Long id, @RequestParam Float valorOrcado) {
         try {
@@ -121,4 +106,39 @@ public class SolicitacaoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+    @GetMapping("/listarfinalizadaspordata")
+    public ResponseEntity<?> listarSolicitacoesFinalizadasPorData() {
+    try {
+        List<Object[]> solicitacoes = solicitacaoService.listarSolicitacoesFinalizadasPorData();
+        // Verifica se a lista está vazia e retorna 204 No Content se não houver resultados
+        if (solicitacoes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        // Retorna 200 OK com os dados agrupados por data
+        return ResponseEntity.ok(solicitacoes);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(500)
+                .body(Map.of("message", "Erro ao gerar relatório de solicitações finalizadas. Tente novamente mais tarde."));
+    }
+    }
+
+    @GetMapping("/listarfinalizadasporcategoria")
+    public ResponseEntity<?> listarSolicitacoesFinalizadasPorCategoria() {
+    try {
+        List<Object[]> solicitacoes = solicitacaoService.listarSolicitacoesFinalizadasPorCategoria();
+        // Verifica se a lista está vazia e retorna 204 No Content se não houver resultados
+        if (solicitacoes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        // Retorna 200 OK com os dados agrupados por categoria
+        return ResponseEntity.ok(solicitacoes);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(500)
+                .body(Map.of("message", "Erro ao gerar relatório de solicitações finalizadas por categoria. Tente novamente mais tarde."));
+    }
+    }
+
 }

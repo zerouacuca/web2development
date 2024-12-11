@@ -59,4 +59,15 @@ export class SolicitacaoService {
     const body = {};
     return this.http.put(url, body);
   }
+
+  // Método para listar solicitações finalizadas agrupadas por data
+  listarFinalizadasPorData(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listarfinalizadaspordata`);
+  }
+
+  // Método para listar solicitações finalizadas agrupadas por categoria
+  listarFinalizadasPorCategoria(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listarfinalizadasporcategoria`);
+  }
+
 }
