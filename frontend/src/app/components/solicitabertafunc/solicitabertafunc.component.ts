@@ -68,6 +68,7 @@ export class SolicitabertafuncComponent implements OnInit {
       case 'ARRUMADA': return 'arrumada';
       case 'APROVADA': return 'aprovada';
       case 'PAGA': return 'paga';
+      case 'FINALIZADA': return 'finalizada';
       case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
       default: return '';
     }
@@ -81,6 +82,7 @@ export class SolicitabertafuncComponent implements OnInit {
       case 'ARRUMADA': return 'Efetuar Manutenção?';
       case 'APROVADA': return 'Efetuar Manutenção';
       case 'PAGA': return 'Finalizar Solicitação';
+      case 'FINALIZADA': return 'finalizada';
       case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
       default: return 'Ação Indefinida';
     }
@@ -93,7 +95,7 @@ export class SolicitabertafuncComponent implements OnInit {
           text: 'Efetuar Orçamento',
           class: 'aprovar',
           action: () => this.efetuarOrcamento(solicitacao)
-        };
+        }; 
       case 'ARRUMADA':
         return {
           text: 'Finalizar',
