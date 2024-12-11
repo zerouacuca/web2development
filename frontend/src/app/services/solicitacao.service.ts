@@ -59,4 +59,17 @@ export class SolicitacaoService {
     const body = {};
     return this.http.put(url, body);
   }
+
+  // solicitacao.service.ts
+  listarFuncionarios(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/funcionarios`);
+  }
+  
+
+
+
+  redirecionarManutencao(redirecionamento: any): Observable<any> {
+    const url = `${this.apiUrl}/solicitacoes/redirecionar`; // Endpoint para redirecionamento
+    return this.http.post<any>(url, redirecionamento);
+  }
 }
