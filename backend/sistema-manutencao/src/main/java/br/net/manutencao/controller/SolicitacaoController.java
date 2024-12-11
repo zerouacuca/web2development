@@ -21,9 +21,9 @@ import java.util.Map;
 @RequestMapping("/solicitacao")
 public class SolicitacaoController {
 
-     @Autowired
+    @Autowired
     private UsuarioRepository usuarioRepository;
-    
+
     @Autowired
     private SolicitacaoService solicitacaoService;
 
@@ -115,22 +115,20 @@ public class SolicitacaoController {
         }
     }
 
-  
-
     @PutMapping("/pagarservice/{id}")
     public ResponseEntity<?> pagarSolicitacao(@PathVariable Long id) {
         try {
             // Atualiza a solicitação com o valor orçado
             Solicitacao solicitacao = solicitacaoService.pagarSolicitacao(id);
             return ResponseEntity.ok(solicitacao.getStatus());
-       } catch (Exception e) {
+        } catch (Exception e) {
             Map<String, String> errorResponse = new HashMap<>();
-           errorResponse.put("error", "Erro ao pagar solicitação");
-           errorResponse.put("details", e.getMessage());
+            errorResponse.put("error", "Erro ao pagar solicitação");
+            errorResponse.put("details", e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
-}
+    }
 
     @PutMapping("/rejeitar/{id}")
     public ResponseEntity<?> rejeitarSolicitacao(@PathVariable Long id, @RequestParam String justificativa) {
@@ -139,7 +137,7 @@ public class SolicitacaoController {
             return ResponseEntity.ok(solicitacao.getStatus());
         } catch (Exception e) {
 
-            Map<String, String> errorResponse = new HashMap<>();  
+            Map<String, String> errorResponse = new HashMap<>();
 
             errorResponse.put("error", "Erro ao rejeitar solicitação");
             errorResponse.put("details", e.getMessage());
@@ -147,67 +145,99 @@ public class SolicitacaoController {
         }
     }
 
-
     @GetMapping("/listarfinalizadaspordata")
     public ResponseEntity<?> listarSolicitacoesFinalizadasPorData() {
-    try {
-        List<Object[]> solicitacoes = solicitacaoService.listarSolicitacoesFinalizadasPorData();
-        // Verifica se a lista está vazia e retorna 204 No Content se não houver resultados
-        if (solicitacoes.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        try {
+            List<Object[]> solicitacoes = solicitacaoService.listarSolicitacoesFinalizadasPorData();
+            // Verifica se a lista está vazia e retorna 204 No Content se não houver
+            // resultados
+            if (solicitacoes.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            // Retorna 200 OK com os dados agrupados por data
+            return ResponseEntity.ok(solicitacoes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500)
+                    .body(Map.of("message",
+                            "Erro ao gerar relatório de solicitações finalizadas. Tente novamente mais tarde."));
         }
-        // Retorna 200 OK com os dados agrupados por data
-        return ResponseEntity.ok(solicitacoes);
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(500)
-                .body(Map.of("message", "Erro ao gerar relatório de solicitações finalizadas. Tente novamente mais tarde."));
-    }
     }
 
     @GetMapping("/listarfinalizadasporcategoria")
     public ResponseEntity<?> listarSolicitacoesFinalizadasPorCategoria() {
-    try {
-        List<Object[]> solicitacoes = solicitacaoService.listarSolicitacoesFinalizadasPorCategoria();
-        // Verifica se a lista está vazia e retorna 204 No Content se não houver resultados
-        if (solicitacoes.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        try {
+            List<Object[]> solicitacoes = solicitacaoService.listarSolicitacoesFinalizadasPorCategoria();
+            // Verifica se a lista está vazia e retorna 204 No Content se não houver
+            // resultados
+            if (solicitacoes.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            // Retorna 200 OK com os dados agrupados por categoria
+            return ResponseEntity.ok(solicitacoes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500)
+                    .body(Map.of("message",
+                            "Erro ao gerar relatório de solicitações finalizadas por categoria. Tente novamente mais tarde."));
         }
-        // Retorna 200 OK com os dados agrupados por categoria
-        return ResponseEntity.ok(solicitacoes);
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(500)
-                .body(Map.of("message", "Erro ao gerar relatório de solicitações finalizadas por categoria. Tente novamente mais tarde."));
-    }
     }
 
-    @PutMapping("/{id}/manutencao")
-public ResponseEntity<?> efetuarManutencao(
-        @PathVariable Long id,
-        @RequestBody ManutencaoDTO manutencaoDTO,
-        @RequestParam Long funcionarioId) { // Recebe o ID do funcionário logado como parâmetro
+    @PutMapping("/efetuarManutencao/{id}")
+    public ResponseEntity<?> efetuarManutencao(
+            @PathVariable Long id,
+            @RequestBody ManutencaoDTO manutencaoDTO,
+            @RequestParam Long funcionarioId) { // Recebe o ID do funcionário logado como parâmetro
 
-    try {
-        Usuario funcionarioLogado = usuarioRepository.findById(funcionarioId)
-                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado com o ID: " + funcionarioId));
+        try {
+            Usuario funcionarioLogado = usuarioRepository.findById(funcionarioId)
+                    .orElseThrow(
+                            () -> new EntityNotFoundException("Funcionário não encontrado com o ID: " + funcionarioId));
 
-        Solicitacao solicitacao = solicitacaoService.efetuarManutencao(id, manutencaoDTO, funcionarioLogado);
+            Solicitacao solicitacao = solicitacaoService.efetuarManutencao(id, manutencaoDTO, funcionarioLogado);
 
-        return ResponseEntity.ok(Map.of(
-                "message", "Manutenção efetuada com sucesso.",
-                "solicitacao", solicitacao
-        ));
-    } catch (EntityNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
-                "error", "Erro ao processar a manutenção. Tente novamente mais tarde."
-        ));
+            return ResponseEntity.ok(Map.of(
+                    "message", "Manutenção efetuada com sucesso.",
+                    "solicitacao", solicitacao));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
+                    "error", "Erro ao processar a manutenção. Tente novamente mais tarde."));
+        }
     }
+
+    @PutMapping("/redirecionar/{id}")
+    public ResponseEntity<?> redirecionarSolicitacao(@PathVariable Long id_solicitacao, @RequestParam Long id_funcionario) {
+        try {
+            // Atualiza a solicitação com o valor orçado
+            Solicitacao solicitacao = solicitacaoService.redirecionarSolicitacao(id_solicitacao, id_funcionario);
+            return ResponseEntity.ok(solicitacao.getStatus());
+        } catch (Exception e) {
+
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Erro ao finalizar solicitação");
+            errorResponse.put("details", e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    @PutMapping("/resgatar/{id}")
+    public ResponseEntity<?> resgatarSolicitacao(@PathVariable Long id_solicitacao) {
+        try {
+            // Atualiza a solicitação com o valor orçado
+            Solicitacao solicitacao = solicitacaoService.resgatarSolicitacao(id_solicitacao);
+            return ResponseEntity.ok(solicitacao.getStatus());
+        } catch (Exception e) {
+
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Erro ao finalizar solicitação");
+            errorResponse.put("details", e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
 }
-
-    
-}
-
