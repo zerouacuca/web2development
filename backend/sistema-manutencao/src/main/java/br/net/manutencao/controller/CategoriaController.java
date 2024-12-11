@@ -75,15 +75,15 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/excluir/{id}")
-    public ResponseEntity<?> excluirFuncionario(@PathVariable Long id) {
+    public ResponseEntity<?> excluirCategoria(@PathVariable Long id) {
         try {
             categoriaService.excluir(id);
-            return ResponseEntity.ok(Map.of("message", "Categoria excluído com sucesso."));
+            return ResponseEntity.ok(Map.of("message", "Categoria excluída com sucesso."));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(Map.of("message", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("message", "Erro no servidor. Tente novamente mais tarde."));
         }
     }
-}
+}    
 

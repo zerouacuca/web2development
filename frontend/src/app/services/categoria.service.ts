@@ -28,6 +28,6 @@ export class CategoriaService {
   }
 
   remover(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/remover/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/excluir/${id}`);
   }
 }
