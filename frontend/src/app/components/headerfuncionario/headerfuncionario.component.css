@@ -3,6 +3,10 @@ header {
    
 }
 
+.dropdown-toggle {
+    cursor: pointer; /* Define o cursor como "mãozinha" */
+}
+
 .navbar-nav {
     display: flex;
     justify-content: center;
