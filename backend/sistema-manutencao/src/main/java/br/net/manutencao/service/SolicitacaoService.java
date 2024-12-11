@@ -258,6 +258,26 @@ public Solicitacao efetuarManutencao(Long id, ManutencaoDTO manutencaoDTO, Usuar
         return solicitacaoRepository.save(solicitacao);
         
     }
+
+public Solicitacao resgatarSolicitacao(Long id) throws Exception {
+    Solicitacao solicitacao = solicitacaoRepository.findById(id)
+         .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+
+        // Criar o histórico da solicitação com os valores atuais
+        HistoricoSolicitacao historico = new HistoricoSolicitacao();
+        historico.setSolicitacao(solicitacao);
+        historico.setEstado(solicitacao.getStatus()); 
+        historico.setDataHora(solicitacao.getDate()); //Atualiza o timestamp
+        
+        historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
+
+        // Atualizar o  status
+        solicitacao.setStatus(EnumStatus.ORÇADA); // Atualiza o status
+        solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
+
+        // Salvar as alterações na solicitação
+        return solicitacaoRepository.save(solicitacao);
+}
 }
 
 
