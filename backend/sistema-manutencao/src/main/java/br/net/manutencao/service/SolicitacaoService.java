@@ -70,11 +70,13 @@ public class SolicitacaoService {
         return solicitacoes; // Retorna a lista de solicitações
     }
 
-    // Método listar todos as solicitacoes
-    public List<Object[]> listarSolicitacoesData() {
-        return solicitacaoRepository.findTotalPorData();
-
+    public List<Object[]> listarSolicitacoesFinalizadasPorData() {
+        return solicitacaoRepository.findSolicitacoesFinalizadasPorData();
     }
+
+    public List<Object[]> listarSolicitacoesFinalizadasPorCategoria() {
+        return solicitacaoRepository.findSolicitacoesFinalizadasPorCategoria();
+    }    
 
     public Solicitacao getSolicitacaoById(Long id) {
         return solicitacaoRepository.findById(id)

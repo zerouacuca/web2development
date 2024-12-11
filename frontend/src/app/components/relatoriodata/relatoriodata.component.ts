@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { SolicitacaoService } from '../../services/solicitacao.service';
+import { jsPDF } from 'jspdf';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { NgFor, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { jsPDF } from 'jspdf';
 
 @Component({
     selector: 'app-relatoriodata',
@@ -12,26 +13,25 @@ import { jsPDF } from 'jspdf';
     styleUrls: ['./relatoriodata.component.css']
 })
 export class RelatoriodataComponent implements OnInit {
-    requests = [
-        { date: '2023-10-01', receita: 150.50 },
-        { date: '2023-10-02', receita: 220.75 },
-        { date: '2023-10-03', receita: 100.00 },
-        { date: '2023-10-03', receita: 200.00 },
-        { date: '2023-10-08', receita: 80.00 },
-        { date: '2023-10-08', receita: 70.00 }
-    ];
-
+    requests: { date: string; receita: number }[] = [];
     filteredRequests: { date: string; receita: number }[] = [];
     startDate: string = '';
     endDate: string = '';
 
+    constructor(private solicitacaoService: SolicitacaoService) { }
+
     ngOnInit() {
-        this.filtrarPorData();
+        this.solicitacaoService.listarFinalizadasPorData().subscribe(data => {
+            this.requests = data.map(item => ({
+                date: item[0], 
+                receita: item[1] 
+            }));
+            this.filtrarPorData();
+        });
     }
 
     filtrarPorData() {
         if (!this.startDate && !this.endDate) {
-            
             this.filteredRequests = this.agruparReceitas(this.requests);
         } else {
             const start = new Date(this.startDate);
@@ -40,24 +40,19 @@ export class RelatoriodataComponent implements OnInit {
                 const requestDate = new Date(request.date);
                 return requestDate >= start && requestDate <= end;
             });
-            
             this.filteredRequests = this.agruparReceitas(filtered);
         }
     }
 
     gerarPDF() {
         const doc = new jsPDF();
-
-        
         doc.setFontSize(22);
         doc.text("Relatório de Receitas por Data/Período", 105, 20, { align: 'center' });
 
-        
         doc.setFontSize(12);
         doc.text("Data", 20, 30);
         doc.text("Receita (R$)", 100, 30);
 
-       
         let y = 40;
         for (const request of this.filteredRequests) {
             doc.text(request.date, 20, y);
@@ -65,20 +60,16 @@ export class RelatoriodataComponent implements OnInit {
             y += 10;
         }
 
-        
         const periodo = (!this.startDate && !this.endDate) ? 'Todo o Período' : `${this.startDate || ''} a ${this.endDate || ''}`;
         const total = `TOTAL: ${this.calcularSomaReceita().toFixed(2)}`;
 
-        
         doc.setFont("helvetica", "bold");
         doc.text(`PERÍODO: ${periodo}`, 20, y);
         doc.text(total, 100, y); 
         y += 10;
 
-    
         doc.setFont("helvetica", "normal");
 
-        
         doc.save("relatorio_receitas.pdf");
     }
 
