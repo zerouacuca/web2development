@@ -89,6 +89,7 @@ export class PgFuncionarioComponent implements OnInit {
       case 'ARRUMADA': return 'arrumada';
       case 'APROVADA': return 'aprovada';
       case 'PAGA': return 'paga';
+      case 'FINALIZADA': return 'finalizada';
       case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
       default: return '';
     }

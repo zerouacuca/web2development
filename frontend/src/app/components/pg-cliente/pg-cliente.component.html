@@ -17,11 +17,15 @@
         <td [ngClass]="getStatusClass(request.status)">{{ request.status }}</td>
         <td class="text-center" style="width: 300px">
           <div class="d-flex justify-content-center">
+            <!-- Botão "Detalhes" -->
             <button class="btn btn-primary btn-sm table me-2" (click)="abrirModal(request)">
-              Detalhes
+              Visualizar Serviço
             </button>
-            <button class="btn btn-sm btn table" [ngClass]="getActionButtonClass(request.status)"
-              (click)="efetuarAcao(request)">
+            <!-- Segundo botão de ação (condicional) -->
+            <button *ngIf="shouldShowActionButton(request.status)" 
+                    class="btn btn-sm btn table" 
+                    [ngClass]="getActionButtonClass(request.status)"
+                    (click)="efetuarAcao(request)">
               {{ getActionButtonText(request.status) }}
             </button>
           </div>
@@ -63,4 +67,5 @@
       </div>
     </div>
   </div>
+
 </div>
