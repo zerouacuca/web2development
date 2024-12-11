@@ -19,6 +19,9 @@ export class PgFuncionarioComponent implements OnInit {
   startDate: string | undefined;
   endDate: string | undefined;
 
+  isModalOpen: boolean = false; // Controla a exibição do modal
+  selectedRequest: Solicitacao | null = null; // Solicitação selecionada para exibição no modal
+
   constructor(
     private router: Router,
     private solicitacaoService: SolicitacaoService
@@ -45,6 +48,16 @@ export class PgFuncionarioComponent implements OnInit {
         localStorage.removeItem("statusSolicitacao");
       }
     }
+  }
+
+  abrirModal(request: Solicitacao): void {
+    this.selectedRequest = request;
+    this.isModalOpen = true;
+  }
+
+  fecharModal(): void {
+    this.isModalOpen = false;
+    this.selectedRequest = null;
   }
 
   efetuarAcao(solicitacao: Solicitacao) {
