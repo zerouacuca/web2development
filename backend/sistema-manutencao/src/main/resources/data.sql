@@ -68,35 +68,35 @@ INSERT INTO td_solicitacao (date, description, preco, status, categoria_id, clie
 ('2024-11-11 10:00:00', 'Canon G3110', 300.0, 'FINALIZADA', 3, 6, 2, 'Cabeçote de impressão entupido', NULL);
 
 -- Histórico de alterações para as solicitações
-INSERT INTO td_historico_solicitacao (data_hora, estado, solicitacao_id) VALUES
+INSERT INTO td_historico_solicitacao (data_hora, estado, funcionario_id, solicitacao_id) VALUES
 -- Históricos para a solicitação 1
-('2024-11-01 10:30:00', 'ORÇADA', 1),
-('2024-11-02 09:00:00', 'APROVADA', 1),
-('2024-11-02 14:00:00', 'FINALIZADA', 1),
+('2024-11-01 10:30:00', 'ORÇADA', 1, 1),
+('2024-11-02 09:00:00', 'APROVADA', 1, 1),
+('2024-11-02 14:00:00', 'FINALIZADA', 1, 1),
 
 -- Históricos para a solicitação 2
-('2024-11-01 12:00:00', 'APROVADA', 2),
-('2024-11-02 10:00:00', 'ARRUMADA', 2),
+('2024-11-01 12:00:00', 'APROVADA', 2, 2),
+('2024-11-02 10:00:00', 'ARRUMADA', 2, 2),
 
 -- Históricos para a solicitação 3
-('2024-11-02 10:30:00', 'REDIRECIONADA', 3),
-('2024-11-03 11:00:00', 'APROVADA', 3),
+('2024-11-02 10:30:00', 'REDIRECIONADA', 2, 3),
+('2024-11-03 11:00:00', 'APROVADA', 2, 3),
 
 -- Históricos para outras solicitações
-('2024-11-03 15:00:00', 'FINALIZADA', 4),
-('2024-11-04 09:00:00', 'PAGA', 5),
-('2024-11-04 15:30:00', 'REJEITADA', 6),
-('2024-11-05 08:00:00', 'ABERTA', 7),
-('2024-11-05 14:30:00', 'FINALIZADA', 8),
-('2024-11-06 11:00:00', 'ARRUMADA', 9),
-('2024-11-06 15:30:00', 'FINALIZADA', 10),
-('2024-11-07 12:00:00', 'PAGA', 11),
-('2024-11-07 15:30:00', 'FINALIZADA', 12),
-('2024-11-08 10:00:00', 'REDIRECIONADA', 13),
-('2024-11-08 16:30:00', 'FINALIZADA', 14),
-('2024-11-09 11:00:00', 'APROVADA', 15),
-('2024-11-09 15:30:00', 'FINALIZADA', 16),
-('2024-11-10 10:30:00', 'ORÇADA', 17),
-('2024-11-10 15:30:00', 'FINALIZADA', 18),
-('2024-11-11 12:30:00', 'APROVADA', 19),
-('2024-11-11 16:30:00', 'FINALIZADA', 20);
+('2024-11-03 15:00:00', 'FINALIZADA', 2, 4),
+('2024-11-04 09:00:00', 'PAGA', 2, 5),
+('2024-11-04 15:30:00', 'REJEITADA', 2, 6),
+('2024-11-05 08:00:00', 'ABERTA', 1, 7),
+('2024-11-05 14:30:00', 'FINALIZADA', 2, 8),
+('2024-11-06 11:00:00', 'ARRUMADA', 2, 9),
+('2024-11-06 15:30:00', 'FINALIZADA', 2, 10),
+('2024-11-07 12:00:00', 'PAGA', 1, 11),
+('2024-11-07 15:30:00', 'FINALIZADA', 1, 12),
+('2024-11-08 10:00:00', 'REDIRECIONADA', 2, 13),
+('2024-11-08 16:30:00', 'FINALIZADA', 1, 14),
+('2024-11-09 11:00:00', 'APROVADA', 1, 15),
+('2024-11-09 15:30:00', 'FINALIZADA', 1, 16),
+('2024-11-10 10:30:00', 'ORÇADA', 2, 17),
+('2024-11-10 15:30:00', 'FINALIZADA', 2, 18),
+('2024-11-11 12:30:00', 'APROVADA', 1, 19),
+('2024-11-11 16:30:00', 'FINALIZADA', 2, 20);
