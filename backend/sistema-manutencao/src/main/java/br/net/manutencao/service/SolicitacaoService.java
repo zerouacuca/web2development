@@ -165,4 +165,28 @@ public class SolicitacaoService {
         // Salvar as alterações na solicitação
         return solicitacaoRepository.save(solicitacao);
     }
+
+
+    @Transactional
+    public Solicitacao aprovarSolicitacao(Long id)  throws Exception {
+         // Encontrar a solicitação com base no ID
+         Solicitacao solicitacao = solicitacaoRepository.findById(id)
+         .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+
+          // Criar o histórico da solicitação com os valores atuais
+        HistoricoSolicitacao historico = new HistoricoSolicitacao();
+        historico.setSolicitacao(solicitacao);
+        historico.setEstado(EnumStatus.APROVADA); // Altera status para aprovada
+        historico.setDataHora(LocalDateTime.now()); //Atualiza o timestamp
+        
+        historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
+
+        // Atualizar o  status
+        
+        solicitacao.setStatus(EnumStatus.APROVADA); // Atualiza o status
+        solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
+
+        // Salvar as alterações na solicitação
+        return solicitacaoRepository.save(solicitacao);
+    }
 }

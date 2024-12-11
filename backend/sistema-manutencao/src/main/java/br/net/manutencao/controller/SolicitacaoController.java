@@ -107,6 +107,22 @@ public class SolicitacaoController {
         }
     }
 
+    @PutMapping("/orcamentocliente/{id}")
+    public ResponseEntity<?> aprovarSolicitacao(@PathVariable Long id) {
+        try {
+            // Atualiza a solicitação com o valor orçado
+            Solicitacao solicitacao = solicitacaoService.aprovarSolicitacao(id);
+            return ResponseEntity.ok(solicitacao.getStatus());
+        } catch (Exception e) {
+
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Erro ao aprovar solicitação");
+            errorResponse.put("details", e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
     @GetMapping("/listarfinalizadaspordata")
     public ResponseEntity<?> listarSolicitacoesFinalizadasPorData() {
     try {
