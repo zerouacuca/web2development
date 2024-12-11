@@ -188,7 +188,7 @@ export const routes: Routes = [
     },
     // {'path': 'categorias/excluir', component: ExcluirCategoriaComponent},
     {
-        'path': 'categorias/atualizar',
+        'path': 'categorias/editar/:id',
         component: AtualizarCategoriaComponent,
         canActivate: [authGuard],
         data: {

@@ -16,15 +16,26 @@ export class CategoriaService {
   }
 
   inserir(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(`${this.apiUrl}/criar`, categoria); 
+    return this.http.post<Categoria>(`${this.apiUrl}/criar`, categoria);
   }
-  
+
   buscarPorId(id: number): Observable<Categoria> {
     return this.http.get<Categoria>(`${this.apiUrl}/buscar/${id}`);
   }
 
+  buscarPorNome(nome: string): Observable<Categoria> {
+    return this.http.get<Categoria>(`${this.apiUrl}/nome/${nome}`);
+  }
+
+  // Atualiza apenas o nome da categoria
+  atualizarPorNome(categoria: Categoria): Observable<Categoria> {
+    return this.http.put<Categoria>(`${this.apiUrl}/alterar-nome`, categoria);
+  }
+  
+
+  // Atualiza a categoria inteira
   atualizar(id: number, categoria: Categoria): Observable<Categoria> {
-    return this.http.put<Categoria>(`${this.apiUrl}/alterar/${categoria.id}`, categoria);
+    return this.http.put<Categoria>(`${this.apiUrl}/alterar/${id}`, categoria);
   }
 
   remover(id: number): Observable<void> {

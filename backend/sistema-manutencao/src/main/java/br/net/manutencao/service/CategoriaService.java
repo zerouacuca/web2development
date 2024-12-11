@@ -26,32 +26,34 @@ public class CategoriaService {
         }
     }
 
-    // Método para listar todas as categorias
     public List<Categoria> getAllCategorias() {
         return categoriaRepository.findAll();
     }
 
-    public Categoria atualizar(Long id, CategoriaCreateDTO categoriaAtualizadoDTO) throws Exception {
+    public void editar(Long id, Categoria categoriaAtualizada) {
+        Categoria categoriaExistente = categoriaRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada com o id: " + id));
 
 
-        Categoria categoria = categoriaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrado para atualização"));
-
-      
-        if (!categoria.getNome().equals(categoriaAtualizadoDTO.getNome()) &&
-                categoriaRepository.existsByNome(categoriaAtualizadoDTO.getNome())) {
-            throw new IllegalArgumentException("Categoria já existe!");
-        }
-
-        categoria.setNome(categoriaAtualizadoDTO.getNome());
-
-        // Salva as alterações no banco
-        return categoriaRepository.save(categoria);
+        categoriaExistente.setNome(categoriaAtualizada.getNome());
+        categoriaRepository.save(categoriaExistente);
     }
 
-    // Método para excluir uma Categoria
+    public Categoria buscarPorId(Long id) {
+        return categoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+    }
+
+    public Categoria atualizarPorNome(Categoria categoria) {
+
+        Categoria categoriaExistente = categoriaRepository.findById(categoria.getId())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        categoriaExistente.setNome(categoria.getNome());
+        return categoriaRepository.save(categoriaExistente);
+    }
+
     public void excluir(Long id) {
-        // Verifica se a categoria existe
         if (!categoriaRepository.existsById(id)) {
             throw new IllegalArgumentException("Categoria não encontrada");
         }
