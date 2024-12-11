@@ -22,4 +22,9 @@ public class HistoricoSolicitacao {
 
     @Column(nullable = false)
     private LocalDateTime dataHora; 
+
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Usuario funcionario;
+
 }

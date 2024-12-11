@@ -44,28 +44,28 @@ VALUES
    'Curitiba', '400', 'Rua do Sol', '(41) 94567-8901', 6);
 
 -- Inserindo 20 solicitações
-INSERT INTO td_solicitacao (date, description, preco, status, categoria_id, cliente_id, funcionario_id) VALUES
+INSERT INTO td_solicitacao (date, description, preco, status, categoria_id, cliente_id, funcionario_id, defeito, justificativa) VALUES
 -- Solicitações associadas a diferentes categorias, clientes e funcionários
-('2024-11-01 10:00:00', 'Reparo no teclado', 150.0, 'ABERTA', 5, 3, 1),
-('2024-11-01 11:30:00', 'Troca de mouse', 80.0, 'REDIRECIONADA', 4, 4, 2),
-('2024-11-02 09:00:00', 'Manutenção em notebook', 300.0, 'ORÇADA', 1, 5, 1),
-('2024-11-02 15:00:00', 'Reparo em impressora', 250.0, 'APROVADA', 3, 6, 2),
-('2024-11-03 08:00:00', 'Montagem de desktop', 600.0, 'FINALIZADA', 2, 3, 1),
-('2024-11-03 10:30:00', 'Substituição de peça em notebook', 400.0, 'PAGA', 1, 4, 1),
-('2024-11-04 14:00:00', 'Configuração de impressora', 120.0, 'REJEITADA', 3, 5, 2),
-('2024-11-05 13:00:00', 'Atualização de sistema', 100.0, 'ARRUMADA', 1, 6, 2),
-('2024-11-05 16:00:00', 'Reparo no mouse', 50.0, 'ABERTA', 4, 3, 1),
-('2024-11-06 09:00:00', 'Troca de fonte no desktop', 220.0, 'ORÇADA', 2, 4, 1),
-('2024-11-06 14:30:00', 'Limpeza de notebook', 90.0, 'APROVADA', 1, 5, 1),
-('2024-11-07 08:00:00', 'Instalação de teclado gamer', 200.0, 'REDIRECIONADA', 5, 6, 2),
-('2024-11-07 11:00:00', 'Configuração de rede', 180.0, 'FINALIZADA', 3, 3, 1),
-('2024-11-08 09:30:00', 'Atualização de driver em impressora', 70.0, 'PAGA', 3, 4, 2),
-('2024-11-08 14:30:00', 'Troca de teclado', 170.0, 'ABERTA', 5, 5, 2),
-('2024-11-09 08:30:00', 'Upgrade de memória em notebook', 450.0, 'ORÇADA', 1, 6, 1),
-('2024-11-09 12:00:00', 'Reparo de fonte no desktop', 250.0, 'APROVADA', 2, 3, 2),
-('2024-11-10 09:00:00', 'Substituição de HD em notebook', 500.0, 'REJEITADA', 1, 4, 1),
-('2024-11-10 14:30:00', 'Configuração de teclado sem fio', 130.0, 'ARRUMADA', 5, 5, 1),
-('2024-11-11 10:00:00', 'Reparo em impressora multifuncional', 300.0, 'FINALIZADA', 3, 6, 2);
+('2024-11-01 10:00:00', 'Logitech G512', 150.0, 'ABERTA', 5, 3, 1, 'Teclas travando', NULL),
+('2024-11-01 11:30:00', 'Logitech M330', 80.0, 'REDIRECIONADA', 4, 4, 2, 'Botão esquerdo não responde', NULL),
+('2024-11-02 09:00:00', 'Dell Inspiron 15', 300.0, 'ORÇADA', 1, 5, 1, 'Sistema operacional não inicializa', NULL),
+('2024-11-02 15:00:00', 'HP LaserJet Pro', 250.0, 'APROVADA', 3, 6, 2, 'Erro ao puxar papel', NULL),
+('2024-11-03 08:00:00', 'Desktop Gamer', 600.0, 'FINALIZADA', 2, 3, 1, 'Peças ainda na embalagem', NULL),
+('2024-11-03 10:30:00', 'Lenovo Ideapad 3', 400.0, 'PAGA', 1, 4, 1, 'Placa-mãe danificada', NULL),
+('2024-11-04 14:00:00', 'Epson EcoTank L3150', 120.0, 'REJEITADA', 3, 5, 2, 'Erro na conexão via Wi-Fi', 'Cliente considerou o preço elevado'),
+('2024-11-05 13:00:00', 'HP Pavilion x360', 100.0, 'ARRUMADA', 1, 6, 2, 'Sistema desatualizado', NULL),
+('2024-11-05 16:00:00', 'Razer DeathAdder', 50.0, 'ABERTA', 4, 3, 1, 'Sensor óptico intermitente', NULL),
+('2024-11-06 09:00:00', 'HP ProDesk 400', 220.0, 'ORÇADA', 2, 4, 1, 'Fonte queimada', NULL),
+('2024-11-06 14:30:00', 'Acer Aspire 5', 90.0, 'APROVADA', 1, 5, 1, 'Superaquecimento devido a poeira', NULL),
+('2024-11-07 08:00:00', 'Redragon Kumara', 200.0, 'REDIRECIONADA', 5, 6, 2, 'Configuração inicial do dispositivo', NULL),
+('2024-11-07 11:00:00', 'Rede Local', 180.0, 'FINALIZADA', 3, 3, 1, 'Falhas intermitentes na conexão', NULL),
+('2024-11-08 09:30:00', 'Brother HL-L2350DW', 70.0, 'PAGA', 3, 4, 2, 'Drivers desatualizados', NULL),
+('2024-11-08 14:30:00', 'Samsung Galaxy Book', 170.0, 'ABERTA', 5, 5, 2, 'Teclas não funcionam', NULL),
+('2024-11-09 08:30:00', 'ASUS VivoBook 15', 450.0, 'ORÇADA', 1, 6, 1, 'Memória insuficiente para aplicativos', NULL),
+('2024-11-09 12:00:00', 'Dell OptiPlex 3080', 250.0, 'APROVADA', 2, 3, 2, 'Fonte parando aleatoriamente', NULL),
+('2024-11-10 09:00:00', 'Acer Nitro 5', 500.0, 'REJEITADA', 1, 4, 1, 'HD com setores defeituosos', 'Cliente optou por comprar novo equipamento'),
+('2024-11-10 14:30:00', 'Logitech K380', 130.0, 'ARRUMADA', 5, 5, 1, 'Problemas na sincronização Bluetooth', NULL),
+('2024-11-11 10:00:00', 'Canon G3110', 300.0, 'FINALIZADA', 3, 6, 2, 'Cabeçote de impressão entupido', NULL);
 
 -- Histórico de alterações para as solicitações
 INSERT INTO td_historico_solicitacao (data_hora, estado, solicitacao_id) VALUES

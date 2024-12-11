@@ -43,4 +43,6 @@ export class AplicarmanutencaoComponent {
   redirecionarManutencao() {
     this.router.navigate(["redirecionarmanutencao"]);
   }
+
+  
 }

@@ -7,23 +7,27 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { SolicitacaoService } from '../../services/solicitacao.service'; // Importando o serviço
+import { HeaderComponent } from '../header/header.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nova-solicitacao',
   templateUrl: './nova-solicitacao.component.html',
   styleUrls: ['./nova-solicitacao.component.css'],
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, HeaderComponent],
   standalone: true
 })
 export class NovaSolicitacaoComponent implements OnInit {
   solicitacaoForm: FormGroup;
   categorias$: Observable<Categoria[]> | undefined;
+ 
 
   constructor(
     private fb: FormBuilder, 
     private categoriaService: CategoriaService,
     private solicitacaoService: SolicitacaoService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     this.solicitacaoForm = this.fb.group({
       description: ['', Validators.required],
@@ -64,7 +68,7 @@ export class NovaSolicitacaoComponent implements OnInit {
       this.solicitacaoService.createSolicitacao(solicitacaoDTO).subscribe(
         response => {
           console.log('Solicitação criada com sucesso', response);
-          // Ações como navegação ou mensagem de sucesso
+          this.router.navigate (["pgcliente"]);
         },
         error => {
           console.error('Erro ao criar solicitação', error);
