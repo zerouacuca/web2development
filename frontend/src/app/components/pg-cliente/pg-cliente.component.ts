@@ -40,10 +40,10 @@ export class PgClienteComponent implements OnInit {
   abrirModal(solicitacao: Solicitacao): void {
     this.solicitacaoSelecionada = solicitacao;
   
-    // Exemplo de histórico dinâmico (substitua com os dados reais, se disponíveis)
+    // Histórico dinâmico (substitua com dados reais se disponíveis)
     this.historicoPassos = [
       { dataHora: '2024-09-14 10:00', funcionario: solicitacao.funcionario.nome, estado: 'CRIADA' },
-      { dataHora: '2024-09-15 14:30', funcionario: solicitacao.funcionario.nome, estado: 'ORÇADA' }
+      { dataHora: '2024-09-15 14:30', funcionario: solicitacao.funcionario.nome, estado: 'ORÇADA' },
     ];
   
     const modal = document.getElementById('solicitacaoModal');
@@ -54,7 +54,10 @@ export class PgClienteComponent implements OnInit {
     }
   }
   
-  
+  shouldShowActionButton(status: string): boolean {
+    const allowedStatuses = ['ORÇADA', 'REJEITADA', 'ARRUMADA'];
+    return allowedStatuses.includes(status);
+  }
 
   fecharModal(): void {
     this.solicitacaoSelecionada = null;
@@ -110,7 +113,7 @@ export class PgClienteComponent implements OnInit {
     switch (status) {
       case 'ORÇADA': return 'Aprovar/Rejeitar serviço';
       case 'REJEITADA': return 'Resgatar Serviço';
-      case 'ABERTA': return 'Efetuar Orçamento';
+      case 'ABERTA': return '';
       case 'ARRUMADA': return 'Pagar Serviço';
       case 'APROVADA': return '';
       case 'PAGA': return '';

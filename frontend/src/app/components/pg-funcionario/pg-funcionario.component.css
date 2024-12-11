@@ -55,7 +55,7 @@ button.paga {
 
 
 button.arrumada {
-  background-color: #800080;
+  background-color: #007bff;
   color: white;
 }
 
@@ -106,8 +106,12 @@ button.visualizar {
 
 /* seria a redirecionada ?! */
 .arrumada {
-  color: #800080;
+  color: #007bff;
   /* Roxo */
+}
+
+.redirecionada {
+  color: #800080;
 }
 
 .aguardandoPagamento {
