@@ -73,3 +73,32 @@ h2, h3 {
   .historico li:last-child {
     border-bottom: none;
   }
+  .modal-dialog {
+    max-width: 600px;
+    margin: 1.75rem auto;
+  }
+  
+  .modal-content {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 15px;
+  }
+  
+  .modal.show {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
