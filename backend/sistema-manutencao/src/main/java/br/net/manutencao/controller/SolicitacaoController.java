@@ -115,20 +115,38 @@ public class SolicitacaoController {
         }
     }
 
+  
+
+    @PutMapping("/pagarservice/{id}")
+    public ResponseEntity<?> pagarSolicitacao(@PathVariable Long id) {
+        try {
+            // Atualiza a solicitação com o valor orçado
+            Solicitacao solicitacao = solicitacaoService.pagarSolicitacao(id);
+            return ResponseEntity.ok(solicitacao.getStatus());
+       } catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+           errorResponse.put("error", "Erro ao pagar solicitação");
+           errorResponse.put("details", e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+}
+
     @PutMapping("/rejeitar/{id}")
-    public ResponseEntity<?> aprovarSolicitacao(@PathVariable Long id, @RequestParam String justificativa) {
+    public ResponseEntity<?> rejeitarSolicitacao(@PathVariable Long id, @RequestParam String justificativa) {
         try {
             Solicitacao solicitacao = solicitacaoService.rejeitarSolicitacao(id, justificativa);
             return ResponseEntity.ok(solicitacao.getStatus());
         } catch (Exception e) {
 
-            Map<String, String> errorResponse = new HashMap<>();
+            Map<String, String> errorResponse = new HashMap<>();  
+
             errorResponse.put("error", "Erro ao rejeitar solicitação");
             errorResponse.put("details", e.getMessage());
-
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
 
     @GetMapping("/listarfinalizadaspordata")
     public ResponseEntity<?> listarSolicitacoesFinalizadasPorData() {

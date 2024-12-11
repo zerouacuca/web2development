@@ -119,7 +119,7 @@ export const routes: Routes = [
         }
     },
     {
-        'path': 'pagarservico',
+        'path': 'pagarservico/:id',
         component: PagarservicoComponent,
         canActivate: [authGuard],
         data: {

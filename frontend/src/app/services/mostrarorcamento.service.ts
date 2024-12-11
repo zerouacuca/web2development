@@ -7,6 +7,7 @@ import { Solicitacao } from '../shared/models/solicitacao.model';
   providedIn: 'root'
 })
 export class MostrarOrcamentoService {
+ 
 
   private baseUrl = 'http://localhost:8081/solicitacao';
 
@@ -23,5 +24,10 @@ export class MostrarOrcamentoService {
   aprovarOrcamento(id: number): Observable<any> {
     const url = `${this.baseUrl}/aprovar/${id}`;
     return this.http.put(url,id );
+  }
+
+  confirmarPagamento(id: number): Observable <any> {
+    const url = `${this.baseUrl}/pagarservice/${id}`
+    return this.http.put(url, id);
   }
 }

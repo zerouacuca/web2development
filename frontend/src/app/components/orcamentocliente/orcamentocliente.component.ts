@@ -11,7 +11,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 @Component({
   selector: 'app-orcamentocliente',
   standalone: true,
-  imports: [HeaderComponent, NgIf, CommonModule, FormsModule, RouterModule, NgxMaskDirective, NgxMaskPipe],
+  imports: [HeaderComponent, NgIf, CommonModule, FormsModule, RouterModule],
   templateUrl: './orcamentocliente.component.html',
   styleUrls: ['./orcamentocliente.component.css']
 })
