@@ -23,10 +23,12 @@ export class AplicarmanutencaoComponent implements OnInit {
   orientacoesCliente: string = '';
 
   //coisas do antigo redirecionar
-  funcionarioSelecionado: string = "Selecionar";
   funcionarios: any[] = [];
   modalVisivel: boolean = false;
   mensagemModal: string = "";
+  funcionarioSelecionado: number | null = null; // Armazena o ID do funcionário
+  funcionarioNomeSelecionado: string | null = null; // Armazena o nome do funcionário
+
 
 
   constructor(
@@ -35,7 +37,7 @@ export class AplicarmanutencaoComponent implements OnInit {
     private solicitacaoService: SolicitacaoService,
     private funcionarioService: FuncionarioService
   ) { }
-
+  
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');  // Obter o id da URL
     if (id) {
@@ -51,8 +53,29 @@ export class AplicarmanutencaoComponent implements OnInit {
   }
 
   enviarRedirecionamento() {
-    this.solicitacaoService.enviarRedirecionamento(this.funcionarioSelecionado);
+    if (!this.funcionarioSelecionado) {
+      alert('Selecione um funcionário para redirecionar a solicitação.');
+      return;
+    }
+  
+    const redirecionamento = {
+      idFuncionario: this.funcionarioSelecionado,
+      idSolicitacao: this.solicitacao.id
+    };
+  
+    this.solicitacaoService.redirecionarManutencao(redirecionamento).subscribe({
+      next: () => {
+        alert('Solicitação redirecionada com sucesso!');
+        this.router.navigate(['pgfuncionario']);
+      },
+      error: (err) => {
+        console.error('Erro ao redirecionar:', err);
+        alert('Erro ao redirecionar a solicitação. Tente novamente.');
+      }
+    });
   }
+  
+  
 
   listarFuncionarios() {
     const idSession = sessionStorage.getItem("id");  // Obtém o ID do sessionStorage
@@ -87,7 +110,7 @@ export class AplicarmanutencaoComponent implements OnInit {
       this.solicitacaoService.efetuarManutencao(solicitacaoId, manutencaoDTO)
         .subscribe({
           next: (response) => {
-            alert(`Manutenção efetuada com sucesso!\n${response.message}`);
+            alert(`Manutenção efetuada com sucesso!`);
             localStorage.setItem('statusSolicitacao', 'AGUARDANDO PAGAMENTO');
             this.router.navigate(['pgfuncionario']);
           },
@@ -105,9 +128,11 @@ export class AplicarmanutencaoComponent implements OnInit {
     this.router.navigate(["redirecionarmanutencao"]);
   }
 
-  selectOption(funcionario: string) {
-    this.funcionarioSelecionado = funcionario;
+  selectOption(funcionarioId: number, funcionarioNome: string) {
+    this.funcionarioSelecionado = funcionarioId; // Armazena o ID para enviar na requisição
+    this.funcionarioNomeSelecionado = funcionarioNome; // Atualiza o nome exibido no botão
   }
+  
 
   mostrarModal() {
     this.mensagemModal = 'Redirecionamento enviado com sucesso!';
