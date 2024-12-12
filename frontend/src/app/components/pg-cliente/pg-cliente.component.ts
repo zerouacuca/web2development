@@ -104,6 +104,7 @@ export class PgClienteComponent implements OnInit {
       case 'APROVADA': return 'aprovada';
       case 'PAGA': return 'paga';
       case 'FINALIZADA': return 'finalizada';
+      case 'REDIRECIONADA': return 'redirecionada';
       case 'AGUARDANDO PAGAMENTO': return 'aguardandoPagamento';
       default: return '';
     }
