@@ -4,12 +4,12 @@
         
         <h2>Dados da Solicitação de Manutenção</h2>
         <div class="solicitacao-detalhes">
-            <p><strong>Nome do Cliente:</strong> João Silva</p>
-            <p><strong>Descrição do Equipamento:</strong> Computador Gamer</p>
-            <p><strong>Categoria:</strong> Computadores</p>
-            <p><strong>Descrição do Defeito:</strong> Tela azul ao inicializar</p>
-            <p><strong>Data da Solicitação:</strong> 20/09/2024</p>
-            <p><strong>Estado:</strong> <span>EM MANUTENÇÃO</span></p>
+            <p><strong>Nome do Cliente:</strong> {{ solicitacao?.cliente.nome }}</p>
+            <p><strong>Descrição do Equipamento:</strong> {{ solicitacao?.description }} </p>
+            <p><strong>Categoria:</strong> {{ solicitacao?.categoria.nome }} </p>
+            <p><strong>Descrição do Defeito:</strong> {{ solicitacao?.defeito }}</p>
+            <p><strong>Data da Solicitação:</strong> {{ solicitacao?.date | date: 'dd MMM yyyy, hh:mm a' }} </p>
+            <p><strong>Estado:</strong> <span> {{ solicitacao?.status }} </span></p>
         </div>
 
         <div class="maintenance-actions">

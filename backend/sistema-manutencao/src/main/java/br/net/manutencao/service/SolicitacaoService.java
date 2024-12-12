@@ -166,7 +166,7 @@ public class SolicitacaoService {
     }
 
     @Transactional
-    public Solicitacao efetuarManutencao(Long id, ManutencaoDTO manutencaoDTO, Usuario funcionario) {
+    public Solicitacao efetuarManutencao(Long id, ManutencaoDTO manutencaoDTO) throws Exception {
         Solicitacao solicitacao = solicitacaoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Solicitação não encontrada com o ID: " + id));
 
@@ -175,7 +175,7 @@ public class SolicitacaoService {
         historico.setSolicitacao(solicitacao);
         historico.setEstado(solicitacao.getStatus());
         historico.setDataHora(solicitacao.getDate());
-        historico.setFuncionario(solicitacao.getFuncionario()); // Registra o funcionário responsável
+        historico.setFuncionario(solicitacao.getFuncionario());
         historicoRepository.save(historico);
 
         // Atualizar os dados da solicitação
@@ -183,6 +183,7 @@ public class SolicitacaoService {
         solicitacao.setOrientacoesCliente(manutencaoDTO.getOrientacoesCliente());
         solicitacao.setStatus(EnumStatus.ARRUMADA);
         solicitacao.setDataManutencao(LocalDateTime.now());
+        
 
         return solicitacaoRepository.save(solicitacao);
     }
@@ -262,7 +263,7 @@ public class SolicitacaoService {
 
         Funcionario funcionario = funcionarioRepository.findById(id_funcionario)
                 .orElseThrow(() -> new Exception("Solicitação não encontrada"));
-        
+
         // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);

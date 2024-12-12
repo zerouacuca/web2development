@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderfuncionarioComponent } from "../headerfuncionario/headerfuncionario.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Solicitacao } from '../../shared/models/solicitacao.model';
+import { SolicitacaoService } from '../../services/solicitacao.service';
 
 @Component({
   selector: 'app-aplicarmanutencao',
@@ -11,38 +13,60 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './aplicarmanutencao.component.html',
   styleUrl: './aplicarmanutencao.component.css'
 })
-export class AplicarmanutencaoComponent {
+export class AplicarmanutencaoComponent implements OnInit {
 
+  solicitacao: any = null;
   descricaoManutencao: string = '';
   orientacoesCliente: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute,
+    private solicitacaoService: SolicitacaoService
+  ) { }
+
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');  // Obter o id da URL
+    if (id) {
+      this.solicitacaoService.buscarPorId(id).subscribe(solicitacao => {
+        this.solicitacao = solicitacao;
+      });
+    }
+  }
 
   efetuarManutencao() {
-    if (this.descricaoManutencao.trim() === "" || this.orientacoesCliente.trim() === "") {
-      alert("Preencha todos os campos para efetuar a manutenção.");
+    if (this.descricaoManutencao.trim() === '' || this.orientacoesCliente.trim() === '') {
+      alert('Preencha todos os campos para efetuar a manutenção.');
       return;
     }
 
-    const dataHoraManutencao = new Date().toLocaleString();
-    const funcionario = "Carlos Souza";
+    const manutencaoDTO = {
+      descricaoManutencao: this.descricaoManutencao,
+      orientacoesCliente: this.orientacoesCliente,
+    };
 
-    alert(`
-        Manutenção efetuada com sucesso!
-        Descrição: ${this.descricaoManutencao}
-        Orientações para o Cliente: ${this.orientacoesCliente}
-        Data/Hora: ${dataHoraManutencao}
-        Funcionário: ${funcionario}
-    `);
-
-    this.router.navigate(["pgfuncionario"]);
-
-    localStorage.setItem("statusSolicitacao", "AGUARDANDO PAGAMENTO");
+    const solicitacaoId = this.solicitacao?.id; // ID da solicitação
+    if (solicitacaoId) {
+      this.solicitacaoService.efetuarManutencao(solicitacaoId, manutencaoDTO)
+        .subscribe({
+          next: (response) => {
+            alert(`Manutenção efetuada com sucesso!\n${response.message}`);
+            localStorage.setItem('statusSolicitacao', 'AGUARDANDO PAGAMENTO');
+            this.router.navigate(['pgfuncionario']);
+          },
+          error: (err) => {
+            console.error('Erro ao efetuar manutenção:', err);
+            alert('Ocorreu um erro ao tentar efetuar a manutenção. Tente novamente.');
+          },
+        });
+    } else {
+      alert('Solicitação não encontrada!');
+    }
   }
 
   redirecionarManutencao() {
     this.router.navigate(["redirecionarmanutencao"]);
   }
 
-  
+
 }

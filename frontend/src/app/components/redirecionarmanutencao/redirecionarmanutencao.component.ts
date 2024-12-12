@@ -25,15 +25,23 @@ export class RedirecionarmanutencaoComponent implements OnInit {
   }
 
   listarFuncionarios() {
+    const idSession = sessionStorage.getItem("id");  // Obtém o ID do sessionStorage
+    
+    // Converte o idSession para número, caso seja uma string
+    const idSessionNumber = idSession ? Number(idSession) : null; 
+  
     this.funcionarioService.listarTodos().subscribe(
       (funcionarios) => {
-        this.funcionarios = funcionarios; 
+        // Filtra os funcionários cujo ID é diferente do ID armazenado no sessionStorage
+        this.funcionarios = funcionarios.filter((funcionario) => funcionario.id !== idSessionNumber);
       },
       (error) => {
         console.error('Erro ao listar funcionários', error);
       }
     );
   }
+  
+  
 
   voltar() {
     this.router.navigate(["aplicarmanutencao"]);

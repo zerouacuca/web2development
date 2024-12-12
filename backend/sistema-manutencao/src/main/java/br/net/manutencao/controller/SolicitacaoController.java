@@ -3,8 +3,6 @@ package br.net.manutencao.controller;
 import br.net.manutencao.DTO.ManutencaoDTO;
 import br.net.manutencao.DTO.SolicitacaoCreateDTO;
 import br.net.manutencao.model.Solicitacao;
-import br.net.manutencao.model.Usuario;
-import br.net.manutencao.repository.UsuarioRepository;
 import br.net.manutencao.service.SolicitacaoService;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -20,9 +18,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/solicitacao")
 public class SolicitacaoController {
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private SolicitacaoService solicitacaoService;
@@ -186,15 +181,12 @@ public class SolicitacaoController {
     @PutMapping("/efetuarManutencao/{id}")
     public ResponseEntity<?> efetuarManutencao(
             @PathVariable Long id,
-            @RequestBody ManutencaoDTO manutencaoDTO,
-            @RequestParam Long funcionarioId) { // Recebe o ID do funcionário logado como parâmetro
+            @RequestBody ManutencaoDTO manutencaoDTO
+            ) { 
 
         try {
-            Usuario funcionarioLogado = usuarioRepository.findById(funcionarioId)
-                    .orElseThrow(
-                            () -> new EntityNotFoundException("Funcionário não encontrado com o ID: " + funcionarioId));
-
-            Solicitacao solicitacao = solicitacaoService.efetuarManutencao(id, manutencaoDTO, funcionarioLogado);
+            
+            Solicitacao solicitacao = solicitacaoService.efetuarManutencao(id, manutencaoDTO);
 
             return ResponseEntity.ok(Map.of(
                     "message", "Manutenção efetuada com sucesso.",

@@ -64,7 +64,7 @@ export const routes: Routes = [
         }
     },
     {
-        'path': 'aplicarmanutencao',
+        'path': 'aplicarmanutencao/:id',
         component: AplicarmanutencaoComponent,
         data: {
             role: ['FUNCIONARIO']

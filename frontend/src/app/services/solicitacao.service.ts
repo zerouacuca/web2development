@@ -8,9 +8,11 @@ import { Solicitacao } from '../shared/models/solicitacao.model';
   providedIn: 'root'
 })
 export class SolicitacaoService {
-  
-
   private apiUrl = 'http://localhost:8081/solicitacao';
+
+  buscarPorId(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -54,18 +56,29 @@ export class SolicitacaoService {
     return this.http.put(url, body);
   }
 
-  finalizarSolicitacao(id: string) : Observable<any>{
+  finalizarSolicitacao(id: string): Observable<any> {
     const url = `${this.apiUrl}/finalizarsolicitacao/${id}`;
     const body = {};
     return this.http.put(url, body);
   }
+
+  efetuarManutencao(
+    id: string,
+    manutencaoDTO: { descricaoManutencao: string; orientacoesCliente: string },
+  ): Observable<any> {
+    return this.http.put<any>(
+      `${this.apiUrl}/efetuarManutencao/${id}`,
+      manutencaoDTO
+    );
+  }
+
 
 
   // solicitacao.service.ts
   listarFuncionarios(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/funcionarios`);
   }
-  
+
 
   redirecionarManutencao(redirecionamento: any): Observable<any> {
     const url = `${this.apiUrl}/solicitacoes/redirecionar`; // Endpoint para redirecionamento
