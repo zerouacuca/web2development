@@ -129,9 +129,9 @@ public class SolicitacaoService {
         // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
-        historico.setEstado(solicitacao.getStatus()); // Armazena o status anterior
+        historico.setEstado(EnumStatus.ORÇADA); // Armazena o status anterior
         historico.setDataHora(solicitacao.getDate()); // Armazena o timestamp anterior
-
+        historico.setFuncionario(solicitacao.getFuncionario());
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o valor orçado e o status
@@ -152,9 +152,9 @@ public class SolicitacaoService {
         // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
-        historico.setEstado(solicitacao.getStatus()); // Altera status para finalizada
+        historico.setEstado(EnumStatus.FINALIZADA); // Altera status para finalizada
         historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
-
+        historico.setFuncionario(solicitacao.getFuncionario());
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o status
@@ -197,9 +197,9 @@ public class SolicitacaoService {
         // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
-        historico.setEstado(solicitacao.getStatus()); // Altera status para aprovada
+        historico.setEstado(EnumStatus.APROVADA); // Altera status para aprovada
         historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
-
+        historico.setFuncionario(solicitacao.getFuncionario());
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o status
@@ -219,9 +219,9 @@ public class SolicitacaoService {
         // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
-        historico.setEstado(solicitacao.getStatus()); // Armazena o status anterior
+        historico.setEstado(EnumStatus.PAGA); // Armazena o status anterior
         historico.setDataHora(solicitacao.getDate()); // Armazena o timestamp anterior
-
+        historico.setFuncionario(solicitacao.getFuncionario());
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o valor orçado e o status
@@ -241,9 +241,9 @@ public class SolicitacaoService {
         // Criar o histórico da solicitação com os valores atuais
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
-        historico.setEstado(solicitacao.getStatus());
+        historico.setEstado(EnumStatus.REJEITADA);
         historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
-
+        historico.setFuncionario(solicitacao.getFuncionario());
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o status
@@ -270,7 +270,6 @@ public class SolicitacaoService {
         historico.setEstado(solicitacao.getStatus());
         historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
         historico.setFuncionario(solicitacao.getFuncionario());
-
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o status
@@ -292,7 +291,7 @@ public class SolicitacaoService {
         historico.setSolicitacao(solicitacao);
         historico.setEstado(solicitacao.getStatus());
         historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
-
+        historico.setFuncionario(solicitacao.getFuncionario());
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o status

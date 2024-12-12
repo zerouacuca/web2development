@@ -7,7 +7,6 @@ import { PgFuncionarioComponent } from './components/pg-funcionario/pg-funcionar
 import { OrcamentoclienteComponent } from './components/orcamentocliente/orcamentocliente.component';
 import { SolicitabertafuncComponent } from './components/solicitabertafunc/solicitabertafunc.component';
 import { AplicarmanutencaoComponent } from './components/aplicarmanutencao/aplicarmanutencao.component';
-import { RedirecionarmanutencaoComponent } from './components/redirecionarmanutencao/redirecionarmanutencao.component';
 import { EfetuarorcamentoComponent } from './components/efetuarorcamento/efetuarorcamento.component';
 import { FinalizarsolicitComponent } from './components/finalizarsolicit/finalizarsolicit.component';
 import { VisualizarservicosComponent } from './components/visualizarservicos/visualizarservicos.component';
@@ -66,13 +65,6 @@ export const routes: Routes = [
     {
         'path': 'aplicarmanutencao/:id',
         component: AplicarmanutencaoComponent,
-        data: {
-            role: ['FUNCIONARIO']
-        }
-    },
-    {
-        'path': 'redirecionarmanutencao',
-        component: RedirecionarmanutencaoComponent,
         data: {
             role: ['FUNCIONARIO']
         }

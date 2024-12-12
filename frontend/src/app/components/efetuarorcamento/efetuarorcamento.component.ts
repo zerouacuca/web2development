@@ -65,15 +65,15 @@ export class EfetuarorcamentoComponent implements OnInit {
 
   // Função para confirmar o orçamento
   confirmarOrcamento() {
-    this.solicitacaoService.confirmarOrcamento(this.solicitacaoId.toString(), this.valorOrcado).subscribe(
-      response => {
-        alert ('Orçamento confirmado');
-        this.router.navigate (["pgfuncionario"]);
+    this.solicitacaoService.confirmarOrcamento(this.solicitacaoId.toString(), this.valorOrcado).subscribe({
+      next: () => {
+        alert('Orçamento confirmado');
+        this.router.navigate(["pgfuncionario"]);
       },
-      error => {
+      error: (err: any) => {
         alert('Erro ao confirmar orçamento');
       }
-    );
+    });
   }
 
   // Função para redirecionar a solicitação

@@ -68,14 +68,18 @@ public class SolicitacaoController {
     }
 
     @PutMapping("/orcar/{id}")
-    public String orcarSolicitacao(@PathVariable Long id, @RequestParam Float valorOrcado) {
+    public ResponseEntity<?> orcarSolicitacao(@PathVariable Long id, @RequestParam Float valorOrcado) {
         try {
             // Atualiza a solicitação com o valor orçado
             Solicitacao solicitacao = solicitacaoService.orcarSolicitacao(id, valorOrcado);
-            return "Solicitação orçada com sucesso! Novo valor: " + solicitacao.getPreco() + " e Status: "
-                    + solicitacao.getStatus();
+            return ResponseEntity.ok(Map.of(
+                    "message", "Solicitação orçada com sucesso!",
+                    "novo_valor", solicitacao.getPreco(),
+                    "status", solicitacao.getStatus()));
         } catch (Exception e) {
-            return "Erro ao orçar solicitação: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
+                    "error", "Erro ao orçar solicitação",
+                    "details", e.getMessage()));
         }
     }
 

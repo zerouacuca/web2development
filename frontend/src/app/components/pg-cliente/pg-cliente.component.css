@@ -112,13 +112,13 @@ button.visualizar {
 
 /* seria a redirecionada ?! */
 .arrumada {
-  color: #800080;
-  /* Roxo */
+  color: #007bff;
+ 
 }
 
-.aguardandoPagamento {
-  color: #007bff;
-  /* Azul */
+.redirecionada {
+  color: #6d1270;
+  
 }
 
 .paga {
