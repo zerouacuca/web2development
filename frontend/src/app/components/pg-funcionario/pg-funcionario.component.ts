@@ -104,7 +104,7 @@ export class PgFuncionarioComponent implements OnInit {
       case 'APROVADA': return 'Efetuar Manutenção';
       case 'PAGA': return 'Finalizar Solicitação';
       case 'AGUARDANDO PAGAMENTO': return 'Aguarde Pagamento';
-      default: return 'Ação Indefinida';
+      default: return '';
     }
   }
 
