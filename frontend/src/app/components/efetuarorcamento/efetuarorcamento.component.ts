@@ -67,10 +67,11 @@ export class EfetuarorcamentoComponent implements OnInit {
   confirmarOrcamento() {
     this.solicitacaoService.confirmarOrcamento(this.solicitacaoId.toString(), this.valorOrcado).subscribe(
       response => {
-        console.log('Orçamento confirmado', response);
+        alert ('Orçamento confirmado');
+        this.router.navigate (["pgfuncionario"]);
       },
       error => {
-        console.error('Erro ao confirmar orçamento', error);
+        alert('Erro ao confirmar orçamento');
       }
     );
   }
@@ -102,7 +103,7 @@ export class EfetuarorcamentoComponent implements OnInit {
         this.router.navigate(['/solicitacoes']);
       },
       error: (err) => {
-        console.error('Erro ao redirecionar manutenção', err);
+        alert('Erro ao redirecionar manutenção');
       }
     });
   }
