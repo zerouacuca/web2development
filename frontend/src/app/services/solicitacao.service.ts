@@ -41,6 +41,12 @@ export class SolicitacaoService {
     });
   }
 
+  enviarRedirecionamento(funcionarioSelecionado: string) {
+    /* const url = `${this.apiUrl}/redirecionar/${id}}`;
+    const body = { valorOrcado };
+    return this.http.put(url, body); */
+  }
+  
   // Método para criar uma solicitação
   createSolicitacao(solicitacao: SolicitacaoCreateDTO): Observable<any> {
     return this.http.post(`${this.apiUrl}/criar`, solicitacao);

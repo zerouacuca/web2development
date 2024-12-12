@@ -1,7 +1,7 @@
 <app-headerfuncionario></app-headerfuncionario>
-<div class="aplicarmanutencao"> 
+<div class="aplicarmanutencao">
     <div class="container">
-        
+
         <h2>Dados da Solicitação de Manutenção</h2>
         <div class="solicitacao-detalhes">
             <p><strong>Nome do Cliente:</strong> {{ solicitacao?.cliente.nome }}</p>
@@ -15,13 +15,44 @@
         <div class="maintenance-actions">
             <h3>Efetuar Manutenção</h3>
             <label for="descricaoManutencao">Descrição da Manutenção:</label>
-            <textarea id="descricaoManutencao" class="form-control" rows="4" [(ngModel)]="descricaoManutencao"></textarea>
+            <textarea id="descricaoManutencao" class="form-control" rows="4"
+                [(ngModel)]="descricaoManutencao"></textarea>
 
             <label for="orientacoesCliente">Orientações para o Cliente:</label>
             <textarea id="orientacoesCliente" class="form-control" rows="4" [(ngModel)]="orientacoesCliente"></textarea>
 
             <button (click)="efetuarManutencao()" class="btn btn-success">Efetuar Manutenção</button>
-            <button (click)="redirecionarManutencao()" class="btn btn-danger">Redirecionar Manutenção</button>
+            <button (click)="abrirModal(solicitacao)" class="btn btn-danger">Redirecionar Manutenção</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" tabindex="-1" [ngClass]="{ 'show': isModalOpen }"
+    [ngStyle]="{ display: isModalOpen ? 'block' : 'none' }">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalhes da Solicitação</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="fecharModal()"></button>
+            </div>
+            <div class="modal-body" *ngIf="solicitacao">
+                <div class="redirecionar-container">
+                    <p class="redirecionar-texto"><strong>Redirecionar Solicitação para: </strong></p>
+                    <div class="dropdown-funcionarios">
+                        <button class="dropbtn">{{ funcionarioSelecionado }}</button>
+                        <div class="dropdown-content">
+                            <div *ngFor="let funcionario of funcionarios" (click)="selectOption(funcionario.nome)">
+                                {{ funcionario.nome }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="enviarRedirecionamento" (click)="enviarRedirecionamento()">Enviar Redirecionamento</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="fecharModal()">Fechar</button>
+            </div>
         </div>
     </div>
 </div>
