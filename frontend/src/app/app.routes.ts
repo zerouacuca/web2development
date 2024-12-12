@@ -70,6 +70,13 @@ export const routes: Routes = [
         }
     },
     {
+        'path': 'solicitacao/redirecionar/:id',
+        component: AplicarmanutencaoComponent,
+        data: {
+            role: ['FUNCIONARIO']
+        }
+    },
+    {
         'path': 'efetuarorcamento/:id',
         component: EfetuarorcamentoComponent,
         canActivate: [authGuard],

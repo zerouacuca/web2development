@@ -205,20 +205,21 @@ public class SolicitacaoController {
     }
 
     @PutMapping("/redirecionar/{id}")
-    public ResponseEntity<?> redirecionarSolicitacao(@PathVariable Long id_solicitacao, @RequestParam Long id_funcionario) {
+    public ResponseEntity<?> redirecionarSolicitacao(
+            @PathVariable("id") Long idSolicitacao, 
+            @RequestParam("id_funcionario") Long idFuncionario) {
         try {
-            // Atualiza a solicitação com o valor orçado
-            Solicitacao solicitacao = solicitacaoService.redirecionarSolicitacao(id_solicitacao, id_funcionario);
-            return ResponseEntity.ok(solicitacao.getStatus());
+            Solicitacao solicitacao = solicitacaoService.redirecionarSolicitacao(idSolicitacao, idFuncionario);
+            return ResponseEntity.ok("Solicitação redirecionada com sucesso! Status: " + solicitacao.getStatus());
         } catch (Exception e) {
-
             Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Erro ao finalizar solicitação");
+            errorResponse.put("error", "Erro ao redirecionar a solicitação");
             errorResponse.put("details", e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
 
     @PutMapping("/resgatar/{id}")
     public ResponseEntity<?> resgatarSolicitacao(@PathVariable Long id) {

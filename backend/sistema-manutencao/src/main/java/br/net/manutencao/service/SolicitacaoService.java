@@ -257,29 +257,29 @@ public class SolicitacaoService {
     }
 
     @Transactional
-    public Solicitacao redirecionarSolicitacao(Long id_solicitacao, Long id_funcionario) throws Exception {
-        Solicitacao solicitacao = solicitacaoRepository.findById(id_solicitacao)
+    public Solicitacao redirecionarSolicitacao(Long idSolicitacao, Long idFuncionario) throws Exception {
+        Solicitacao solicitacao = solicitacaoRepository.findById(idSolicitacao)
                 .orElseThrow(() -> new Exception("Solicitação não encontrada"));
 
-        Funcionario funcionario = funcionarioRepository.findById(id_funcionario)
-                .orElseThrow(() -> new Exception("Solicitação não encontrada"));
+        Funcionario funcionario = funcionarioRepository.findById(idFuncionario)
+                .orElseThrow(() -> new Exception("Funcionário não encontrado"));
 
-        // Criar o histórico da solicitação com os valores atuais
+        // Cria o histórico da solicitação antes de alterar
         HistoricoSolicitacao historico = new HistoricoSolicitacao();
         historico.setSolicitacao(solicitacao);
         historico.setEstado(solicitacao.getStatus());
-        historico.setDataHora(solicitacao.getDate()); // Atualiza o timestamp
+        historico.setDataHora(LocalDateTime.now()); // Timestamp atual
         historico.setFuncionario(solicitacao.getFuncionario());
-        historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
+        historicoRepository.save(historico);
 
-        // Atualizar o status
-        solicitacao.setStatus(EnumStatus.REDIRECIONADA); // Atualiza o status
-        solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
+        // Atualiza a solicitação
+        solicitacao.setStatus(EnumStatus.REDIRECIONADA);
+        solicitacao.setDate(LocalDateTime.now()); // Timestamp atualizado
         solicitacao.setFuncionario(funcionario);
 
-        // Salvar as alterações na solicitação
         return solicitacaoRepository.save(solicitacao);
     }
+
 
     @Transactional
     public Solicitacao resgatarSolicitacao(Long id_solicitacao) throws Exception {

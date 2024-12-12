@@ -87,9 +87,14 @@ export class SolicitacaoService {
 
 
   redirecionarManutencao(redirecionamento: any): Observable<any> {
-    const url = `${this.apiUrl}/solicitacoes/redirecionar`; // Endpoint para redirecionamento
-    return this.http.post<any>(url, redirecionamento);
+    const url = `${this.apiUrl}/redirecionar/${redirecionamento.idSolicitacao}`;
+    return this.http.put<any>(url, {}, {
+        params: { id_funcionario: redirecionamento.idFuncionario.toString() } // Certifique-se de que é string
+});
+
   }
+
+  
 
   // Método para listar solicitações finalizadas agrupadas por data
   listarFinalizadasPorData(): Observable<any[]> {
