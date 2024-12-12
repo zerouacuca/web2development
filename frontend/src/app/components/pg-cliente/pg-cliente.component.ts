@@ -73,7 +73,11 @@ export class PgClienteComponent implements OnInit {
   efetuarAcao(solicitacao: Solicitacao) {
     switch (solicitacao.status) {
       case "REJEITADA":
-        this.solicitacaoService.resgatarServico(solicitacao.id);
+        this.solicitacaoService.resgatarServico(solicitacao.id).subscribe({
+          next: () => console.log(`Serviço ${solicitacao.id} resgatado com sucesso.`),
+          error: (err) => console.error(`Erro ao resgatar o serviço: ${err.message}`)
+        });
+        window.location.reload();
         break;
       case "ABERTA":
         this.router.navigate(["efetuarorcamento", solicitacao.id]);

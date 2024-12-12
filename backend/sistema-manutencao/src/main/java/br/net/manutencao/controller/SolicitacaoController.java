@@ -221,10 +221,10 @@ public class SolicitacaoController {
     }
 
     @PutMapping("/resgatar/{id}")
-    public ResponseEntity<?> resgatarSolicitacao(@PathVariable Long id_solicitacao) {
+    public ResponseEntity<?> resgatarSolicitacao(@PathVariable Long id) {
         try {
             // Atualiza a solicitação com o valor orçado
-            Solicitacao solicitacao = solicitacaoService.resgatarSolicitacao(id_solicitacao);
+            Solicitacao solicitacao = solicitacaoService.resgatarSolicitacao(id);
             return ResponseEntity.ok(solicitacao.getStatus());
         } catch (Exception e) {
 
