@@ -101,5 +101,8 @@ export class SolicitacaoService {
     return this.http.get<any[]>(`${this.apiUrl}/listarfinalizadasporcategoria`);
   }
 
+  resgatarServico(id: number){
+    return this.http.put(`${this.apiUrl}/resgatar/${id}`, {});
+  }
 
 }

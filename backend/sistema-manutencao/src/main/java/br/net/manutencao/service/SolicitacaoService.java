@@ -295,7 +295,7 @@ public class SolicitacaoService {
         historicoRepository.save(historico); // Salva o histórico antes de atualizar a solicitação
 
         // Atualizar o status
-        solicitacao.setStatus(EnumStatus.REJEITADA); // Atualiza o status
+        solicitacao.setStatus(EnumStatus.ORÇADA); // Atualiza o status
         solicitacao.setDate(LocalDateTime.now()); // Atualiza o timestamp
 
         // Salvar as alterações na solicitação

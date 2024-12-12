@@ -73,7 +73,7 @@ export class PgClienteComponent implements OnInit {
   efetuarAcao(solicitacao: Solicitacao) {
     switch (solicitacao.status) {
       case "REJEITADA":
-        solicitacao.status = "ABERTA";
+        this.solicitacaoService.resgatarServico(solicitacao.id);
         break;
       case "ABERTA":
         this.router.navigate(["efetuarorcamento", solicitacao.id]);
